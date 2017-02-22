@@ -401,7 +401,7 @@ hr {
 }
 
 p {
-  margin: 0 0 10px;
+  margin: 0 0 130px 0;
 }
 
 .lead {
@@ -4944,6 +4944,7 @@ a.list-group-item.active > .badge,
 
 .jumbotron p {
   line-height: 1.4;
+    height: 32px;
 }
 
 .container .jumbotron {
