@@ -13,7 +13,7 @@ namespace WebApplication6
     public partial class _Default : Page
     {
         Int32 temp = 0;
-        Int32 zipsize = 104857600;
+        //Int32 zipsize = 104857600;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)
@@ -48,8 +48,23 @@ namespace WebApplication6
                 com.Parameters.AddWithValue("@ziplocation", FileUpload1.PostedFile.ToString());
 
                 com.ExecuteNonQuery();
-                Response.Redirect("Default.aspx");
-                Response.Write("Upload Successful");
+                //Response.Redirect("Default.aspx");
+                //Response.Write("Upload Successful");
+
+                if (FileUpload1.HasFile)
+                {
+                    //try
+                    //{
+                        string filename = Path.GetFileName(FileUpload1.FileName);
+                        FileUpload1.SaveAs(Server.MapPath("~") + filename);
+                        StatusLabel.Text = "Upload status: File uploaded!";
+
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
+                    //}
+                }
 
 
                 conn.Close();
@@ -58,35 +73,38 @@ namespace WebApplication6
             {
                 Response.Write("Error:" + ex.ToString());
             }
-        
 
-        if (FileUpload1.HasFile)
-            {
-                try
-                {
+            Response.Redirect("Default.aspx");
+            Response.Write("Upload Successful");
 
-                    if (FileUpload1.PostedFile.ContentType == "application/x-zip-compressed")
-                    {
-                        if (FileUpload1.PostedFile.ContentLength < zipsize) // change zip size int to have larger files.
-                        {
-                            string filename = Path.GetFileName(FileUpload1.FileName);
-                            FileUpload1.SaveAs(Server.MapPath("UploadedFiles") + filename);
-                            StatusLabel.Text = "Upload status: File uploaded!";
-                        }
-                        else
-                            StatusLabel.Text = "Upload status: File has to be less than 100mb!";
-                    }
-                    else
-                        StatusLabel.Text = "Only ZipFiles accepted!";
-                }
-                catch(Exception ex)
-                {
-                    StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
-                }
+            //if (FileUpload1.HasFile)
+            //    {
+            //        try
+            //        {
+
+            //            if (FileUpload1.PostedFile.ContentType == "application/octet-stream")
+            //            {
+            //                if (FileUpload1.PostedFile.ContentLength < 104857600) // change zip size int to have larger files.
+            //                {
+            //                    string filename = Path.GetFileName(FileUpload1.FileName);
+            //                    //var filePath = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/stored"), FileUpload1.FileName + ".zip");
+            //                    FileUpload1.SaveAs(Server.MapPath("~/Uploads") + filename);
+            //                    StatusLabel.Text = "Upload status: File uploaded!";
+            //                }
+            //                else
+            //                    StatusLabel.Text = "Upload status: File has to be less than 100mb!";
+            //           }
+            //            else
+            //                StatusLabel.Text = "Only ZipFiles accepted!";
+            //        }
+            //        catch(Exception ex)
+            //        {
+            //            StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
+            //        }
 
 
 
-            }
+            //   }
 
         }
     }

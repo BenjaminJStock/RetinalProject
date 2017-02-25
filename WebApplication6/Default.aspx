@@ -45,16 +45,14 @@
                     <td style="width: 405px">
                         <asp:FileUpload ID="FileUpload1" runat="server" Width="357px" />
                     </td>
-                    <td>Please Upload a Zip file containing your images 
-            
-            <asp:Label runat="server" id="StatusLabel" text="Upload status: " />
-            
-                    </td>
+                    <td>Please Upload a Zip file containing your images </td>
                 </tr>
             </table>
             <asp:Label ID="lblmessage" runat="server" Text="File Uploaded to Database"></asp:Label>
             <br />
             <asp:Button ID="Button1" runat="server" Text="Upload Zip File to Database" OnClick="Button1_Click" />
+            
+            <asp:Label runat="server" id="StatusLabel" text="Upload status: " />
             
         </div>
     </div>
