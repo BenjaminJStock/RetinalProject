@@ -6,12 +6,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.IO;
 
 namespace WebApplication6
 {
     public partial class _Default : Page
     {
         Int32 temp = 0;
+        Int32 zipsize = 104857600;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)
@@ -31,6 +33,8 @@ namespace WebApplication6
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
             try
             {
 
@@ -41,7 +45,7 @@ namespace WebApplication6
                 com.Parameters.AddWithValue("@name", NameBox.Text);
                 com.Parameters.AddWithValue("@email", EmaiBox.Text);
                 com.Parameters.AddWithValue("@institution", InstitutionBox.Text);
-                com.Parameters.AddWithValue("@ziplocation", ZipUpload.PostedFile.ToString());
+                com.Parameters.AddWithValue("@ziplocation", FileUpload1.PostedFile.ToString());
 
                 com.ExecuteNonQuery();
                 Response.Redirect("Default.aspx");
@@ -54,6 +58,36 @@ namespace WebApplication6
             {
                 Response.Write("Error:" + ex.ToString());
             }
+        
+
+        if (FileUpload1.HasFile)
+            {
+                try
+                {
+
+                    if (FileUpload1.PostedFile.ContentType == "application/x-zip-compressed")
+                    {
+                        if (FileUpload1.PostedFile.ContentLength < zipsize) // change zip size int to have larger files.
+                        {
+                            string filename = Path.GetFileName(FileUpload1.FileName);
+                            FileUpload1.SaveAs(Server.MapPath("UploadedFiles") + filename);
+                            StatusLabel.Text = "Upload status: File uploaded!";
+                        }
+                        else
+                            StatusLabel.Text = "Upload status: File has to be less than 100mb!";
+                    }
+                    else
+                        StatusLabel.Text = "Only ZipFiles accepted!";
+                }
+                catch(Exception ex)
+                {
+                    StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
+                }
+
+
+
+            }
+
         }
     }
 }
