@@ -22,13 +22,13 @@ namespace WebApplication6 {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Img_Database control.
+        /// SqlDataBaseZip control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource Img_Database;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataBaseZip;
         
         /// <summary>
         /// GridView1 control.

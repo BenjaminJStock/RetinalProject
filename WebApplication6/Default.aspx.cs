@@ -7,7 +7,10 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.IO;
+using System.Data;
 
+//TODO - Make Zip Only, add time and date to database when uploading.
+//TODO - Change IIS settings?
 
 namespace WebApplication6
 {
@@ -38,15 +41,16 @@ namespace WebApplication6
             
         }
 
-        
+
 
         protected void Button1_Click(object sender, EventArgs e)
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
             string folder = Server.MapPath("~/files/");
-            
-        
+
+
+
 
             try
             {
@@ -59,18 +63,18 @@ namespace WebApplication6
                 com.Parameters.AddWithValue("@email", EmaiBox.Text);
                 com.Parameters.AddWithValue("@institution", InstitutionBox.Text);
                 com.Parameters.AddWithValue("@ziplocation", fileName); //chjange this to path
-                com.Parameters.AddWithValue("@TimeNDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
+                                                                       //com.Parameters.AddWithValue("@TimeNDate", lTime.Text);
 
                 com.ExecuteNonQuery();
                 //Response.Redirect("Default.aspx");
                 //Response.Write("Upload Successful");
 
 
-                
+
                 if (FileUpload1.PostedFile != null && FileUpload1.PostedFile.ContentLength > 0)
                 {
 
-                    //TODO - Make Zip Only, add time and date to database when uploading.
+                    
 
                     //string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName); 
                     //string folder = Server.MapPath("~/files/");
@@ -145,7 +149,5 @@ namespace WebApplication6
             //   }
 
         }
-
-        
     }
 }
