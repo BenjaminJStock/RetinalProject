@@ -10,8 +10,8 @@
     <form id="form1" runat="server">
     <div style="margin-left: 40px">
     
-        <asp:SqlDataSource ID="Img_Database" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Table]"></asp:SqlDataSource>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" DataKeyNames="Id" DataSourceID="Img_Database" ForeColor="Black" GridLines="Vertical" Height="197px" Width="536px">
+        <asp:SqlDataSource ID="Img_Database" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Table]" OnSelecting="Img_Database_Selecting"></asp:SqlDataSource>
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" DataKeyNames="Id" DataSourceID="Img_Database" ForeColor="Black" GridLines="Vertical" Height="197px" Width="579px">
             <AlternatingRowStyle BackColor="#CCCCCC" />
             <Columns>
                 <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id" />
@@ -19,6 +19,7 @@
                 <asp:BoundField DataField="Email_Address" HeaderText="Email_Address" SortExpression="Email_Address" />
                 <asp:BoundField DataField="Institution" HeaderText="Institution" SortExpression="Institution" />
                 <asp:BoundField DataField="ZipFileLocation" HeaderText="ZipFileLocation" SortExpression="ZipFileLocation" />
+                <asp:BoundField DataField="TimeNDate" HeaderText="TimeNDate" />
             </Columns>
             <FooterStyle BackColor="#CCCCCC" />
             <HeaderStyle BackColor="Black" Font-Bold="True" ForeColor="White" />

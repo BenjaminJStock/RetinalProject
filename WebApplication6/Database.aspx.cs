@@ -13,5 +13,10 @@ namespace WebApplication6
         {
 
         }
+
+        protected void Img_Database_Selecting(object sender, SqlDataSourceSelectingEventArgs e)
+        {
+
+        }
     }
 }

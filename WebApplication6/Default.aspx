@@ -7,7 +7,7 @@
         <p class="lead" aria-multiselectable="False" spellcheck="true">This is a website that allows you to upload a retinal image dataset zip file, then will compare the images in that zip folder to a gold standard dataset and perform an analysis algorithm onto it in order to give back medically accurate results that will show the specificity, sensivity, accuracy and kappa scores of each image.</p>
         <p><a href="http://www.asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a>
         </p>
-        <div style="height: 337px">
+        <div style="height: 426px">
             
             <table class="nav-justified">
                 <tr>
@@ -51,10 +51,16 @@
             <asp:Label ID="lblmessage" runat="server" Text="File Uploaded to Database"></asp:Label>
             <br />
             <asp:Button ID="Button1" runat="server" Text="Upload Zip File to Database" OnClick="Button1_Click" />
-            
+            &nbsp;&nbsp;
             <asp:Label runat="server" id="StatusLabel" text="Upload status: " />
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br />
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
             
         </div>
     </div>
+
+   
 
     </asp:Content>

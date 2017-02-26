@@ -8,14 +8,20 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.IO;
 
+
 namespace WebApplication6
 {
     public partial class _Default : Page
     {
         Int32 temp = 0;
+        private string time;
+
+        //= DateTime.Now.ToString("MM-dd-yyyy h:mmtt");
         //Int32 zipsize = 104857600;
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+
             if (IsPostBack)
             {
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
@@ -29,13 +35,18 @@ namespace WebApplication6
                 }
                 conn.Close();
             }
+            
         }
+
+        
 
         protected void Button1_Click(object sender, EventArgs e)
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
             string folder = Server.MapPath("~/files/");
+            
+        
 
             try
             {
@@ -48,6 +59,7 @@ namespace WebApplication6
                 com.Parameters.AddWithValue("@email", EmaiBox.Text);
                 com.Parameters.AddWithValue("@institution", InstitutionBox.Text);
                 com.Parameters.AddWithValue("@ziplocation", fileName); //chjange this to path
+                com.Parameters.AddWithValue("@TimeNDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
 
                 com.ExecuteNonQuery();
                 //Response.Redirect("Default.aspx");
@@ -58,7 +70,9 @@ namespace WebApplication6
                 if (FileUpload1.PostedFile != null && FileUpload1.PostedFile.ContentLength > 0)
                 {
 
-                    //string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
+                    //TODO - Make Zip Only, add time and date to database when uploading.
+
+                    //string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName); 
                     //string folder = Server.MapPath("~/files/");
                     Directory.CreateDirectory(folder);
                     FileUpload1.PostedFile.SaveAs(Path.Combine(folder, fileName));
@@ -131,5 +145,7 @@ namespace WebApplication6
             //   }
 
         }
+
+        
     }
 }
