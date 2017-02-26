@@ -34,6 +34,8 @@ namespace WebApplication6
         protected void Button1_Click(object sender, EventArgs e)
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
+            string folder = Server.MapPath("~/files/");
 
             try
             {
@@ -45,26 +47,48 @@ namespace WebApplication6
                 com.Parameters.AddWithValue("@name", NameBox.Text);
                 com.Parameters.AddWithValue("@email", EmaiBox.Text);
                 com.Parameters.AddWithValue("@institution", InstitutionBox.Text);
-                com.Parameters.AddWithValue("@ziplocation", FileUpload1.PostedFile.ToString());
+                com.Parameters.AddWithValue("@ziplocation", fileName); //chjange this to path
 
                 com.ExecuteNonQuery();
                 //Response.Redirect("Default.aspx");
                 //Response.Write("Upload Successful");
 
-                if (FileUpload1.HasFile)
-                {
-                    //try
-                    //{
-                        string filename = Path.GetFileName(FileUpload1.FileName);
-                        FileUpload1.SaveAs(Server.MapPath("~") + filename);
-                        StatusLabel.Text = "Upload status: File uploaded!";
 
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
-                    //}
+                
+                if (FileUpload1.PostedFile != null && FileUpload1.PostedFile.ContentLength > 0)
+                {
+
+                    //string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
+                    //string folder = Server.MapPath("~/files/");
+                    Directory.CreateDirectory(folder);
+                    FileUpload1.PostedFile.SaveAs(Path.Combine(folder, fileName));
+                    try
+                    {
+                        StatusLabel.Text = "Success,images saved";
+                        Response.Write("Uploaded: " + fileName);
+                    }
+                    catch
+                    {
+                        StatusLabel.Text = "Operation Failed!!!";
+                    }
                 }
+
+
+
+                //if (FileUpload1.HasFile)
+                //{
+                //    try
+                //    {
+                //        string filename = Path.GetFileName(FileUpload1.FileName);
+                //        FileUpload1.SaveAs(Server.MapPath("~") + filename);
+                //        StatusLabel.Text = "Upload status: File uploaded!";
+
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
+                //    }
+                //}
 
 
                 conn.Close();
