@@ -21,7 +21,7 @@ namespace WebApplication6
     {
         Int32 temp = 0;
         private string time;
-
+        
         //= DateTime.Now.ToString("MM-dd-yyyy h:mmtt");
         //Int32 zipsize = 104857600;
         protected void Page_Load(object sender, EventArgs e)
@@ -50,9 +50,10 @@ namespace WebApplication6
             string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
             string folder = Server.MapPath("~/files/");
             string extractPath = Server.MapPath("~/UnZipFiles/");
-       
+            //Array.ForEach(Directory.GetFiles("~/UnZipFiles"), File.Delete);
             try
             {
+                System.IO.Directory.Delete(extractPath,true);
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 conn.Open();
                 string insertQuery = "insert into [Table] (Full_Name, Email_Address, Institution, ZipFileLocation) values (@name, @email, @institution, @ziplocation)";
@@ -136,6 +137,11 @@ namespace WebApplication6
             //            StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
             //        }
             //   }
+
+
+
+
+
         }
     }
 }
