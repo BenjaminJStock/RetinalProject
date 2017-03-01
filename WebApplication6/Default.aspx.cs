@@ -20,10 +20,7 @@ namespace WebApplication6
     public partial class _Default : Page
     {
         Int32 temp = 0;
-        private string time;
         
-        //= DateTime.Now.ToString("MM-dd-yyyy h:mmtt");
-        //Int32 zipsize = 104857600;
         protected void Page_Load(object sender, EventArgs e)
         {
             
@@ -50,7 +47,7 @@ namespace WebApplication6
             string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
             string folder = Server.MapPath("~/files/");
             string extractPath = Server.MapPath("~/UnZipFiles/");
-            //Array.ForEach(Directory.GetFiles("~/UnZipFiles"), File.Delete);
+            
             try
             {
                 System.IO.Directory.Delete(extractPath,true);
@@ -75,7 +72,7 @@ namespace WebApplication6
                     FileUpload1.PostedFile.SaveAs(Path.Combine(folder, fileName));
                     try
                     {
-                        StatusLabel.Text = "Success,images saved";
+                        StatusLabel.Text = "Success, images saved and analysis is running";
                         Response.Write("Uploaded: " + fileName);
                     }
 
@@ -88,20 +85,7 @@ namespace WebApplication6
                         zip.ExtractAll(extractPath, ExtractExistingFileAction.DoNotOverwrite);
                     }
                 }
-                //if (FileUpload1.HasFile)
-                //{
-                //    try
-                //    {
-                //        string filename = Path.GetFileName(FileUpload1.FileName);
-                //        FileUpload1.SaveAs(Server.MapPath("~") + filename);
-                //        StatusLabel.Text = "Upload status: File uploaded!";
-
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
-                //    }
-                //}
+                
                 conn.Close();
             }
             catch (Exception ex)
@@ -109,39 +93,10 @@ namespace WebApplication6
                 Response.Write("Error:" + ex.ToString());
             }
 
-            Response.Redirect("Default.aspx");
-            Response.Write("Upload Successful");
-
-            //if (FileUpload1.HasFile)
-            //    {
-            //        try
-            //        {
-
-            //            if (FileUpload1.PostedFile.ContentType == "application/octet-stream")
-            //            {
-            //                if (FileUpload1.PostedFile.ContentLength < 104857600) // change zip size int to have larger files.
-            //                {
-            //                    string filename = Path.GetFileName(FileUpload1.FileName);
-            //                    //var filePath = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/stored"), FileUpload1.FileName + ".zip");
-            //                    FileUpload1.SaveAs(Server.MapPath("~/Uploads") + filename);
-            //                    StatusLabel.Text = "Upload status: File uploaded!";
-            //                }
-            //                else
-            //                    StatusLabel.Text = "Upload status: File has to be less than 100mb!";
-            //           }
-            //            else
-            //                StatusLabel.Text = "Only ZipFiles accepted!";
-            //        }
-            //        catch(Exception ex)
-            //        {
-            //            StatusLabel.Text = "Upload status: The file could not be uploaded. The following error occured: " + ex.Message;
-            //        }
-            //   }
-
-
-
-
+            
 
         }
+
+
     }
 }
