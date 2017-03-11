@@ -6,7 +6,7 @@
         <h1>Retinal Image</h1>
         <p class="lead" aria-multiselectable="False" spellcheck="true">This is a website that allows you to upload a retinal image dataset zip file, then will compare the images in that zip folder to a gold standard dataset and perform an analysis algorithm onto it in order to give back medically accurate results that will show the specificity, sensivity, accuracy and kappa scores of each image.</p>
         <p class="lead" aria-multiselectable="False" spellcheck="true">&nbsp;</p>
-        <p class="lead" aria-multiselectable="False" spellcheck="true">&nbsp;</p>
+        
         <div style="height: 426px">
             
             <table class="nav-justified">
@@ -48,25 +48,10 @@
                     <td>Please Upload a Zip file containing your images </td>
                 </tr>
             </table>
-            <asp:Label ID="lblmessage" runat="server" Text="File Uploaded to Database"></asp:Label>
             <br />
             <asp:Button ID="Button1" runat="server" Text="Upload Zip File to Database" OnClick="Button1_Click" />
             &nbsp;&nbsp;
-            <asp:Label runat="server" id="StatusLabel" text="Upload status: " />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <br />
-            
+            <asp:Label runat="server" id="StatusLabel" text="Upload status: " /> 
         </div>
-        <%-- below is for having a timer so the current time and date can be uploaded to the database as well but it keeps refreshing the page so i cant add stuff to the forms to add to the database.--%>
-        <%--<div>
-            <p style="height: 102px">Current Time:
-                <asp:Label ID="lTime" runat="server"></asp:Label>
-                <asp:Timer ID="Timer1" runat="server" Interval="1000" OnTick="Timer1_Tick">
-                </asp:Timer>
-            </p>
-        </div>--%>
-    </div>
-
-   
-
-    </asp:Content>
+    </div>   
+</asp:Content>

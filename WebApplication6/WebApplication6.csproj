@@ -238,6 +238,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="UploadSucc.aspx" />
+    <Content Include="Results.aspx" />
     <None Include="Properties\PublishProfiles\benjaminjstock co uk.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -465,6 +467,20 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UploadSucc.aspx.cs">
+      <DependentUpon>UploadSucc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UploadSucc.aspx.designer.cs">
+      <DependentUpon>UploadSucc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Results.aspx.cs">
+      <DependentUpon>Results.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Results.aspx.designer.cs">
+      <DependentUpon>Results.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

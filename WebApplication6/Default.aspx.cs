@@ -132,7 +132,7 @@ namespace WebApplication6
 
 
 
-            Response.Write("Upload Successful");
+            Response.Redirect("UploadSucc.aspx");
 
 
         }
