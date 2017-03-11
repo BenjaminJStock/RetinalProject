@@ -9,6 +9,13 @@ using System.Configuration;
 using System.IO;
 using System.Data;
 using Ionic.Zip;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
+using AForge;
+using AForge.Imaging;
+using AForge.Math;
+
 
 
 //TODO - Make Zip Only, add time and date to database when uploading.
@@ -20,10 +27,9 @@ namespace WebApplication6
     public partial class _Default : Page
     {
         Int32 temp = 0;
-        
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
 
             if (IsPostBack)
             {
@@ -38,7 +44,7 @@ namespace WebApplication6
                 }
                 conn.Close();
             }
-            
+
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -47,10 +53,10 @@ namespace WebApplication6
             string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
             string folder = Server.MapPath("~/files/");
             string extractPath = Server.MapPath("~/UnZipFiles/");
-            
+
             try
             {
-                System.IO.Directory.Delete(extractPath,true);
+                System.IO.Directory.Delete(extractPath, true);
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 conn.Open();
                 string insertQuery = "insert into [Table] (Full_Name, Email_Address, Institution, ZipFileLocation) values (@name, @email, @institution, @ziplocation)";
@@ -59,11 +65,10 @@ namespace WebApplication6
                 com.Parameters.AddWithValue("@email", EmaiBox.Text);
                 com.Parameters.AddWithValue("@institution", InstitutionBox.Text);
                 com.Parameters.AddWithValue("@ziplocation", fileName); //chjange this to path
-                //com.Parameters.AddWithValue("@TimeNDate", lTime.Text);
                 com.ExecuteNonQuery();
                 //Response.Redirect("Default.aspx");
                 //Response.Write("Upload Successful");
-                
+
                 if (FileUpload1.PostedFile != null && FileUpload1.PostedFile.ContentLength > 0)
                 {
                     //string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName); 
@@ -85,7 +90,7 @@ namespace WebApplication6
                         zip.ExtractAll(extractPath, ExtractExistingFileAction.DoNotOverwrite);
                     }
                 }
-                
+
                 conn.Close();
             }
             catch (Exception ex)
@@ -93,10 +98,43 @@ namespace WebApplication6
                 Response.Write("Error:" + ex.ToString());
             }
 
-            
+
+
+
+            System.Threading.Thread.Sleep(25000); //wait 5 seconds for images to be uploaded
+                                                  //read GS
+                                                  //read Im
+
+
+            //Bitmap myBmp = new Bitmap("UnZipFiles/1st_manual/01_manual1.gif");
+            //Bitmap mymask = new Bitmap("UnZipFiles/mask/01_test_mask.gif");
+
+            //Bitmap bm = new Bitmap(Server.MapPath("~/UnZipFiles/1st_manual/01_manual1.gif"));
+
+            //Bitmap UI1 = AForge.Imaging.Image.FromFile("~/UnZipFiles/1st_manual/01_manual1.gif");
+            //Bitmap Mask1 = AForge.Imaging.Image.FromFile("~/UnZipFiles/mask/01_test_mask.gif");
+
+
+
+            string mainImagePath = Server.MapPath("~/UnZipFiles/1st_manual/01_manual1.gif");
+            Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
+
+            string maskImagePath = Server.MapPath("~/UnZipFiles/mask/01_test_mask.gif");
+            Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
+
+            //gather statistics 
+            ImageStatistics stat = new ImageStatistics(mainImage);
+            ImageStatistics statmask = new ImageStatistics(MaskImage);
+
+            int UserImagePixel = statmask.PixelsCount;
+            int MaskPixel = stat.PixelsCount;
+
+
+
+
+            Response.Write("Upload Successful");
+
 
         }
-
-
     }
 }
