@@ -103,20 +103,9 @@ namespace WebApplication6
 
 
 
-            System.Threading.Thread.Sleep(25000); //wait 5 seconds for images to be uploaded
+            System.Threading.Thread.Sleep(25000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
                                                   //read GS
                                                   //read Im
-
-
-            //Bitmap myBmp = new Bitmap("UnZipFiles/1st_manual/01_manual1.gif");
-            //Bitmap mymask = new Bitmap("UnZipFiles/mask/01_test_mask.gif");
-
-            //Bitmap bm = new Bitmap(Server.MapPath("~/UnZipFiles/1st_manual/01_manual1.gif"));
-
-            //Bitmap UI1 = AForge.Imaging.Image.FromFile("~/UnZipFiles/1st_manual/01_manual1.gif");
-            //Bitmap Mask1 = AForge.Imaging.Image.FromFile("~/UnZipFiles/mask/01_test_mask.gif");
-
-
 
             string mainImagePath = Server.MapPath("~/UnZipFiles/1st_manual/01_manual1.gif");
             Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
@@ -135,12 +124,7 @@ namespace WebApplication6
             int MaskPixel = statmask.PixelsCount;
             int MaskPixelWhite = statmask.PixelsCountWithoutBlack;
 
-            //statIM.PixelsCount.ToString();
-
-
-
-
-
+            
             IMPixel.Text = UserImagePixel.ToString();
             IMPixelWhite.Text = UserImagePixelWhite.ToString();
 
