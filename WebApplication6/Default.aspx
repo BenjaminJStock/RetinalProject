@@ -7,7 +7,7 @@
         <p class="lead" aria-multiselectable="False" spellcheck="true">This is a website that allows you to upload a retinal image dataset zip file, then will compare the images in that zip folder to a gold standard dataset and perform an analysis algorithm onto it in order to give back medically accurate results that will show the specificity, sensivity, accuracy and kappa scores of each image.</p>
         <p class="lead" aria-multiselectable="False" spellcheck="true">&nbsp;</p>
         
-        <div style="height: 426px">
+        <div>
             
             <table class="nav-justified">
                 <tr>
@@ -52,6 +52,24 @@
             <asp:Button ID="Button1" runat="server" Text="Upload Zip File to Database" OnClick="Button1_Click" />
             &nbsp;&nbsp;
             <asp:Label runat="server" id="StatusLabel" text="Upload status: " /> 
+            <br /><br />
+            <asp:Label ID="Label3" runat="server" Text="Image All Pixels"></asp:Label>
+            <asp:Label ID="IMPixel" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="Label4" runat="server" Text="Image White Only - No Black "></asp:Label>
+            <asp:Label ID="IMPixelWhite" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="Label7" runat="server" Text="Total  - White = "></asp:Label>
+            <asp:Label ID="ImageTotal" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="Label5" runat="server" Text="Mask All Pixels"></asp:Label>
+            <asp:Label ID="MaskAll" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="Label6" runat="server" Text="Mask White Only"></asp:Label>
+            <asp:Label ID="MaskWhite" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="Label8" runat="server" Text="Total - White= "></asp:Label>
+            <asp:Label ID="MaskTotal" runat="server" Text="Label"></asp:Label>
         </div>
     </div>   
 </asp:Content>

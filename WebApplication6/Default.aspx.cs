@@ -27,6 +27,8 @@ namespace WebApplication6
     public partial class _Default : Page
     {
         Int32 temp = 0;
+        private int pixelsWithoutBlack;
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -123,18 +125,45 @@ namespace WebApplication6
             Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
 
             //gather statistics 
-            ImageStatistics stat = new ImageStatistics(mainImage);
+            ImageStatistics statIM = new ImageStatistics(mainImage);
             ImageStatistics statmask = new ImageStatistics(MaskImage);
 
-            int UserImagePixel = statmask.PixelsCount;
-            int MaskPixel = stat.PixelsCount;
+            int UserImagePixel = statIM.PixelsCount;
+            int UserImagePixelWhite = statIM.PixelsCountWithoutBlack;
+
+
+            int MaskPixel = statmask.PixelsCount;
+            int MaskPixelWhite = statmask.PixelsCountWithoutBlack;
+
+            //statIM.PixelsCount.ToString();
 
 
 
 
-            Response.Redirect("UploadSucc.aspx");
+
+            IMPixel.Text = UserImagePixel.ToString();
+            IMPixelWhite.Text = UserImagePixelWhite.ToString();
+
+            MaskAll.Text = MaskPixel.ToString();
+            MaskWhite.Text = MaskPixelWhite.ToString();
+
+            int MaskTotal1 = MaskPixel - MaskPixelWhite;
+            int ImageTotal1 = UserImagePixel - UserImagePixelWhite;
+
+            MaskTotal.Text = MaskTotal1.ToString();
+            ImageTotal.Text = ImageTotal1.ToString();
+            
+
+            
 
 
-        }
+
+
+
+
+        //Response.Redirect("UploadSucc.aspx");
+
+
+    }
     }
 }
