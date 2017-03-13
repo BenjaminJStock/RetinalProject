@@ -101,9 +101,10 @@ namespace WebApplication6
 
 
 
-            System.Threading.Thread.Sleep(25000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
+            System.Threading.Thread.Sleep(30000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
                                                   //read GS
                                                   //read Im
+                                                  //read mask
 
             string mainImagePath = Server.MapPath("~/UnZipFiles/1st_manual/01_manual1.gif");
             Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
@@ -150,6 +151,10 @@ namespace WebApplication6
             MaskTotal.Text = MaskTotal1.ToString();
             ImageTotal.Text = ImageTotal1.ToString();
             GSTotal.Text = GSTotal1.ToString();
+
+
+            //% = TP + FN
+            //% = TP + FP
 
 
             //TP = Im & GS;
