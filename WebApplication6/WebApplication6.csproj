@@ -485,6 +485,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="GoldStandard\" />
     <Folder Include="System\" />
     <Folder Include="Uploads\" />
   </ItemGroup>

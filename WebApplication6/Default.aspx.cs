@@ -27,8 +27,6 @@ namespace WebApplication6
     public partial class _Default : Page
     {
         Int32 temp = 0;
-        private int pixelsWithoutBlack;
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -113,41 +111,65 @@ namespace WebApplication6
             string maskImagePath = Server.MapPath("~/UnZipFiles/mask/01_test_mask.gif");
             Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
 
+
+            string GoldStandardPath = Server.MapPath("~/GoldStandard/Test/1st_manual/02_manual1.gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive
+            Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
+
             //gather statistics 
             ImageStatistics statIM = new ImageStatistics(mainImage);
             ImageStatistics statmask = new ImageStatistics(MaskImage);
+            ImageStatistics statGS = new ImageStatistics(GSImage);
 
-            int UserImagePixel = statIM.PixelsCount;
+            int IM = statIM.PixelsCount;
             int UserImagePixelWhite = statIM.PixelsCountWithoutBlack;
 
-
-            int MaskPixel = statmask.PixelsCount;
+            int Mask = statmask.PixelsCount;
             int MaskPixelWhite = statmask.PixelsCountWithoutBlack;
 
-            
-            IMPixel.Text = UserImagePixel.ToString();
+            int GS = statGS.PixelsCount;
+            int GSWhiteOnly = statGS.PixelsCountWithoutBlack;
+
+            //Below outputs the pixel counts as labels so I know it works.
+
+            //IMG
+            IMPixel.Text = IM.ToString();
             IMPixelWhite.Text = UserImagePixelWhite.ToString();
 
-            MaskAll.Text = MaskPixel.ToString();
+            //Mask
+            MaskAll.Text = Mask.ToString();
             MaskWhite.Text = MaskPixelWhite.ToString();
 
-            int MaskTotal1 = MaskPixel - MaskPixelWhite;
-            int ImageTotal1 = UserImagePixel - UserImagePixelWhite;
+            //goldStandard
+            GSAll.Text = GS.ToString();
+            GSWhiteNoBlack.Text = GSWhiteOnly.ToString();
 
+            int MaskTotal1 = Mask - MaskPixelWhite;
+            int ImageTotal1 = IM - UserImagePixelWhite;
+            int GSTotal1 = GS - GSWhiteOnly;
+            
             MaskTotal.Text = MaskTotal1.ToString();
             ImageTotal.Text = ImageTotal1.ToString();
-            
-
-            
+            GSTotal.Text = GSTotal1.ToString();
 
 
+            //TP = Im & GS;
+            //FN = ~Im & GS;
+            //TN = ~Im & ~GS;
+            //FP = Im & ~GS;
 
 
 
 
-        //Response.Redirect("UploadSucc.aspx");
 
 
-    }
+
+
+
+
+
+            //Response.Redirect("UploadSucc.aspx");
+
+
+        }
     }
 }
