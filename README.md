@@ -1,6 +1,6 @@
 # Retinal Image Analyser
 
-![N|Solid](http://www.rainbowcreativemedia.com/wp-content/themes/Rainbow_2016/images/ede299499541feb76de115e5d3399513_asp_net.png)
+![N|Solid]
 
 Retinal image analyser is a ASP.net with C# based web application that is able to analyse upload 'zip' files containing retinal scan images along with the masks used, and give results that are medically accurate.
 #### Features
