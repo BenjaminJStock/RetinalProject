@@ -42,7 +42,7 @@ Just clone or download this repository and open in Visual Studio, then click run
 Note: You may need to update visual studio for the local SQL database to work properly.
 If that doesnt work, then Download the ImageUpload SQL file and add it as 'connectionstring' in the data connection tab on the Server Explorer pane. 
 
-##License
+## License
                                   
                                   
                                   Apache License
