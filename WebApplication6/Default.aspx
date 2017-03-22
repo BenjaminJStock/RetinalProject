@@ -55,21 +55,34 @@
             <br /><br />
             <asp:Label ID="Label3" runat="server" Text="Image All Pixels"></asp:Label>
             <asp:Label ID="IMPixel" runat="server" Text="Label"></asp:Label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label14" runat="server" Text="TP:"></asp:Label>
+&nbsp;<asp:Label ID="TPLabel" runat="server" Text="Label"></asp:Label>
             <br />
             <asp:Label ID="Label4" runat="server" Text="Image White Only - No Black "></asp:Label>
             <asp:Label ID="IMPixelWhite" runat="server" Text="Label"></asp:Label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Label ID="Label15" runat="server" Text="TN:"></asp:Label>
+            <asp:Label ID="TNLabel" runat="server" Text="Label"></asp:Label>
             <br />
             <asp:Label ID="Label7" runat="server" Text="Total  - White = "></asp:Label>
             <asp:Label ID="ImageTotal" runat="server" Text="Label"></asp:Label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label16" runat="server" Text="FP:"></asp:Label>
+&nbsp;<asp:Label ID="FPLabel" runat="server" Text="Label"></asp:Label>
             <br />
             <asp:Label ID="Label5" runat="server" Text="Mask All Pixels"></asp:Label>
             <asp:Label ID="MaskAll" runat="server" Text="Label"></asp:Label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Label ID="Label17" runat="server" Text="FN:"></asp:Label>
+            <asp:Label ID="FNLabel" runat="server" Text="Label"></asp:Label>
             <br />
             <asp:Label ID="Label6" runat="server" Text="Mask White Only"></asp:Label>
             <asp:Label ID="MaskWhite" runat="server" Text="Label"></asp:Label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Label ID="Label13" runat="server" Text="Label"></asp:Label>
             <br />
             <asp:Label ID="Label8" runat="server" Text="Total - White= "></asp:Label>
             <asp:Label ID="MaskTotal" runat="server" Text="Label"></asp:Label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <br />
             <asp:Label runat="server" Text="GStandard All Pixels"></asp:Label>
             <asp:Label ID="GSAll" runat="server" Text="Label"></asp:Label>
@@ -79,6 +92,9 @@
             <br />
             <asp:Label runat="server" Text="GsTotal - White ="></asp:Label>
             <asp:Label ID="GSTotal" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="LabelResults" runat="server" Text="Results"></asp:Label>
+            <asp:Label ID="ResultsLabel" runat="server" Text="ResultsLabel"></asp:Label>
         </div>
     </div>   
 </asp:Content>

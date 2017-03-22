@@ -99,7 +99,7 @@ namespace WebApplication6
             }
 
 
-
+            //Image Algorithm
 
             System.Threading.Thread.Sleep(30000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
                                                   //read GS
@@ -115,6 +115,8 @@ namespace WebApplication6
 
             string GoldStandardPath = Server.MapPath("~/GoldStandard/Test/1st_manual/02_manual1.gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive
             Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
+
+            
 
             //gather statistics 
             ImageStatistics statIM = new ImageStatistics(mainImage);
@@ -144,37 +146,101 @@ namespace WebApplication6
             GSAll.Text = GS.ToString();
             GSWhiteNoBlack.Text = GSWhiteOnly.ToString();
 
-            int MaskTotal1 = Mask - MaskPixelWhite;
-            int ImageTotal1 = IM - UserImagePixelWhite;
-            int GSTotal1 = GS - GSWhiteOnly;
-            
-            MaskTotal.Text = MaskTotal1.ToString();
-            ImageTotal.Text = ImageTotal1.ToString();
-            GSTotal.Text = GSTotal1.ToString();
 
 
-            //% = TP + FN
-            //% = TP + FP
+            //    % TP : True Positive; Correct Foreground
+            //    % FP : False Positive; Incorrect Foreground
+            //    % TN : True Negative; Coreect Background
+            //    % FN : False Negative; Incorrect Background
+
+            int noPxlGT = GSWhiteOnly; //% = TP + FN
+
+            //    % Count pixels in the Segment map
+            int noPxlSM = UserImagePixelWhite; //% = TP + FP
+
+            int nargin = 0; //the number of parameters
+
+            //if (nargin < 3)
+            //{
+
+            //    // Working out the TP FN TN FP
+            //    int TP = UserImagePixelWhite + GSWhiteOnly;     //TP = Im & GS;
+            //    TPLabel.Text = TP.ToString();
+
+            //    int FN = GSWhiteOnly;                           //FN = ~Im & GS;
+            //    FNLabel.Text = FN.ToString();
+
+            //    int TN = 0;   //TN = ~Im & ~GS;
+            //    TNLabel.Text = TN.ToString();
+            //    //int TN;
+
+            //    int FP = UserImagePixelWhite;                   //FP = Im & ~GS;
+            //    FPLabel.Text = FP.ToString();
+            //}
+            //else
+            //{
 
 
-            //TP = Im & GS;
-            //FN = ~Im & GS;
-            //TN = ~Im & ~GS;
-            //FP = Im & ~GS;
+                //else
+                float TP = MaskPixelWhite & UserImagePixelWhite & GSWhiteOnly; //TP = mask & Im & GS;
+                float FN = MaskPixelWhite + GSWhiteOnly;                       //FN = mask & ~Im & GS;
+                int TN = MaskPixelWhite;                                     //TN = mask & ~Im & ~GS;                                    
+                int FP = MaskPixelWhite & UserImagePixelWhite;               //FP = mask & Im & ~GS;
+
+            float noTP = TP;              // noTP = sum(TP(:));    
+            float noFP = FP;              // noFP = sum(FP(:) );
+            float noTN = TN;            // noTN = sum(TN(:) );
+            float noFN = FN;              // noFN = sum(FN(:) );
+
+            float TPFP = noTP + noFP; //%positiveResponse(TP+FP)
+            float TPFN = noTP + noFN; //%positiveReference(TP+FN)
+            float FPTN = noFP + noTN; //% negativeReference(FP + TN)
+            float FNTN = noFN + noTN; //% negativeResponse(FN + TN)
+            float FPFN = noFP + noFN; //% Error(FP + FN)
+            float TPTN = noTP + noTN; //% Correct(TP + TN)
+            float Total = noTP + noTN + noFP + noFN;
+
+            float Sensitivity = noTP / TPFN;
+            float Specificity = noTN / FPTN;
+            float Precision = noTP / TPFP;
+            float JaccardCoefficient = noTP / (noTP + noFP + noFN);
+            float AndrewFailer = noFP / TPFN;
+            float Accuracy = TPTN / Total;
+            float TPRate = noTP / TPFN;
+            float FPRate = noFP / FPTN;
+
+            float referenceLikelihood = TPFN / Total;
+            float responseLikelihood = TPFP / Total;
+            //int randomAccuracy = referenceLikelihood * responseLikelihood + (1 - referenceLikelihood) * (1 - responseLikelihood);
+            //int kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy); //%(p - e) / (1 - e) 
+            float DiceCoeff = (2 * noTP) / (2 * noTP + noFP + noFN);
+
+            //    %Result = [Sensitivity Specificity Accuracy kappa];
+            //var Results1 = [noPxlGT noPxlSM noTP noFP noTN noFN FPFN Sensitivity Specificity Precision JaccardCoefficient AndrewFailer Accuracy kappa TPRate FPRate, DiceCoeff];
 
 
+            float[] Results = new float[] { GSWhiteOnly, UserImagePixelWhite, noTP, noFP, noTN, noFN, FPFN, Sensitivity, Specificity, Precision, JaccardCoefficient, AndrewFailer, Accuracy, TPRate, FPRate, DiceCoeff };
+
+            string[] ResultsString = new string[] { "GSWhiteOnly", "UserImagePixelWhite", "noTP", "noFP", "noTN", "noFN", "FPFN", "Sensitivity", "Specificity", "Precision", "JaccardCoefficient", "AndrewFailer", "Accuracy", "TPRate", "FPRate", "DiceCoeff" };
 
 
+            ResultsLabel.Text = string.Join("<br>", Results.Cast<float>());
 
+            LabelResults.Text = string.Join("<br>", ResultsString.Cast<string>());
 
+                //Making Sure the PixelCountWithoutBlack is Correct. IT IS!
 
+                ///////////////////////////////////////////
+                //int MaskTotal1 = Mask - MaskPixelWhite;
+                //int ImageTotal1 = IM - UserImagePixelWhite;
+                //int GSTotal1 = GS - GSWhiteOnly;
 
+                //MaskTotal.Text = MaskTotal1.ToString();
+                //ImageTotal.Text = ImageTotal1.ToString();
+                //GSTotal.Text = GSTotal1.ToString();
+                //////////////////////////////////////////
 
-
-
-            //Response.Redirect("UploadSucc.aspx");
-
-
+                //Response.Redirect("UploadSucc.aspx");
+            }
+            }
         }
-    }
-}
