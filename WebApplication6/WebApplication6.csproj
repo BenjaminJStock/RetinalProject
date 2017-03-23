@@ -486,6 +486,7 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="GoldStandard\" />
+    <Folder Include="Masks\" />
     <Folder Include="System\" />
     <Folder Include="Uploads\" />
   </ItemGroup>

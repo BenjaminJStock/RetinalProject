@@ -109,7 +109,7 @@ namespace WebApplication6
             string mainImagePath = Server.MapPath("~/UnZipFiles/1st_manual/01_manual1.gif");
             Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
 
-            string maskImagePath = Server.MapPath("~/UnZipFiles/mask/01_test_mask.gif");
+            string maskImagePath = Server.MapPath("~/Masks/01_test_mask.gif");
             Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
 
 
@@ -224,23 +224,35 @@ namespace WebApplication6
             string[] ResultsString = new string[] { "GSWhiteOnly", "UserImagePixelWhite", "noTP", "noFP", "noTN", "noFN", "FPFN", "Sensitivity", "Specificity", "Precision", "JaccardCoefficient", "AndrewFailer", "Accuracy", "TPRate", "FPRate", "DiceCoeff" };
 
 
-            ResultsLabel.Text = string.Join("<br>", Results.Cast<float>());
+            float[] Results0 = new float[] {Sensitivity, Specificity, Precision, Accuracy, kappa };
 
-            LabelResults.Text = string.Join("<br>", ResultsString.Cast<string>());
+            string[] ResultsString0 = new string[] {"Sensitivity", "Specificity", "Precision",  "Accuracy", "kappa"};
 
-                //Making Sure the PixelCountWithoutBlack is Correct. IT IS!
 
-                ///////////////////////////////////////////
-                //int MaskTotal1 = Mask - MaskPixelWhite;
-                //int ImageTotal1 = IM - UserImagePixelWhite;
-                //int GSTotal1 = GS - GSWhiteOnly;
 
-                //MaskTotal.Text = MaskTotal1.ToString();
-                //ImageTotal.Text = ImageTotal1.ToString();
-                //GSTotal.Text = GSTotal1.ToString();
-                //////////////////////////////////////////
+            ResultsLabel.Text = string.Join(",", Results.Cast<float>());
 
-                //Response.Redirect("UploadSucc.aspx");
-            }
+            LabelResults.Text = string.Join(",", ResultsString.Cast<string>());
+
+            ResultsLabel0.Text = string.Join(",", Results0.Cast<float>());
+
+            LabelResults0.Text = string.Join(",", ResultsString0.Cast<string>());
+
+
+
+            //Making Sure the PixelCountWithoutBlack is Correct. IT IS!
+
+            ///////////////////////////////////////////
+            //int MaskTotal1 = Mask - MaskPixelWhite;
+            //int ImageTotal1 = IM - UserImagePixelWhite;
+            //int GSTotal1 = GS - GSWhiteOnly;
+
+            //MaskTotal.Text = MaskTotal1.ToString();
+            //ImageTotal.Text = ImageTotal1.ToString();
+            //GSTotal.Text = GSTotal1.ToString();
+            //////////////////////////////////////////
+
+            //Response.Redirect("UploadSucc.aspx");
+        }
             }
         }
