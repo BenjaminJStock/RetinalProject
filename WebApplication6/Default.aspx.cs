@@ -123,28 +123,28 @@ namespace WebApplication6
             ImageStatistics statmask = new ImageStatistics(MaskImage);
             ImageStatistics statGS = new ImageStatistics(GSImage);
 
-            int IM = statIM.PixelsCount;
-            int UserImagePixelWhite = statIM.PixelsCountWithoutBlack;
+            float IM = statIM.PixelsCount;
+            float UserImagePixelWhite = statIM.PixelsCountWithoutBlack;
 
-            int Mask = statmask.PixelsCount;
-            int MaskPixelWhite = statmask.PixelsCountWithoutBlack;
+            float Mask = statmask.PixelsCount;
+            float MaskPixelWhite = statmask.PixelsCountWithoutBlack;
 
-            int GS = statGS.PixelsCount;
-            int GSWhiteOnly = statGS.PixelsCountWithoutBlack;
+            float GS = statGS.PixelsCount;
+            float GSWhiteOnly = statGS.PixelsCountWithoutBlack;
 
             //Below outputs the pixel counts as labels so I know it works.
 
             //IMG
-            IMPixel.Text = IM.ToString();
-            IMPixelWhite.Text = UserImagePixelWhite.ToString();
+            //IMPixel.Text = IM.ToString();
+            //IMPixelWhite.Text = UserImagePixelWhite.ToString();
 
             //Mask
-            MaskAll.Text = Mask.ToString();
-            MaskWhite.Text = MaskPixelWhite.ToString();
+        //MaskAll.Text = Mask.ToString();
+            //MaskWhite.Text = MaskPixelWhite.ToString();
 
             //goldStandard
-            GSAll.Text = GS.ToString();
-            GSWhiteNoBlack.Text = GSWhiteOnly.ToString();
+            //GSAll.Text = GS.ToString();
+           // GSWhiteNoBlack.Text = GSWhiteOnly.ToString();
 
 
 
@@ -153,12 +153,12 @@ namespace WebApplication6
             //    % TN : True Negative; Coreect Background
             //    % FN : False Negative; Incorrect Background
 
-            int noPxlGT = GSWhiteOnly; //% = TP + FN
+            float noPxlGT = GSWhiteOnly; //% = TP + FN
 
             //    % Count pixels in the Segment map
-            int noPxlSM = UserImagePixelWhite; //% = TP + FP
+            float noPxlSM = UserImagePixelWhite; //% = TP + FP
 
-            int nargin = 0; //the number of parameters
+            float nargin = 0; //the number of parameters
 
             //if (nargin < 3)
             //{
@@ -182,10 +182,10 @@ namespace WebApplication6
 
 
                 //else
-                float TP = MaskPixelWhite & UserImagePixelWhite & GSWhiteOnly; //TP = mask & Im & GS;
+                float TP = MaskPixelWhite + UserImagePixelWhite + GSWhiteOnly; //TP = mask & Im & GS;
                 float FN = MaskPixelWhite + GSWhiteOnly;                       //FN = mask & ~Im & GS;
-                int TN = MaskPixelWhite;                                     //TN = mask & ~Im & ~GS;                                    
-                int FP = MaskPixelWhite & UserImagePixelWhite;               //FP = mask & Im & ~GS;
+                float TN = MaskPixelWhite;                                     //TN = mask & ~Im & ~GS;                                    
+                float FP = MaskPixelWhite + UserImagePixelWhite;               //FP = mask & Im & ~GS;
 
             float noTP = TP;              // noTP = sum(TP(:));    
             float noFP = FP;              // noFP = sum(FP(:) );
@@ -211,8 +211,8 @@ namespace WebApplication6
 
             float referenceLikelihood = TPFN / Total;
             float responseLikelihood = TPFP / Total;
-            //int randomAccuracy = referenceLikelihood * responseLikelihood + (1 - referenceLikelihood) * (1 - responseLikelihood);
-            //int kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy); //%(p - e) / (1 - e) 
+            float randomAccuracy = referenceLikelihood * responseLikelihood + (1 - referenceLikelihood) * (1 - responseLikelihood);
+            float kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy); //%(p - e) / (1 - e) 
             float DiceCoeff = (2 * noTP) / (2 * noTP + noFP + noFN);
 
             //    %Result = [Sensitivity Specificity Accuracy kappa];
