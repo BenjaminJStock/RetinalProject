@@ -488,6 +488,7 @@
     <Folder Include="GoldStandard\" />
     <Folder Include="Masks\" />
     <Folder Include="System\" />
+    <Folder Include="UnZipFiles\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <PropertyGroup>

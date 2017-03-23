@@ -113,7 +113,7 @@ namespace WebApplication6
             Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
 
 
-            string GoldStandardPath = Server.MapPath("~/GoldStandard/Test/1st_manual/02_manual1.gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive
+            string GoldStandardPath = Server.MapPath("~/GoldStandard/Test/1st_manual/01_manual1.gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive
             Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
 
             
