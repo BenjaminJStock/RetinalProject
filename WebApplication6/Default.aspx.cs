@@ -106,6 +106,16 @@ namespace WebApplication6
                                                   //read Im
                                                   //read mask
 
+
+            //Deletes the _manual1 prefix, files are left with 01,02,03 - Easy for looping
+            DirectoryInfo d = new DirectoryInfo(Server.MapPath("~/UnZipFiles/1st_manual"));
+            FileInfo[] infos = d.GetFiles();
+            foreach (FileInfo f in infos)
+            {
+                File.Move(f.FullName, f.FullName.ToString().Replace("_manual1", ""));
+            }
+
+
             string mainImagePath = Server.MapPath("~/UnZipFiles/1st_manual/01_manual1.gif");
             Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
 
@@ -116,7 +126,7 @@ namespace WebApplication6
             string GoldStandardPath = Server.MapPath("~/GoldStandard/Test/1st_manual/01_manual1.gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive
             Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
 
-            
+
 
             //gather statistics 
             ImageStatistics statIM = new ImageStatistics(mainImage);
@@ -139,12 +149,12 @@ namespace WebApplication6
             //IMPixelWhite.Text = UserImagePixelWhite.ToString();
 
             //Mask
-        //MaskAll.Text = Mask.ToString();
+            //MaskAll.Text = Mask.ToString();
             //MaskWhite.Text = MaskPixelWhite.ToString();
 
             //goldStandard
             //GSAll.Text = GS.ToString();
-           // GSWhiteNoBlack.Text = GSWhiteOnly.ToString();
+            // GSWhiteNoBlack.Text = GSWhiteOnly.ToString();
 
 
 
@@ -181,11 +191,11 @@ namespace WebApplication6
             //{
 
 
-                //else
-                float TP = MaskPixelWhite + UserImagePixelWhite + GSWhiteOnly; //TP = mask & Im & GS;
-                float FN = MaskPixelWhite + GSWhiteOnly;                       //FN = mask & ~Im & GS;
-                float TN = MaskPixelWhite;                                     //TN = mask & ~Im & ~GS;                                    
-                float FP = MaskPixelWhite + UserImagePixelWhite;               //FP = mask & Im & ~GS;
+            //else
+            float TP = MaskPixelWhite + UserImagePixelWhite + GSWhiteOnly; //TP = mask & Im & GS;
+            float FN = MaskPixelWhite + GSWhiteOnly;                       //FN = mask & ~Im & GS;
+            float TN = MaskPixelWhite;                                     //TN = mask & ~Im & ~GS;                                    
+            float FP = MaskPixelWhite + UserImagePixelWhite;               //FP = mask & Im & ~GS;
 
             float noTP = TP;              // noTP = sum(TP(:));    
             float noFP = FP;              // noFP = sum(FP(:) );
@@ -224,9 +234,9 @@ namespace WebApplication6
             string[] ResultsString = new string[] { "GSWhiteOnly", "UserImagePixelWhite", "noTP", "noFP", "noTN", "noFN", "FPFN", "Sensitivity", "Specificity", "Precision", "JaccardCoefficient", "AndrewFailer", "Accuracy", "TPRate", "FPRate", "DiceCoeff" };
 
 
-            float[] Results0 = new float[] {Sensitivity, Specificity, Precision, Accuracy, kappa };
+            float[] Results0 = new float[] { Sensitivity, Specificity, Precision, Accuracy, kappa };
 
-            string[] ResultsString0 = new string[] {"Sensitivity", "Specificity", "Precision",  "Accuracy", "kappa"};
+            string[] ResultsString0 = new string[] { "Sensitivity", "Specificity", "Precision", "Accuracy", "kappa" };
 
 
 
@@ -254,5 +264,36 @@ namespace WebApplication6
 
             //Response.Redirect("UploadSucc.aspx");
         }
-            }
-        }
+        //public class Rename
+        //{
+        //    public static void Main(string[] args)
+        //    {
+        //        // Rename all files in the C:\Temp\ directory.
+        //        Rename.RenameFiles(new DirectoryInfo(@"C:\Temp\"));
+        //        Rename.RenameFiles(new DirectoryInfo(HttpContext.Server.MapPath)
+
+        //    }
+
+        //    public static void RenameFiles(DirectoryInfo path)
+        //    {
+        //        // Does the path exist?
+        //        if (path.Exists)
+        //        {
+        //            // Get all files in the directory.
+        //            FileInfo[] files = path.GetFiles("*.jpg");
+        //            foreach (FileInfo file in files)
+        //            {
+        //                // Split the filename
+        //                string[] parts = file.Name.Split('_');
+        //                // Concatinate the second and fourth part.
+        //                string newFilename = string.Concat(parts[1], "_", parts[3]);
+        //                // Combine the original path with the new filename.
+        //                string newPath = Path.Combine(path.FullName, newFilename);
+        //                // Move the file.
+        //                File.Move(file.FullName, newPath);
+        //            }
+        //        }
+        //    }
+        //}
+    }
+}
