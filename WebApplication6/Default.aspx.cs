@@ -18,8 +18,8 @@ using AForge.Math;
 
 
 
-//TODO - Make Zip Only, add time and date to database when uploading.
-//TODO - Change IIS settings?
+//TODO - add time and date to database when uploading.
+
 //TODO - requires dot net zip to run.
 
 namespace WebApplication6
@@ -116,14 +116,19 @@ namespace WebApplication6
             }
 
 
-            string mainImagePath = Server.MapPath("~/UnZipFiles/1st_manual/01_manual1.gif");
+            //TODO - change path files to 01,02,03 in a loop?
+
+
+
+            // + 01 + .gif  - Doesnt work for 01 - 09, it doesnt read the 0
+            string mainImagePath = Server.MapPath("~/UnZipFiles/1st_manual/" + 10 + ".gif");
             Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
 
             string maskImagePath = Server.MapPath("~/Masks/01_test_mask.gif");
             Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
 
 
-            string GoldStandardPath = Server.MapPath("~/GoldStandard/Test/1st_manual/01_manual1.gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive
+            string GoldStandardPath = Server.MapPath("~/GoldStandard/1st_manualGS/01_manual1.gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive
             Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
 
 
@@ -264,36 +269,6 @@ namespace WebApplication6
 
             //Response.Redirect("UploadSucc.aspx");
         }
-        //public class Rename
-        //{
-        //    public static void Main(string[] args)
-        //    {
-        //        // Rename all files in the C:\Temp\ directory.
-        //        Rename.RenameFiles(new DirectoryInfo(@"C:\Temp\"));
-        //        Rename.RenameFiles(new DirectoryInfo(HttpContext.Server.MapPath)
-
-        //    }
-
-        //    public static void RenameFiles(DirectoryInfo path)
-        //    {
-        //        // Does the path exist?
-        //        if (path.Exists)
-        //        {
-        //            // Get all files in the directory.
-        //            FileInfo[] files = path.GetFiles("*.jpg");
-        //            foreach (FileInfo file in files)
-        //            {
-        //                // Split the filename
-        //                string[] parts = file.Name.Split('_');
-        //                // Concatinate the second and fourth part.
-        //                string newFilename = string.Concat(parts[1], "_", parts[3]);
-        //                // Combine the original path with the new filename.
-        //                string newPath = Path.Combine(path.FullName, newFilename);
-        //                // Move the file.
-        //                File.Move(file.FullName, newPath);
-        //            }
-        //        }
-        //    }
-        //}
+        
     }
 }
