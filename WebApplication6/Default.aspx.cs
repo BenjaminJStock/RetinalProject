@@ -121,7 +121,7 @@ namespace WebApplication6
 
 
             // + 01 + .gif  - Doesnt work for 01 - 09, it doesnt read the 0
-            string mainImagePath = Server.MapPath("~/UnZipFiles/1st_manual/" + 10 + ".gif");
+            string mainImagePath = Server.MapPath("~/UnZipFiles/1st_manual/" + 12 + ".gif");
             Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
 
             string maskImagePath = Server.MapPath("~/Masks/01_test_mask.gif");

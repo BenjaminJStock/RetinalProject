@@ -1,0 +1,7 @@
+image 10
+Sensitivity,Specificity,Precision,Accuracy,kappa 
+0.5253894,0.4714694,0.5276429,0.5,-0.003140386
+
+image 11
+Sensitivity,Specificity,Precision,Accuracy,kappa 
+0.5274948,0.4691204,0.5273977,0.5,-0.003384803
