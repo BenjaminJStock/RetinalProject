@@ -62,6 +62,8 @@
             <asp:Label ID="LabelResults0" runat="server" Text="Label"></asp:Label>
             <br />
             <asp:Label ID="ResultsLabel0" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
         </div>
     </div>   
 </asp:Content>

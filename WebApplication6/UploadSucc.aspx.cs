@@ -11,7 +11,9 @@ namespace WebApplication6
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Threading.Thread.Sleep(15000); //wait 15 seconds the go to upload succ
 
+            Response.Redirect("UploadSucc.aspx");
         }
     }
 }

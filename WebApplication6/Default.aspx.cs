@@ -245,14 +245,19 @@ namespace WebApplication6
 
 
 
-            ResultsLabel.Text = string.Join(",", Results.Cast<float>());
+            ResultsLabel.Text = string.Join(", ", Results.Cast<float>());
 
-            LabelResults.Text = string.Join(",", ResultsString.Cast<string>());
+            LabelResults.Text = string.Join(", ", ResultsString.Cast<string>());
 
-            ResultsLabel0.Text = string.Join(",", Results0.Cast<float>());
+            ResultsLabel0.Text = string.Join(", ", Results0.Cast<float>());
 
-            LabelResults0.Text = string.Join(",", ResultsString0.Cast<string>());
+            LabelResults0.Text = string.Join(", ", ResultsString0.Cast<string>());
 
+            string ResultName = LabelResults0.Text;
+            Session["ResultsName"] = ResultName;
+
+            string ResultScore = ResultsLabel0.Text;
+            Session["ResultsScore"] = ResultScore;
 
 
             //Making Sure the PixelCountWithoutBlack is Correct. IT IS!
