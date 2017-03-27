@@ -101,27 +101,36 @@ namespace WebApplication6
 
             //Image Algorithm
 
-            System.Threading.Thread.Sleep(30000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
+            System.Threading.Thread.Sleep(10000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
                                                   //read GS
                                                   //read Im
                                                   //read mask
 
 
             //Deletes the _manual1 prefix, files are left with 01,02,03 - Easy for looping
-            DirectoryInfo d = new DirectoryInfo(Server.MapPath("~/UnZipFiles/1st_manual"));
-            FileInfo[] infos = d.GetFiles();
-            foreach (FileInfo f in infos)
+            //DirectoryInfo d = new DirectoryInfo(Server.MapPath("~/UnZipFiles/1st_manual"));
+            //FileInfo[] infos = d.GetFiles();
+            //foreach (FileInfo f in infos)
+            //{
+            //    File.Move(f.FullName, f.FullName.ToString().Replace("_manual1", ""));
+            //}
+
+            string Folderpath = Server.MapPath("~/UnZipFiles/");
+            string[] files = Directory.GetFiles(Folderpath);
+            int i = 0;
+            foreach (string file in files)
             {
-                File.Move(f.FullName, f.FullName.ToString().Replace("_manual1", ""));
+                string path = file.Substring(0, file.LastIndexOf('\\'));
+                File.Move(file, path + "\\image" + i + ".gif");
+                i++;
             }
 
 
-            //TODO - change path files to 01,02,03 in a loop?
 
+            
+            int imageNumber = 0; // after each image is renamed, I need it to loop
 
-
-            // + 01 + .gif  - Doesnt work for 01 - 09, it doesnt read the 0
-            string mainImagePath = Server.MapPath("~/UnZipFiles/1st_manual/" + 12 + ".gif");
+            string mainImagePath = Server.MapPath("~/UnZipFiles/image" + imageNumber + ".gif");
             Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
 
             string maskImagePath = Server.MapPath("~/Masks/01_test_mask.gif");
@@ -130,8 +139,6 @@ namespace WebApplication6
 
             string GoldStandardPath = Server.MapPath("~/GoldStandard/1st_manualGS/01_manual1.gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive
             Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
-
-
 
             //gather statistics 
             ImageStatistics statIM = new ImageStatistics(mainImage);
@@ -276,4 +283,5 @@ namespace WebApplication6
         }
         
     }
+
 }
