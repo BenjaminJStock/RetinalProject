@@ -13,7 +13,7 @@ namespace WebApplication6
         {
             System.Threading.Thread.Sleep(15000); //wait 15 seconds the go to upload succ
 
-            Response.Redirect("UploadSucc.aspx");
+            Response.Redirect("Results.aspx");
         }
     }
 }

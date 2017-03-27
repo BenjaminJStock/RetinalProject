@@ -279,7 +279,21 @@ namespace WebApplication6
             //GSTotal.Text = GSTotal1.ToString();
             //////////////////////////////////////////
 
-            //Response.Redirect("UploadSucc.aspx");
+
+
+            //foreach (Result info in Results)
+            //{
+            //    var mycommand = new SqlCommand("INSERT INTO RSS2 VALUES(@Date, @Templow, @Temphigh)", myConnection);
+            //    mycommand.Parameters.AddWithValue("@Date", info.Date);
+            //    mycommand.Parameters.AddWithValue("@Templow", info.TempLow);
+            //    mycommand.Parameters.AddWithValue("@Temphigh", info.TempHigh);
+            //    mycommand.ExecuteNonQuery();
+            //}
+
+
+            System.Threading.Thread.Sleep(10000);
+
+            Response.Redirect("UploadSucc.aspx");
         }
         
     }
