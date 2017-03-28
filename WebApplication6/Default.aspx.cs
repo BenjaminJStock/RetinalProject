@@ -147,28 +147,15 @@ namespace WebApplication6
 
             float IM = statIM.PixelsCount;
             float UserImagePixelWhite = statIM.PixelsCountWithoutBlack;
+            float UserImageAllPixels = statIM.PixelsCount;
 
             float Mask = statmask.PixelsCount;
             float MaskPixelWhite = statmask.PixelsCountWithoutBlack;
+            float MaskAllPixels = statmask.PixelsCount;
 
             float GS = statGS.PixelsCount;
             float GSWhiteOnly = statGS.PixelsCountWithoutBlack;
-
-            //Below outputs the pixel counts as labels so I know it works.
-
-            //IMG
-            //IMPixel.Text = IM.ToString();
-            //IMPixelWhite.Text = UserImagePixelWhite.ToString();
-
-            //Mask
-            //MaskAll.Text = Mask.ToString();
-            //MaskWhite.Text = MaskPixelWhite.ToString();
-
-            //goldStandard
-            //GSAll.Text = GS.ToString();
-            // GSWhiteNoBlack.Text = GSWhiteOnly.ToString();
-
-
+            float GSAllPixels = statGS.PixelsCount;
 
             //    % TP : True Positive; Correct Foreground
             //    % FP : False Positive; Incorrect Foreground
@@ -177,41 +164,20 @@ namespace WebApplication6
 
             float noPxlGT = GSWhiteOnly; //% = TP + FN
 
+            float notIM = UserImageAllPixels - UserImagePixelWhite; //Leaves with black pixels of image
+            float notGS = GSAllPixels - GSWhiteOnly; //Leaves with black pixels of image
+
             //    % Count pixels in the Segment map
             float noPxlSM = UserImagePixelWhite; //% = TP + FP
 
-            float nargin = 0; //the number of parameters
-
-            //if (nargin < 3)
-            //{
-
-            //    // Working out the TP FN TN FP
-            //    int TP = UserImagePixelWhite + GSWhiteOnly;     //TP = Im & GS;
-            //    TPLabel.Text = TP.ToString();
-
-            //    int FN = GSWhiteOnly;                           //FN = ~Im & GS;
-            //    FNLabel.Text = FN.ToString();
-
-            //    int TN = 0;   //TN = ~Im & ~GS;
-            //    TNLabel.Text = TN.ToString();
-            //    //int TN;
-
-            //    int FP = UserImagePixelWhite;                   //FP = Im & ~GS;
-            //    FPLabel.Text = FP.ToString();
-            //}
-            //else
-            //{
-
-
-            //else
             float TP = MaskPixelWhite + UserImagePixelWhite + GSWhiteOnly; //TP = mask & Im & GS;
-            float FN = MaskPixelWhite + GSWhiteOnly;                       //FN = mask & ~Im & GS;
-            float TN = MaskPixelWhite;                                     //TN = mask & ~Im & ~GS;                                    
+            float FN = MaskPixelWhite + notIM +GSWhiteOnly;                //FN = mask & ~Im & GS;
+            float TN = MaskPixelWhite + notIM + notGS;                     //TN = mask & ~Im & ~GS;                                    
             float FP = MaskPixelWhite + UserImagePixelWhite;               //FP = mask & Im & ~GS;
 
             float noTP = TP;              // noTP = sum(TP(:));    
             float noFP = FP;              // noFP = sum(FP(:) );
-            float noTN = TN;            // noTN = sum(TN(:) );
+            float noTN = TN;              // noTN = sum(TN(:) );
             float noFN = FN;              // noFN = sum(FN(:) );
 
             float TPFP = noTP + noFP; //%positiveResponse(TP+FP)
