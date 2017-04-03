@@ -52,7 +52,30 @@
             <asp:Button ID="Button1" runat="server" Text="Upload Zip File to Database" OnClick="Button1_Click" />
             &nbsp;&nbsp;
             <asp:Label runat="server" id="StatusLabel" text="Upload status: " /> 
-            <br /><br />
+            <br />
+            <asp:Label ID="Label1" runat="server" Text="Count of Total Pixels IM GS MASK"></asp:Label>
+            <asp:Label ID="IMLABEL" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="GSLABEL" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="MASKLABEL" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="Label2" runat="server" Text="WhitePixelCount"></asp:Label>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Label ID="WHITEIM" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="WHITEGS" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="WHITEMASK" runat="server" Text="Label"></asp:Label>
+            <br />
+            <asp:Label ID="Label3" runat="server" Text="BLACKPIXELCOUNT"></asp:Label>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Label ID="IMBLACK" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="GSBLACK" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="MaskBlack" runat="server" Text="Label"></asp:Label>
+            <br />
+            <br />
+            <br />
+            <br />
+            <asp:Label ID="intlabel" runat="server" Text="Label"></asp:Label>
+            <br />
+            <br />
             <asp:Label ID="LabelResults" runat="server" Text="Label"></asp:Label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <br />
