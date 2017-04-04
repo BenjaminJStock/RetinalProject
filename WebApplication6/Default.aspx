@@ -53,29 +53,23 @@
             &nbsp;&nbsp;
             <asp:Label runat="server" id="StatusLabel" text="Upload status: " /> 
             <br />
-            <asp:Label ID="Label1" runat="server" Text="Count of Total Pixels IM GS MASK"></asp:Label>
-            <asp:Label ID="IMLABEL" runat="server" Text="Label"></asp:Label>
-            <asp:Label ID="GSLABEL" runat="server" Text="Label"></asp:Label>
-            <asp:Label ID="MASKLABEL" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="Label1" runat="server" Text="height"></asp:Label>
+            <asp:Label ID="heightlabel" runat="server" Text="Label"></asp:Label>
             <br />
-            <asp:Label ID="Label2" runat="server" Text="WhitePixelCount"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Label ID="WHITEIM" runat="server" Text="Label"></asp:Label>
-            <asp:Label ID="WHITEGS" runat="server" Text="Label"></asp:Label>
-            <asp:Label ID="WHITEMASK" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="Label3" runat="server" Text="width"></asp:Label>
+            <asp:Label ID="widthlabel" runat="server" Text="Label"></asp:Label>
             <br />
-            <asp:Label ID="Label3" runat="server" Text="BLACKPIXELCOUNT"></asp:Label>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Label ID="IMBLACK" runat="server" Text="Label"></asp:Label>
-            <asp:Label ID="GSBLACK" runat="server" Text="Label"></asp:Label>
-            <asp:Label ID="MaskBlack" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="Label4" runat="server" Text="tp"></asp:Label>
+            &nbsp;<asp:Label ID="LabelTP" runat="server" Text="Label"></asp:Label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label6" runat="server" Text="tn"></asp:Label>
+            &nbsp;&nbsp;<asp:Label ID="LabelTN" runat="server" Text="LabelTN"></asp:Label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label8" runat="server" Text="fp"></asp:Label>
+            &nbsp;&nbsp;&nbsp;<asp:Label ID="LabelFP" runat="server" Text="Label"></asp:Label>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Label ID="Label10" runat="server" Text="FN"></asp:Label>
+            <asp:Label ID="LabelFN" runat="server" Text="Label"></asp:Label>
             <br />
-            <br />
-            <br />
-            <br />
-            <asp:Label ID="intlabel" runat="server" Text="Label"></asp:Label>
-            <br />
-            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
             <asp:Label ID="LabelResults" runat="server" Text="Label"></asp:Label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <br />
