@@ -152,7 +152,7 @@ namespace WebApplication6
                 string maskImagePath = Server.MapPath("~/Masks/01_test_mask.gif");
                 Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
 
-                string GoldStandardPath = Server.MapPath("~/GoldStandard/1st_manualGS/image" + imageNumber + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
+                string GoldStandardPath = Server.MapPath("~/GoldStandard/1st_manualGS/image" + 10 + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
                 Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
             
 
@@ -183,29 +183,31 @@ namespace WebApplication6
 
 
 
-            for (int i = 0; i < columnCount;)
+            for (int y = 0; y < mainImage.Height; y++)
             {
-                for (int j = 0; j < rowCount;)
+                for (int x = 0; x < mainImage.Width; x++)
                 {
-                    Color gspixel = GSImage.GetPixel(i, j);
-                    Color imagepixel = mainImage.GetPixel(i, j);
+                    Color gspixel = GSImage.GetPixel(x, y);
+                    Color imagepixel = mainImage.GetPixel(x, y);
+                    Color White = Color.FromArgb(255,255,255);
+                    Color Black = Color.FromArgb(0, 0, 0);
 
                     //var gsColor = gspixel.ToKnownColor();
-                   // var imColor = imagepixel.ToKnownColor();
+                    // var imColor = imagepixel.ToKnownColor();
 
-                    if (gspixel == Color.White && imagepixel == Color.White)
+                    if (gspixel == White && imagepixel == White)
                     {
                         TP1++;
                     }
-                    if (gspixel == Color.White && imagepixel == Color.Black)
+                    else if (gspixel == White && imagepixel == Black)
                     {
                         FN1++;
                     }
-                    if (gspixel == Color.Black && imagepixel == Color.White)
+                    else if (gspixel == Black && imagepixel == White)
                     {
                         FP1++;
                     }
-                    if (gspixel == Color.Black && imagepixel == Color.Black)
+                    else if (gspixel == Black && imagepixel == Black)
                     {
                         TN1++;
                     }
@@ -217,151 +219,121 @@ namespace WebApplication6
 
 
 
-            LabelFN.Text = FN1.ToString();
+                    LabelFN.Text = FN1.ToString();
                     LabelTP.Text = TP1.ToString();
                     LabelFP.Text = FP1.ToString();
                     LabelTN.Text = TN1.ToString();
 
 
-                    //float IMALL = statIM.PixelsCount;
-                    //float IMBLACK1 = statIM.PixelsCountWithoutBlack;
-                    //float IMWHITE = IMALL - IMBLACK1;
-
-                    //float GSALL = statGS.PixelsCount;
-                    //float GSBLACK1 = statGS.PixelsCountWithoutBlack;
-                    //float GSWHITE = GSALL - GSBLACK1;
-
-                    //float MASKALL = statmask.PixelsCount;
-                    //float MASKBLACK1 = statmask.PixelsCountWithoutBlack;
-                    //float MASKWHITE = MASKALL - MASKBLACK1;
-
-                    ////IMBLACK.Text = IMWHITE.ToString();
-                    ////GSBLACK.Text = GSWHITE.ToString();
-                    ////MaskBlack.Text = MASKWHITE.ToString();
-
-
-                    //float IM = statIM.PixelsCount;
-                    //float UserImagePixelWhite = statIM.PixelsCountWithoutBlack;
-                    //float UserImageAllPixels = statIM.PixelsCount;
-
-                    //float Mask = statmask.PixelsCount;
-                    //float MaskPixelWhite = statmask.PixelsCountWithoutBlack;
-                    //float MaskAllPixels = statmask.PixelsCount;
-
-                    //float GS = statGS.PixelsCount;
-                    //float GSWhiteOnly = statGS.PixelsCountWithoutBlack;
-                    //float GSAllPixels = statGS.PixelsCount;
+                    
 
                     ////    % TP : True Positive; Correct Foreground
                     ////    % FP : False Positive; Incorrect Foreground
                     ////    % TN : True Negative; Coreect Background
                     ////    % FN : False Negative; Incorrect Background
 
-                    //float noPxlGT = GSWhiteOnly; //% = TP + FN
-
-                    //float notIM = UserImageAllPixels - UserImagePixelWhite; //Leaves with black pixels of image
-                    //float notGS = GSAllPixels - GSWhiteOnly; //Leaves with black pixels of image
+                    float noPxlGT = TN1 + FN1; //% = TP + FN
 
                     ////    % Count pixels in the Segment map
-                    //float noPxlSM = UserImagePixelWhite; //% = TP + FP
+                    float noPxlSM = TP1 + FP1; //% = TP + FP
 
-                    //float TP = MaskPixelWhite + UserImagePixelWhite + GSWhiteOnly; //TP = mask & Im & GS;
-                    //float FN = MaskPixelWhite - notIM + GSWhiteOnly;                //FN = mask & ~Im & GS;
-                    //float TN = MaskPixelWhite - notIM - notGS;                     //TN = mask & ~Im & ~GS;                                    
-                    //float FP = MaskPixelWhite + UserImagePixelWhite - notGS;               //FP = mask & Im & ~GS;
+            float TP = TP1; //TP = mask & Im & GS;
+            float FN = FN1;//FN = mask & ~Im & GS;
+            float TN = TN1;                     //TN = mask & ~Im & ~GS;                                    
+            float FP = FP1;               //FP = mask & Im & ~GS;
 
-                    //float noTP = TP;              // noTP = sum(TP(:));    
-                    //float noFP = FP;              // noFP = sum(FP(:) );
-                    //float noTN = TN;              // noTN = sum(TN(:) );
-                    //float noFN = FN;              // noFN = sum(FN(:) );
+            float noTP = TP;              // noTP = sum(TP(:));    
+            float noFP = FP;              // noFP = sum(FP(:) );
+            float noTN = TN;              // noTN = sum(TN(:) );
+            float noFN = FN;              // noFN = sum(FN(:) );
 
-                    //float TPFP = noTP + noFP; //%positiveResponse(TP+FP)
-                    //float TPFN = noTP + noFN; //%positiveReference(TP+FN)
-                    //float FPTN = noFP + noTN; //% negativeReference(FP + TN)
-                    //float FNTN = noFN + noTN; //% negativeResponse(FN + TN)
-                    //float FPFN = noFP + noFN; //% Error(FP + FN)
-                    //float TPTN = noTP + noTN; //% Correct(TP + TN)
-                    //float Total = noTP + noTN + noFP + noFN;
+            float TPFP = noTP + noFP; //%positiveResponse(TP+FP)
+            float TPFN = noTP + noFN; //%positiveReference(TP+FN)
+            float FPTN = noFP + noTN; //% negativeReference(FP + TN)
+            float FNTN = noFN + noTN; //% negativeResponse(FN + TN)
+            float FPFN = noFP + noFN; //% Error(FP + FN)
+            float TPTN = noTP + noTN; //% Correct(TP + TN)
+            float Total = noTP + noTN + noFP + noFN;
 
-                    //float Sensitivity = noTP / TPFN;
-                    //float Specificity = noTN / FPTN;
-                    //float Precision = noTP / TPFP;
-                    //float JaccardCoefficient = noTP / (noTP + noFP + noFN);
-                    //float AndrewFailer = noFP / TPFN;
-                    //float Accuracy = TPTN / Total;
-                    //float TPRate = noTP / TPFN;
-                    //float FPRate = noFP / FPTN;
+            float Sensitivity = noTP / TPFN;
+            float Specificity = noTN / FPTN;
+            float Precision = noTP / TPFP;
+            float JaccardCoefficient = noTP / (noTP + noFP + noFN);
+            float AndrewFailer = noFP / TPFN;
+            float Accuracy = TPTN / Total;
+            float TPRate = noTP / TPFN;
+            float FPRate = noFP / FPTN;
 
-                    //float referenceLikelihood = TPFN / Total;
-                    //float responseLikelihood = TPFP / Total;
-                    //float randomAccuracy = referenceLikelihood * responseLikelihood + (1 - referenceLikelihood) * (1 - responseLikelihood);
-                    //float kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy); //%(p - e) / (1 - e) 
-                    //float DiceCoeff = (2 * noTP) / (2 * noTP + noFP + noFN);
+            float referenceLikelihood = TPFN / Total;
+            float responseLikelihood = TPFP / Total;
+            float randomAccuracy = referenceLikelihood * responseLikelihood + (1 - referenceLikelihood) * (1 - responseLikelihood);
+            float kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy); //%(p - e) / (1 - e) 
+            float DiceCoeff = (2 * noTP) / (2 * noTP + noFP + noFN);
 
-                    //    %Result = [Sensitivity Specificity Accuracy kappa];
-                    //var Results1 = [noPxlGT noPxlSM noTP noFP noTN noFN FPFN Sensitivity Specificity Precision JaccardCoefficient AndrewFailer Accuracy kappa TPRate FPRate, DiceCoeff];
-
-
-                    //float[] Results = new float[] { GSWhiteOnly, UserImagePixelWhite, noTP, noFP, noTN, noFN, FPFN, Sensitivity, Specificity, Precision, JaccardCoefficient, AndrewFailer, Accuracy, TPRate, FPRate, DiceCoeff };
-
-                    //string[] ResultsString = new string[] { "GSWhiteOnly", "UserImagePixelWhite", "noTP", "noFP", "noTN", "noFN", "FPFN", "Sensitivity", "Specificity", "Precision", "JaccardCoefficient", "AndrewFailer", "Accuracy", "TPRate", "FPRate", "DiceCoeff" };
+            //    %Result = [Sensitivity Specificity Accuracy kappa];
+            //var Results1 = [noPxlGT noPxlSM noTP noFP noTN noFN FPFN Sensitivity Specificity Precision JaccardCoefficient AndrewFailer Accuracy kappa TPRate FPRate, DiceCoeff];
 
 
-                    //float[] Results0 = new float[] { Sensitivity, Specificity, Precision, Accuracy, kappa };
-
-                    //string[] ResultsString0 = new string[] { "Sensitivity", "Specificity", "Precision", "Accuracy", "kappa" };
-
-
-
-                    //ResultsLabel.Text = string.Join(", ", Results.Cast<float>());
-
-                    //LabelResults.Text = string.Join(", ", ResultsString.Cast<string>());
-
-                    //ResultsLabel0.Text = string.Join(", ", Results0.Cast<float>());
-
-                    //LabelResults0.Text = string.Join(", ", ResultsString0.Cast<string>());
-
-                    //string ResultName = LabelResults0.Text;
-                    //Session["ResultsName"] = ResultName;
-
-                    //string ResultScore = ResultsLabel0.Text;
-                    //Session["ResultsScore"] = ResultScore;
+            float[] Results = new float[] {noTP, noFP, noTN, noFN, FPFN, Sensitivity, Specificity, Precision, JaccardCoefficient, AndrewFailer, Accuracy, TPRate, FPRate, DiceCoeff };
+            
+            string[] ResultsString = new string[] {"noTP", "noFP", "noTN", "noFN", "FPFN", "Sensitivity", "Specificity", "Precision", "JaccardCoefficient", "AndrewFailer", "Accuracy", "TPRate", "FPRate", "DiceCoeff" };
 
 
-                    //Making Sure the PixelCountWithoutBlack is Correct. IT IS!
+            float[] Results0 = new float[] { Sensitivity, Specificity, Precision, Accuracy, kappa };
 
-                    ///////////////////////////////////////////
-                    //int MaskTotal1 = Mask - MaskPixelWhite;
-                    //int ImageTotal1 = IM - UserImagePixelWhite;
-                    //int GSTotal1 = GS - GSWhiteOnly;
-
-                    //MaskTotal.Text = MaskTotal1.ToString();
-                    //ImageTotal.Text = ImageTotal1.ToString();
-                    //GSTotal.Text = GSTotal1.ToString();
-                    //////////////////////////////////////////
+            string[] ResultsString0 = new string[] { "Sensitivity", "Specificity", "Precision", "Accuracy", "kappa" };
 
 
 
-                    //foreach (Result info in Results)
-                    //{
-                    //    var mycommand = new SqlCommand("INSERT INTO RSS2 VALUES(@Date, @Templow, @Temphigh)", myConnection);
-                    //    mycommand.Parameters.AddWithValue("@Date", info.Date);
-                    //    mycommand.Parameters.AddWithValue("@Templow", info.TempLow);
-                    //    mycommand.Parameters.AddWithValue("@Temphigh", info.TempHigh);
-                    //    mycommand.ExecuteNonQuery();
-                    //}
+            ResultsLabel.Text = string.Join(", ", Results.Cast<float>());
+
+            LabelResults.Text = string.Join(", ", ResultsString.Cast<string>());
+
+            ResultsLabel0.Text = string.Join(", ", Results0.Cast<float>());
+
+            LabelResults0.Text = string.Join(", ", ResultsString0.Cast<string>());
+
+            //string ResultName = LabelResults0.Text;
+            //Session["ResultsName"] = ResultName;
+
+            //string ResultScore = ResultsLabel0.Text;
+            //Session["ResultsScore"] = ResultScore;
+
+
+            //Making Sure the PixelCountWithoutBlack is Correct. IT IS!
+
+            ///////////////////////////////////////////
+            //int MaskTotal1 = Mask - MaskPixelWhite;
+            //int ImageTotal1 = IM - UserImagePixelWhite;
+            //int GSTotal1 = GS - GSWhiteOnly;
+
+            //MaskTotal.Text = MaskTotal1.ToString();
+            //ImageTotal.Text = ImageTotal1.ToString();
+            //GSTotal.Text = GSTotal1.ToString();
+            //////////////////////////////////////////
 
 
 
-                   // loopcount++;
-                //}
+            //foreach (Result info in Results)
+            //{
+            //    var mycommand = new SqlCommand("INSERT INTO RSS2 VALUES(@Date, @Templow, @Temphigh)", myConnection);
+            //    mycommand.Parameters.AddWithValue("@Date", info.Date);
+            //    mycommand.Parameters.AddWithValue("@Templow", info.TempLow);
+            //    mycommand.Parameters.AddWithValue("@Temphigh", info.TempHigh);
+            //    mycommand.ExecuteNonQuery();
+            //}
 
-                //System.Threading.Thread.Sleep(10000);
 
-                //Response.Redirect("UploadSucc.aspx");
-            }
 
+            // loopcount++;
+            //}
+
+            //System.Threading.Thread.Sleep(10000);
+
+            //Response.Redirect("UploadSucc.aspx");
         }
+
+    }
     }
 
         
