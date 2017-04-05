@@ -103,24 +103,13 @@ namespace WebApplication6
             {
                 Response.Write("Error:" + ex.ToString());
             }
-
-
-            //Image Algorithm
-
+          
             System.Threading.Thread.Sleep(10000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
                                                   //read GS
                                                   //read Im
                                                   //read mask
 
-
-            //Deletes the _manual1 prefix, files are left with 01,02,03 - Easy for looping
-            //DirectoryInfo d = new DirectoryInfo(Server.MapPath("~/UnZipFiles/1st_manual"));
-            //FileInfo[] infos = d.GetFiles();
-            //foreach (FileInfo f in infos)
-            //{
-            //    File.Move(f.FullName, f.FullName.ToString().Replace("_manual1", ""));
-            //}
-
+            
             string Folderpath = Server.MapPath("~/UnZipFiles/");
             string[] files = Directory.GetFiles(Folderpath);
             int p = 0;
@@ -136,11 +125,11 @@ namespace WebApplication6
 
             int imageNumber = 0; // after each image is renamed, I need it to loop
 
-            //intlabel.Text = count.ToString();
+           
 
             int loopcount = 0;
 
-            //looplabel.Text = loopcount.ToString();
+            
 
 
             //while (loopcount <= 20)
@@ -154,15 +143,7 @@ namespace WebApplication6
 
                 string GoldStandardPath = Server.MapPath("~/GoldStandard/1st_manualGS/image" + 10 + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
                 Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
-            
 
-                //IMLABEL.Text = statIM.PixelsCount.ToString();
-                //GSLABEL.Text = statGS.PixelsCount.ToString();
-                //MASKLABEL.Text = statmask.PixelsCount.ToString();
-
-                //WHITEIM.Text = statIM.PixelsCountWithoutBlack.ToString();
-                //WHITEGS.Text = statGS.PixelsCountWithoutBlack.ToString();
-                //WHITEMASK.Text = statmask.PixelsCountWithoutBlack.ToString();
                 
                 int TP1 = 0;
                 int FP1 = 0;
@@ -178,8 +159,6 @@ namespace WebApplication6
                 heightlabel.Text = columnCount.ToString();
                 widthlabel.Text = rowCount.ToString();
 
-            //imagepixel = mainImage.GetPixel(i, j);
-            //gspixel = GSImage.GetPixel(i, j);
 
 
 
