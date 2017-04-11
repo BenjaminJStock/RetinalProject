@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.IO;
 using System.Data;
 using Ionic.Zip;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
-using AForge;
-using AForge.Imaging;
-using AForge.Math;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 
 
@@ -29,8 +23,13 @@ namespace WebApplication6
     public partial class _Default : Page
     {
         Int32 temp = 0;
-        Color imagepixel;
-        Color gspixel;
+        List<float> SensitivityList = new List<float>();
+        List<float> SpecificityList = new List<float>();
+        List<float> PrecisionList = new List<float>();
+        List<float> AccuracyList = new List<float>();
+        List<float> kappaList = new List<float>();
+        List<int> ImageNumber = new List<int>();
+
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -103,13 +102,13 @@ namespace WebApplication6
             {
                 Response.Write("Error:" + ex.ToString());
             }
-          
+
             System.Threading.Thread.Sleep(10000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
                                                   //read GS
                                                   //read Im
                                                   //read mask
 
-            
+
             string Folderpath = Server.MapPath("~/UnZipFiles/");
             string[] files = Directory.GetFiles(Folderpath);
             int p = 0;
@@ -125,26 +124,26 @@ namespace WebApplication6
 
             int imageNumber = 0; // after each image is renamed, I need it to loop
 
-           
+
 
             int loopcount = 0;
 
-            
 
 
-            //while (loopcount <= 20)
-            //{
 
-                string mainImagePath = Server.MapPath("~/UnZipFiles/image" + 0 + ".gif");
+            while (loopcount <= 19)
+            {
+
+                string mainImagePath = Server.MapPath("~/UnZipFiles/image" + imageNumber + ".gif");
                 Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
 
                 string maskImagePath = Server.MapPath("~/Masks/01_test_mask.gif");
                 Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
 
-                string GoldStandardPath = Server.MapPath("~/GoldStandard/1st_manualGS/image" + 10 + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
+                string GoldStandardPath = Server.MapPath("~/GoldStandard/1st_manualGS/image" + 0 + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
                 Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
 
-                
+
                 int TP1 = 0;
                 int FP1 = 0;
                 int TN1 = 0;
@@ -162,157 +161,174 @@ namespace WebApplication6
 
 
 
-            for (int y = 0; y < mainImage.Height; y++)
-            {
-                for (int x = 0; x < mainImage.Width; x++)
+                for (int y = 0; y < mainImage.Height; y++)
                 {
-                    Color gspixel = GSImage.GetPixel(x, y);
-                    Color imagepixel = mainImage.GetPixel(x, y);
-                    Color White = Color.FromArgb(255,255,255);
-                    Color Black = Color.FromArgb(0, 0, 0);
+                    for (int x = 0; x < mainImage.Width; x++)
+                    {
+                        Color gspixel = GSImage.GetPixel(x, y);
+                        Color imagepixel = mainImage.GetPixel(x, y);
+                        Color White = Color.FromArgb(255, 255, 255);
+                        Color Black = Color.FromArgb(0, 0, 0);
 
-                    //var gsColor = gspixel.ToKnownColor();
-                    // var imColor = imagepixel.ToKnownColor();
+                        //var gsColor = gspixel.ToKnownColor();
+                        // var imColor = imagepixel.ToKnownColor();
 
-                    if (gspixel == White && imagepixel == White)
-                    {
-                        TP1++;
-                    }
-                    else if (gspixel == White && imagepixel == Black)
-                    {
-                        FN1++;
-                    }
-                    else if (gspixel == Black && imagepixel == White)
-                    {
-                        FP1++;
-                    }
-                    else if (gspixel == Black && imagepixel == Black)
-                    {
-                        TN1++;
+                        if (gspixel == White && imagepixel == White)
+                        {
+                            TP1++;
+                        }
+                        else if (gspixel == White && imagepixel == Black)
+                        {
+                            FN1++;
+                        }
+                        else if (gspixel == Black && imagepixel == White)
+                        {
+                            FP1++;
+                        }
+                        else if (gspixel == Black && imagepixel == Black)
+                        {
+                            TN1++;
+                        }
                     }
                 }
+
+
+
+
+
+
+                LabelFN.Text = FN1.ToString();
+                LabelTP.Text = TP1.ToString();
+                LabelFP.Text = FP1.ToString();
+                LabelTN.Text = TN1.ToString();
+
+
+
+
+                ////    % TP : True Positive; Correct Foreground
+                ////    % FP : False Positive; Incorrect Foreground
+                ////    % TN : True Negative; Coreect Background
+                ////    % FN : False Negative; Incorrect Background
+
+                float noPxlGT = TN1 + FN1; //% = TP + FN
+
+                ////    % Count pixels in the Segment map
+                float noPxlSM = TP1 + FP1; //% = TP + FP
+
+                float TP = TP1; //TP = mask & Im & GS;
+                float FN = FN1;//FN = mask & ~Im & GS;
+                float TN = TN1;                     //TN = mask & ~Im & ~GS;                                    
+                float FP = FP1;               //FP = mask & Im & ~GS;
+
+                float noTP = TP;              // noTP = sum(TP(:));    
+                float noFP = FP;              // noFP = sum(FP(:) );
+                float noTN = TN;              // noTN = sum(TN(:) );
+                float noFN = FN;              // noFN = sum(FN(:) );
+
+                float TPFP = noTP + noFP; //%positiveResponse(TP+FP)
+                float TPFN = noTP + noFN; //%positiveReference(TP+FN)
+                float FPTN = noFP + noTN; //% negativeReference(FP + TN)
+                float FNTN = noFN + noTN; //% negativeResponse(FN + TN)
+                float FPFN = noFP + noFN; //% Error(FP + FN)
+                float TPTN = noTP + noTN; //% Correct(TP + TN)
+                float Total = noTP + noTN + noFP + noFN;
+
+                float Sensitivity = noTP / TPFN;
+                float Specificity = noTN / FPTN;
+                float Precision = noTP / TPFP;
+                float JaccardCoefficient = noTP / (noTP + noFP + noFN);
+                float AndrewFailer = noFP / TPFN;
+                float Accuracy = TPTN / Total;
+                float TPRate = noTP / TPFN;
+                float FPRate = noFP / FPTN;
+
+                float referenceLikelihood = TPFN / Total;
+                float responseLikelihood = TPFP / Total;
+                float randomAccuracy = referenceLikelihood * responseLikelihood + (1 - referenceLikelihood) * (1 - responseLikelihood);
+                float kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy); //%(p - e) / (1 - e) 
+                float DiceCoeff = (2 * noTP) / (2 * noTP + noFP + noFN);
+
+                //    %Result = [Sensitivity Specificity Accuracy kappa];
+                //var Results1 = [noPxlGT noPxlSM noTP noFP noTN noFN FPFN Sensitivity Specificity Precision JaccardCoefficient AndrewFailer Accuracy kappa TPRate FPRate, DiceCoeff];
+
+
+                float[] Results = new float[] { noTP, noFP, noTN, noFN, FPFN, Sensitivity, Specificity, Precision, JaccardCoefficient, AndrewFailer, Accuracy, TPRate, FPRate, DiceCoeff };
+
+                string[] ResultsString = new string[] { "noTP", "noFP", "noTN", "noFN", "FPFN", "Sensitivity", "Specificity", "Precision", "JaccardCoefficient", "AndrewFailer", "Accuracy", "TPRate", "FPRate", "DiceCoeff" };
+
+
+                float[] Results0 = new float[] { Sensitivity, Specificity, Precision, Accuracy, kappa };
+
+                string[] ResultsString0 = new string[] { "Sensitivity", "Specificity", "Precision", "Accuracy", "kappa" };
+
+
+
+                ResultsLabel.Text = string.Join(", ", Results.Cast<float>());
+
+                LabelResults.Text = string.Join(", ", ResultsString.Cast<string>());
+
+                ResultsLabel0.Text = string.Join(", ", Results0.Cast<float>());
+
+                LabelResults0.Text = string.Join(", ", ResultsString0.Cast<string>());
+
+                //string ResultName = LabelResults0.Text;
+                //Session["ResultsName"] = ResultName;
+
+                //string ResultScore = ResultsLabel0.Text;
+                //Session["ResultsScore"] = ResultScore;
+
+
+               
+                
+                SensitivityList.Add(Sensitivity);
+                SpecificityList.Add(Specificity);
+                PrecisionList.Add(Precision);
+                AccuracyList.Add(Accuracy);
+                kappaList.Add(kappa);
+                ImageNumber.Add(imageNumber);
+
+
+                loopcount++;
+                imageNumber++;
             }
 
-
-
-
-
-
-                    LabelFN.Text = FN1.ToString();
-                    LabelTP.Text = TP1.ToString();
-                    LabelFP.Text = FP1.ToString();
-                    LabelTN.Text = TN1.ToString();
-
-
-                    
-
-                    ////    % TP : True Positive; Correct Foreground
-                    ////    % FP : False Positive; Incorrect Foreground
-                    ////    % TN : True Negative; Coreect Background
-                    ////    % FN : False Negative; Incorrect Background
-
-                    float noPxlGT = TN1 + FN1; //% = TP + FN
-
-                    ////    % Count pixels in the Segment map
-                    float noPxlSM = TP1 + FP1; //% = TP + FP
-
-            float TP = TP1; //TP = mask & Im & GS;
-            float FN = FN1;//FN = mask & ~Im & GS;
-            float TN = TN1;                     //TN = mask & ~Im & ~GS;                                    
-            float FP = FP1;               //FP = mask & Im & ~GS;
-
-            float noTP = TP;              // noTP = sum(TP(:));    
-            float noFP = FP;              // noFP = sum(FP(:) );
-            float noTN = TN;              // noTN = sum(TN(:) );
-            float noFN = FN;              // noFN = sum(FN(:) );
-
-            float TPFP = noTP + noFP; //%positiveResponse(TP+FP)
-            float TPFN = noTP + noFN; //%positiveReference(TP+FN)
-            float FPTN = noFP + noTN; //% negativeReference(FP + TN)
-            float FNTN = noFN + noTN; //% negativeResponse(FN + TN)
-            float FPFN = noFP + noFN; //% Error(FP + FN)
-            float TPTN = noTP + noTN; //% Correct(TP + TN)
-            float Total = noTP + noTN + noFP + noFN;
-
-            float Sensitivity = noTP / TPFN;
-            float Specificity = noTN / FPTN;
-            float Precision = noTP / TPFP;
-            float JaccardCoefficient = noTP / (noTP + noFP + noFN);
-            float AndrewFailer = noFP / TPFN;
-            float Accuracy = TPTN / Total;
-            float TPRate = noTP / TPFN;
-            float FPRate = noFP / FPTN;
-
-            float referenceLikelihood = TPFN / Total;
-            float responseLikelihood = TPFP / Total;
-            float randomAccuracy = referenceLikelihood * responseLikelihood + (1 - referenceLikelihood) * (1 - responseLikelihood);
-            float kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy); //%(p - e) / (1 - e) 
-            float DiceCoeff = (2 * noTP) / (2 * noTP + noFP + noFN);
-
-            //    %Result = [Sensitivity Specificity Accuracy kappa];
-            //var Results1 = [noPxlGT noPxlSM noTP noFP noTN noFN FPFN Sensitivity Specificity Precision JaccardCoefficient AndrewFailer Accuracy kappa TPRate FPRate, DiceCoeff];
-
-
-            float[] Results = new float[] {noTP, noFP, noTN, noFN, FPFN, Sensitivity, Specificity, Precision, JaccardCoefficient, AndrewFailer, Accuracy, TPRate, FPRate, DiceCoeff };
-            
-            string[] ResultsString = new string[] {"noTP", "noFP", "noTN", "noFN", "FPFN", "Sensitivity", "Specificity", "Precision", "JaccardCoefficient", "AndrewFailer", "Accuracy", "TPRate", "FPRate", "DiceCoeff" };
-
-
-            float[] Results0 = new float[] { Sensitivity, Specificity, Precision, Accuracy, kappa };
-
-            string[] ResultsString0 = new string[] { "Sensitivity", "Specificity", "Precision", "Accuracy", "kappa" };
-
-
-
-            ResultsLabel.Text = string.Join(", ", Results.Cast<float>());
-
-            LabelResults.Text = string.Join(", ", ResultsString.Cast<string>());
-
-            ResultsLabel0.Text = string.Join(", ", Results0.Cast<float>());
-
-            LabelResults0.Text = string.Join(", ", ResultsString0.Cast<string>());
-
-            //string ResultName = LabelResults0.Text;
-            //Session["ResultsName"] = ResultName;
-
-            //string ResultScore = ResultsLabel0.Text;
-            //Session["ResultsScore"] = ResultScore;
-
-
-            //Making Sure the PixelCountWithoutBlack is Correct. IT IS!
-
-            ///////////////////////////////////////////
-            //int MaskTotal1 = Mask - MaskPixelWhite;
-            //int ImageTotal1 = IM - UserImagePixelWhite;
-            //int GSTotal1 = GS - GSWhiteOnly;
-
-            //MaskTotal.Text = MaskTotal1.ToString();
-            //ImageTotal.Text = ImageTotal1.ToString();
-            //GSTotal.Text = GSTotal1.ToString();
-            //////////////////////////////////////////
-
-
-
-            //foreach (Result info in Results)
+            //foreach (var title in AccuracyList)
             //{
-            //    var mycommand = new SqlCommand("INSERT INTO RSS2 VALUES(@Date, @Templow, @Temphigh)", myConnection);
-            //    mycommand.Parameters.AddWithValue("@Date", info.Date);
-            //    mycommand.Parameters.AddWithValue("@Templow", info.TempLow);
-            //    mycommand.Parameters.AddWithValue("@Temphigh", info.TempHigh);
-            //    mycommand.ExecuteNonQuery();
+            //    Label11.Text += title + "<br />"; /*it just shows the last 'title' in 'titles', I want it to start at the first, and go to the next title every time the event occurs (frontPageToolStripMenuItem_Click)*/
             //}
 
 
 
-            // loopcount++;
-            //}
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ImageNumber", typeof(int));
+            dt.Columns.Add("Sensitivity", typeof(float));
+            dt.Columns.Add("Specificity", typeof(float));
+            dt.Columns.Add("Precision", typeof(float));
+            dt.Columns.Add("Accuracy", typeof(float));
+            dt.Columns.Add("kappa", typeof(float));
+
+            for (int i = 0; i < SensitivityList.Count; i++)
+            {
+                dt.Rows.Add(ImageNumber[i],SensitivityList[i], SpecificityList[i], PrecisionList[i], AccuracyList[i], kappaList[i]); 
+
+            }
+
+           
+
+            GridView1.DataSource = dt;
+            GridView1.DataBind();
+            
+
+            
+           
 
             //System.Threading.Thread.Sleep(10000);
 
             //Response.Redirect("UploadSucc.aspx");
         }
+    }
+}
 
-    }
-    }
 
         
