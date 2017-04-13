@@ -43,10 +43,11 @@
                 <tr>
                     <td style="width: 315px; font-size: medium">Zip File:</td>
                     <td style="width: 405px">
-                        <asp:FileUpload ID="FileUpload1" runat="server"  Width="357px" />
+                        <asp:FileUpload ID="FileUpload1" runat="server" accept=".zip" Width="357px" />
                     </td>
                     <td style="font-size: large">Please Upload a Zip file containing your images </td>
                 </tr>
+
                 <tr>
                     <td style="width: 315px; font-size: medium">Zip File:</td>
                     <td style="width: 405px">
@@ -63,16 +64,17 @@
             &nbsp;&nbsp;
             <br />
             <br />
-            <asp:GridView ID="GridView1" runat="server" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" ForeColor="Black" GridLines="Vertical">
-                <AlternatingRowStyle BackColor="#CCCCCC" />
-                <FooterStyle BackColor="#CCCCCC" />
-                <HeaderStyle BackColor="Black" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#999999" ForeColor="Black" HorizontalAlign="Center" />
-                <SelectedRowStyle BackColor="#000099" Font-Bold="True" ForeColor="White" />
-                <SortedAscendingCellStyle BackColor="#F1F1F1" />
-                <SortedAscendingHeaderStyle BackColor="#808080" />
-                <SortedDescendingCellStyle BackColor="#CAC9C9" />
-                <SortedDescendingHeaderStyle BackColor="#383838" />
+            <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" Width="701px">
+                <AlternatingRowStyle BackColor="White" />
+                <FooterStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#FFCC66" ForeColor="#333333" HorizontalAlign="Center" />
+                <RowStyle BackColor="#FFFBD6" ForeColor="#333333" />
+                <SelectedRowStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="Navy" />
+                <SortedAscendingCellStyle BackColor="#FDF5AC" />
+                <SortedAscendingHeaderStyle BackColor="#4D0000" />
+                <SortedDescendingCellStyle BackColor="#FCF6C0" />
+                <SortedDescendingHeaderStyle BackColor="#820000" />
             </asp:GridView>
             <br />
             The bottom row of the above table will show the average score for the total images uploaded.<br />
