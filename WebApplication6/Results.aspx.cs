@@ -13,6 +13,10 @@ namespace WebApplication6
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            DataTable tb = new DataTable();
+            Session["ss"] = tb;
+
             //if (!this.IsPostBack)
             //{
             //    DataTable dt = new DataTable();
@@ -24,13 +28,13 @@ namespace WebApplication6
             //                new DataColumn("Precision", typeof(float)),
             //                new DataColumn("Accuracy", typeof(float)),
             //                new DataColumn("kappa",typeof(float)) });
-                           
+
             //    dt.Rows.Add(1, "John Hammond", "United States");
             //    dt.Rows.Add(2, "Mudassar Khan", "India");
             //    dt.Rows.Add(3, "Suzanne Mathews", "France");
             //    dt.Rows.Add(4, "Robert Schidner", "Russia");
             //    GridView1.DataSource = dt;
             //    GridView1.DataBind();
-            }
+        }
         }
     }
