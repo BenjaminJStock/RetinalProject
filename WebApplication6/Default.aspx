@@ -64,16 +64,16 @@
             &nbsp;&nbsp;
             <br />
             <br />
-            <asp:GridView ID="GridView1" runat="server" CellPadding="3" GridLines="None" Width="701px" BackColor="White" BorderColor="White" BorderStyle="Ridge" BorderWidth="2px" CellSpacing="1">
-                <FooterStyle BackColor="#C6C3C6" ForeColor="Black" />
-                <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#E7E7FF" />
-                <PagerStyle BackColor="#C6C3C6" ForeColor="Black" HorizontalAlign="Right" />
-                <RowStyle BackColor="#DEDFDE" ForeColor="Black" />
-                <SelectedRowStyle BackColor="#9471DE" Font-Bold="True" ForeColor="White" />
+            <asp:GridView ID="GridView1" runat="server" CellPadding="3" GridLines="Vertical" Width="801px" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" Caption="Results Table - Please note the last row is the average results for all images" CaptionAlign="Top" ForeColor="Black">
+                <AlternatingRowStyle BackColor="#CCCCCC" />
+                <FooterStyle BackColor="#CCCCCC" />
+                <HeaderStyle BackColor="Black" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#999999" ForeColor="Black" HorizontalAlign="Center" />
+                <SelectedRowStyle BackColor="#000099" Font-Bold="True" ForeColor="White" />
                 <SortedAscendingCellStyle BackColor="#F1F1F1" />
-                <SortedAscendingHeaderStyle BackColor="#594B9C" />
+                <SortedAscendingHeaderStyle BackColor="#808080" />
                 <SortedDescendingCellStyle BackColor="#CAC9C9" />
-                <SortedDescendingHeaderStyle BackColor="#33276A" />
+                <SortedDescendingHeaderStyle BackColor="#383838" />
             </asp:GridView>
             <br />
             The bottom row of the above table will show the average score for the total images uploaded.<br />

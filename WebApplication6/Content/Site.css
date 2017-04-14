@@ -32,6 +32,31 @@ input[type="select"] {
     background-color:white;
 }
 
+
+
+/*table tbody tr td td td 
+{
+    padding-left:158px;
+}*/
+
+#gvOrders
+{
+    fill: greenyellow;
+}
+
+#MainContent_gvCustomers_gvOrders_0 {
+    font-size :small;
+
+}
+
+
+
+
+table #MainContent_gvCustomers.Grid  + tbody +tr +td +div {
+
+    padding-left :158px;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {

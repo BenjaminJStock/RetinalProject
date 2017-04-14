@@ -21,6 +21,8 @@ namespace WebApplication6
     public partial class _Default : Page
     {
         Int32 temp = 0;
+
+
         List<float> SensitivityList = new List<float>();
         List<float> SpecificityList = new List<float>();
         List<float> PrecisionList = new List<float>();
@@ -33,9 +35,17 @@ namespace WebApplication6
             if (IsPostBack)
             {
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+
                 conn.Open();
+                SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                conn1.Open();
                 string checkuser = "select count(*) from [Table] where Full_Name ='" + NameBox.Text + "' ";
+                string checkuser1 = "select count(*) from [ResultsDatabase] where Full_Name ='" + NameBox.Text + "' ";
+
+
                 SqlCommand com = new SqlCommand(checkuser, conn);
+                SqlCommand com1 = new SqlCommand(checkuser1, conn);
+
                 temp = Convert.ToInt32(com.ExecuteScalar().ToString());
                 if (temp == 1)
                 {
@@ -108,8 +118,11 @@ namespace WebApplication6
 
 
 
+
             while (loopcount <= files.Length - 1)
             {
+
+
 
                 string mainImagePath = Server.MapPath("~/UnZipFiles/image" + imageNumber + ".gif");
                 Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
@@ -117,12 +130,12 @@ namespace WebApplication6
                 string maskImagePath = Server.MapPath("~/Masks/01_test_mask.gif");
                 Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
 
-              
+
 
                 //if (DropDownList1.SelectedItem.Text == "Drive" )
-               // {
-                    string GoldStandardPath = Server.MapPath("~/GoldStandard/Drive/image" + 0 + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
-                    Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
+                // {
+                string GoldStandardPath = Server.MapPath("~/GoldStandard/Drive/image" + 0 + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
+                Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
                 //}
                 //else if (DropDownList1.SelectedItem.Text == "Stare")
                 //{
@@ -130,15 +143,15 @@ namespace WebApplication6
                 //    Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
 
                 //}
-                
+
                 int TP1 = 0;
                 int FP1 = 0;
                 int TN1 = 0;
                 int FN1 = 0;
 
-               
 
-                
+
+
                 for (int y = 0; y < mainImage.Height; y++)
                 {
                     for (int x = 0; x < mainImage.Width; x++)
@@ -208,18 +221,18 @@ namespace WebApplication6
                 float referenceLikelihood = TPFN / Total;
                 float responseLikelihood = TPFP / Total;
                 float randomAccuracy = referenceLikelihood * responseLikelihood + (1 - referenceLikelihood) * (1 - responseLikelihood);
-                float kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy); 
+                float kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy);
                 float DiceCoeff = (2 * noTP) / (2 * noTP + noFP + noFN);
 
                 //    %Result = [Sensitivity Specificity Accuracy kappa];
                 //var Results1 = [noPxlGT noPxlSM noTP noFP noTN noFN FPFN Sensitivity Specificity Precision JaccardCoefficient AndrewFailer Accuracy kappa TPRate FPRate, DiceCoeff];
 
 
-                
 
-                float[] Results = new float[] { noTP, noFP, noTN, noFN, FPFN, Sensitivity, Specificity, Precision, JaccardCoefficient, AndrewFailer, Accuracy, kappa,TPRate, FPRate, DiceCoeff };
 
-                string[] ResultsString = new string[] { "noTP", "noFP", "noTN", "noFN", "FPFN", "Sensitivity", "Specificity", "Precision", "JaccardCoefficient", "AndrewFailer", "Accuracy","Kappa", "TPRate", "FPRate", "DiceCoeff" };
+                float[] Results = new float[] { noTP, noFP, noTN, noFN, FPFN, Sensitivity, Specificity, Precision, JaccardCoefficient, AndrewFailer, Accuracy, kappa, TPRate, FPRate, DiceCoeff };
+
+                string[] ResultsString = new string[] { "noTP", "noFP", "noTN", "noFN", "FPFN", "Sensitivity", "Specificity", "Precision", "JaccardCoefficient", "AndrewFailer", "Accuracy", "Kappa", "TPRate", "FPRate", "DiceCoeff" };
 
 
                 float[] Results0 = new float[] { Sensitivity, Specificity, Precision, Accuracy, kappa };
@@ -238,16 +251,16 @@ namespace WebApplication6
 
                 imageNumber++;
 
-                SensitivityAvg = + SensitivityAvg + Sensitivity;
-                SpecificityAvg = + SpecificityAvg + Specificity;
-                PrecisionAvg = + PrecisionAvg + Precision;
-                AccuracyAvg = + AccuracyAvg + Accuracy;
-                kappaAvg = + kappaAvg + kappa;
+                SensitivityAvg = +SensitivityAvg + Sensitivity;
+                SpecificityAvg = +SpecificityAvg + Specificity;
+                PrecisionAvg = +PrecisionAvg + Precision;
+                AccuracyAvg = +AccuracyAvg + Accuracy;
+                kappaAvg = +kappaAvg + kappa;
 
             }
 
             float RowAdd = imageNumber;
-           float MeanAvg = imageNumber; //used as divide by 20 for mean, as it starts on 0
+            float MeanAvg = imageNumber; //used as divide by 20 for mean, as it starts on 0
 
             float SensitivityMean = 0;
             float SpecificityMean = 0;
@@ -262,8 +275,7 @@ namespace WebApplication6
             kappaMean = kappaAvg / MeanAvg;
 
 
-
-
+           
 
             //foreach (var title in AccuracyList)
             //{
@@ -280,7 +292,12 @@ namespace WebApplication6
             dt.Columns.Add("Accuracy", typeof(float));
             dt.Columns.Add("kappa", typeof(float));
 
-
+            ImageNumber.Add(imageNumber);
+            SensitivityList.Add(SensitivityMean);
+            SpecificityList.Add(SpecificityMean);
+            PrecisionList.Add(PrecisionMean);
+            AccuracyList.Add(AccuracyMean);
+            kappaList.Add(kappaMean);
 
             for (int i = 0; i < SensitivityList.Count; i++)
             {
@@ -288,19 +305,73 @@ namespace WebApplication6
 
             }
 
+            
 
-            dt.Rows.Add(0000 , SensitivityMean, SpecificityMean, PrecisionMean, AccuracyMean, kappaMean);
+
+
+            //dt.Rows.Add(0000 , SensitivityMean, SpecificityMean, PrecisionMean, AccuracyMean, kappaMean);
             int rowcount = dt.Rows.Count - 1;
             dt.Rows[rowcount][0] = DBNull.Value;
             GridView1.DataSource = dt;
-            GridView1.DataBind();
+            GridView1.DataBind();   
+            int countsql = 0;
+            //try
+            //{
+
+            //    SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            //    conn1.Open();
+            //    string insertQueryResults = "insert into [ResultsDataBase] (Name, ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values (@name, @imgnum, @sens, @spec, @prec, @acc, @kapp)";
+            //    SqlCommand com1 = new SqlCommand(insertQueryResults, conn1);
+            //    com1.Parameters.AddWithValue("@name", NameBox.Text);
+            //    com1.Parameters.AddWithValue("@imgnum", imageNumber);
+            //    com1.Parameters.AddWithValue("@sens", SensitivityMean);
+            //    com1.Parameters.AddWithValue("@spec", SpecificityMean);
+            //    com1.Parameters.AddWithValue("@prec", PrecisionMean);
+            //    com1.Parameters.AddWithValue("@acc", AccuracyMean);
+            //    com1.Parameters.AddWithValue("@kapp", kappaMean);
+            //    com1.ExecuteNonQuery();
+                
+
+            //    conn1.Close();
+            //}
+            //catch (Exception ex)
+            //{
+            //    Response.Write("Error:" + ex.ToString());
+            //}
+            
+
+            try
+            {
+
+                 while (countsql < imageNumber)
+                {
+                    SqlConnection conn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                    conn2.Open();
+                    string insertQueryResults = "insert into [AllResults] ( ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values ( @imgnum1, @sens1, @spec1, @prec1, @acc1, @kapp1)";
+                    SqlCommand com2 = new SqlCommand(insertQueryResults, conn2);
+                    com2.Parameters.AddWithValue("@imgnum1", countsql);
+                    com2.Parameters.AddWithValue("@sens1", SensitivityList[countsql]);
+                    com2.Parameters.AddWithValue("@spec1", SpecificityList[countsql]);
+                    com2.Parameters.AddWithValue("@prec1", PrecisionList[countsql]);
+                    com2.Parameters.AddWithValue("@acc1", AccuracyList[countsql]);
+                    com2.Parameters.AddWithValue("@kapp1", kappaList[countsql]);
+                    com2.ExecuteNonQuery();
 
 
-            
-            
+                    conn2.Close();
+                    countsql++;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Error:" + ex.ToString());
+            }
+
+
             //System.Threading.Thread.Sleep(10000);
 
-           
+
 
         }
     }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,30 +13,50 @@ namespace WebApplication6
 {
     public partial class WebForm2 : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            DataTable tb = new DataTable();
-            Session["ss"] = tb;
-
-            //if (!this.IsPostBack)
-            //{
-            //    DataTable dt = new DataTable();
-            //    dt.Columns.AddRange(new DataColumn[8] { new DataColumn("ID", typeof(int)),
-            //                new DataColumn("Name", typeof(string)),
-            //                new DataColumn("Occupation", typeof(string)),
-            //                new DataColumn("Sensitivity", typeof(float)),
-            //                new DataColumn("Specificity", typeof(float)),
-            //                new DataColumn("Precision", typeof(float)),
-            //                new DataColumn("Accuracy", typeof(float)),
-            //                new DataColumn("kappa",typeof(float)) });
-
-            //    dt.Rows.Add(1, "John Hammond", "United States");
-            //    dt.Rows.Add(2, "Mudassar Khan", "India");
-            //    dt.Rows.Add(3, "Suzanne Mathews", "France");
-            //    dt.Rows.Add(4, "Robert Schidner", "Russia");
-            //    GridView1.DataSource = dt;
-            //    GridView1.DataBind();
+            if (!IsPostBack)
+            {
+                gvCustomers.DataSource = GetData("SELECT * FROM [ResultsDataBase]");
+                gvCustomers.DataBind();
+            }
         }
+
+        private static DataTable GetData(string query)
+        {
+            string strConnString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            using (SqlConnection con3 = new SqlConnection(strConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.CommandText = query;
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        cmd.Connection = con3;
+                        sda.SelectCommand = cmd;
+                        using (DataSet ds = new DataSet())
+                        {
+                            DataTable dt = new DataTable();
+                            sda.Fill(0, 20, dt);
+                            return dt;
+                        }
+                    }
+                }
+            }
+        
         }
+
+        protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string customerId = gvCustomers.DataKeys[e.Row.RowIndex].Value.ToString();
+                GridView gvOrders = e.Row.FindControl("gvOrders") as GridView;
+                gvOrders.DataSource = GetData(string.Format("SELECT * FROM [AllResults]"));
+                gvOrders.DataBind();
+            }
+        }
+
     }
+}
