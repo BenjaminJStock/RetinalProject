@@ -108,7 +108,7 @@ namespace WebApplication6
 
 
 
-            while (loopcount <= 19)
+            while (loopcount <= files.Length - 1)
             {
 
                 string mainImagePath = Server.MapPath("~/UnZipFiles/image" + imageNumber + ".gif");
@@ -136,11 +136,8 @@ namespace WebApplication6
                 int TN1 = 0;
                 int FN1 = 0;
 
-                int columnCount = mainImage.Height;
-                int rowCount = mainImage.Width;
+               
 
-                int N = mainImage.Width - 1;
-                int M = mainImage.Height - 1;
                 
                 for (int y = 0; y < mainImage.Height; y++)
                 {
@@ -150,9 +147,6 @@ namespace WebApplication6
                         Color imagepixel = mainImage.GetPixel(x, y);
                         Color White = Color.FromArgb(255, 255, 255);
                         Color Black = Color.FromArgb(0, 0, 0);
-
-                        //var gsColor = gspixel.ToKnownColor();
-                        // var imColor = imagepixel.ToKnownColor();
 
                         if (gspixel == White && imagepixel == White)
                         {
@@ -184,8 +178,8 @@ namespace WebApplication6
                 ////    % Count pixels in the Segment map
                 float noPxlSM = TP1 + FP1; //% = TP + FP
 
-                float TP = TP1; //TP = mask & Im & GS;
-                float FN = FN1;//FN = mask & ~Im & GS;
+                float TP = TP1;     //TP = mask & Im & GS;
+                float FN = FN1;     //FN = mask & ~Im & GS;
                 float TN = TN1;                     //TN = mask & ~Im & ~GS;                                    
                 float FP = FP1;               //FP = mask & Im & ~GS;
 
@@ -214,7 +208,7 @@ namespace WebApplication6
                 float referenceLikelihood = TPFN / Total;
                 float responseLikelihood = TPFP / Total;
                 float randomAccuracy = referenceLikelihood * responseLikelihood + (1 - referenceLikelihood) * (1 - responseLikelihood);
-                float kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy); //%(p - e) / (1 - e) 
+                float kappa = (Accuracy - randomAccuracy) / (1 - randomAccuracy); 
                 float DiceCoeff = (2 * noTP) / (2 * noTP + noFP + noFN);
 
                 //    %Result = [Sensitivity Specificity Accuracy kappa];
@@ -249,10 +243,10 @@ namespace WebApplication6
                 PrecisionAvg = + PrecisionAvg + Precision;
                 AccuracyAvg = + AccuracyAvg + Accuracy;
                 kappaAvg = + kappaAvg + kappa;
-               
+
             }
 
-           float RowAdd = imageNumber;
+            float RowAdd = imageNumber;
            float MeanAvg = imageNumber; //used as divide by 20 for mean, as it starts on 0
 
             float SensitivityMean = 0;
@@ -296,8 +290,8 @@ namespace WebApplication6
 
 
             dt.Rows.Add(0000 , SensitivityMean, SpecificityMean, PrecisionMean, AccuracyMean, kappaMean);
-
-            dt.Rows[20][0] = DBNull.Value;
+            int rowcount = dt.Rows.Count - 1;
+            dt.Rows[rowcount][0] = DBNull.Value;
             GridView1.DataSource = dt;
             GridView1.DataBind();
 
