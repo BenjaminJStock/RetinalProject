@@ -44,7 +44,7 @@ namespace WebApplication6
                     }
                 }
             }
-        
+
         }
 
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
@@ -53,10 +53,47 @@ namespace WebApplication6
             {
                 string customerId = gvCustomers.DataKeys[e.Row.RowIndex].Value.ToString();
                 GridView gvOrders = e.Row.FindControl("gvOrders") as GridView;
-                gvOrders.DataSource = GetData(string.Format("SELECT * FROM [AllResults]"));
+                gvOrders.DataSource = GetData(string.Format("SELECT * FROM [AllResults]")); //SELECT* FROM table LIMIT 10 OFFSET N-10
                 gvOrders.DataBind();
+
             }
         }
 
+
+
+        private string ConvertSortDirectionToSql(SortDirection sortDirection)
+        {
+            string newSortDirection = String.Empty;
+
+            switch (sortDirection)
+            {
+                case SortDirection.Ascending:
+                    newSortDirection = "ASC";
+                    break;
+
+                case SortDirection.Descending:
+                    newSortDirection = "DESC";
+                    break;
+            }
+
+            return newSortDirection;
+        }
+
+        protected void gvOrders_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            DataTable dataTable = gvCustomers.DataSource as DataTable;
+
+            if (dataTable != null)
+            {
+                DataView dataView = new DataView(dataTable);
+                dataView.Sort = e.SortExpression + " " + ConvertSortDirectionToSql(e.SortDirection);
+
+                gvCustomers.DataSource = dataView;
+                gvCustomers.DataBind();
+            }
+        }
+
+
     }
 }
+

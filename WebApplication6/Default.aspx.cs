@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web.UI;
 using System.Data.SqlClient;
 using System.Configuration;
@@ -8,7 +7,7 @@ using System.Data;
 using Ionic.Zip;
 using System.Drawing;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Net.Mail;
 
 //TODO - add time and date to database when uploading.
 
@@ -29,7 +28,7 @@ namespace WebApplication6
         List<float> AccuracyList = new List<float>();
         List<float> kappaList = new List<float>();
         List<int> ImageNumber = new List<int>();
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)
@@ -62,10 +61,19 @@ namespace WebApplication6
             string folder = Server.MapPath("~/files/");
             string extractPath = Server.MapPath("~/UnZipFiles/");
 
-            
+
+
+
+            string[] files123 = Directory.GetFiles(extractPath);
+            foreach (string file in files123)
+            {
+                File.Delete(file);
+            }
+
             try
             {
-                System.IO.Directory.Delete(extractPath, true);
+
+                //System.IO.Directory.Delete();
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 conn.Open();
                 string insertQuery = "insert into [Table] (Full_Name, Email_Address, Institution, ZipFileLocation) values (@name, @email, @institution, @ziplocation)";
@@ -84,7 +92,7 @@ namespace WebApplication6
                     //string folder = Server.MapPath("~/files/");
                     Directory.CreateDirectory(folder);
                     FileUpload1.PostedFile.SaveAs(Path.Combine(folder, fileName));
-                    
+
                     using (ZipFile zip = ZipFile.Read(FileUpload1.PostedFile.InputStream))
                     {
                         zip.ExtractAll(extractPath, ExtractExistingFileAction.DoNotOverwrite);
@@ -275,7 +283,7 @@ namespace WebApplication6
             kappaMean = kappaAvg / MeanAvg;
 
 
-           
+
 
             //foreach (var title in AccuracyList)
             //{
@@ -301,67 +309,38 @@ namespace WebApplication6
 
             for (int i = 0; i < SensitivityList.Count; i++)
             {
-                dt.Rows.Add(ImageNumber[i],SensitivityList[i], SpecificityList[i], PrecisionList[i], AccuracyList[i], kappaList[i]); 
+                dt.Rows.Add(ImageNumber[i], SensitivityList[i], SpecificityList[i], PrecisionList[i], AccuracyList[i], kappaList[i]);
 
             }
-
-            
-
-
-
-            //dt.Rows.Add(0000 , SensitivityMean, SpecificityMean, PrecisionMean, AccuracyMean, kappaMean);
-            int rowcount = dt.Rows.Count - 1;
-            dt.Rows[rowcount][0] = DBNull.Value;
-            GridView1.DataSource = dt;
-            GridView1.DataBind();   
             int countsql = 0;
-            //try
-            //{
 
-            //    SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
-            //    conn1.Open();
-            //    string insertQueryResults = "insert into [ResultsDataBase] (Name, ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values (@name, @imgnum, @sens, @spec, @prec, @acc, @kapp)";
-            //    SqlCommand com1 = new SqlCommand(insertQueryResults, conn1);
-            //    com1.Parameters.AddWithValue("@name", NameBox.Text);
-            //    com1.Parameters.AddWithValue("@imgnum", imageNumber);
-            //    com1.Parameters.AddWithValue("@sens", SensitivityMean);
-            //    com1.Parameters.AddWithValue("@spec", SpecificityMean);
-            //    com1.Parameters.AddWithValue("@prec", PrecisionMean);
-            //    com1.Parameters.AddWithValue("@acc", AccuracyMean);
-            //    com1.Parameters.AddWithValue("@kapp", kappaMean);
-            //    com1.ExecuteNonQuery();
-                
 
-            //    conn1.Close();
-            //}
-            //catch (Exception ex)
-            //{
-            //    Response.Write("Error:" + ex.ToString());
-            //}
-            
+
+
+            ////dt.Rows.Add(0000 , SensitivityMean, SpecificityMean, PrecisionMean, AccuracyMean, kappaMean);
+            //int rowcount = dt.Rows.Count - 1;
+            //dt.Rows[rowcount][0] = DBNull.Value;
+            //GridView1.DataSource = dt;
+            //GridView1.DataBind();   
 
             try
             {
 
-                 while (countsql < imageNumber)
-                {
-                    SqlConnection conn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
-                    conn2.Open();
-                    string insertQueryResults = "insert into [AllResults] ( ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values ( @imgnum1, @sens1, @spec1, @prec1, @acc1, @kapp1)";
-                    SqlCommand com2 = new SqlCommand(insertQueryResults, conn2);
-                    com2.Parameters.AddWithValue("@imgnum1", countsql);
-                    com2.Parameters.AddWithValue("@sens1", SensitivityList[countsql]);
-                    com2.Parameters.AddWithValue("@spec1", SpecificityList[countsql]);
-                    com2.Parameters.AddWithValue("@prec1", PrecisionList[countsql]);
-                    com2.Parameters.AddWithValue("@acc1", AccuracyList[countsql]);
-                    com2.Parameters.AddWithValue("@kapp1", kappaList[countsql]);
-                    com2.ExecuteNonQuery();
+                SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                conn1.Open();
+                string insertQueryResults = "insert into [ResultsDataBase] (Name, ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values (@name, @imgnum, @sens, @spec, @prec, @acc, @kapp)";
+                SqlCommand com1 = new SqlCommand(insertQueryResults, conn1);
+                com1.Parameters.AddWithValue("@name", NameBox.Text);
+                com1.Parameters.AddWithValue("@imgnum", imageNumber);
+                com1.Parameters.AddWithValue("@sens", SensitivityMean);
+                com1.Parameters.AddWithValue("@spec", SpecificityMean);
+                com1.Parameters.AddWithValue("@prec", PrecisionMean);
+                com1.Parameters.AddWithValue("@acc", AccuracyMean);
+                com1.Parameters.AddWithValue("@kapp", kappaMean);
+                com1.ExecuteNonQuery();
 
 
-                    conn2.Close();
-                    countsql++;
-                }
-                
+                conn1.Close();
             }
             catch (Exception ex)
             {
@@ -369,13 +348,40 @@ namespace WebApplication6
             }
 
 
-            //System.Threading.Thread.Sleep(10000);
 
 
+            while (countsql <= imageNumber)
+            {
+                SqlConnection conn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                conn2.Open();
+                string insertQueryResults = "insert into [AllResults] ( ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values ( @imgnum1, @sens1, @spec1, @prec1, @acc1, @kapp1)";
+                SqlCommand com2 = new SqlCommand(insertQueryResults, conn2);
+                com2.Parameters.AddWithValue("@imgnum1", countsql);
+                com2.Parameters.AddWithValue("@sens1", SensitivityList[countsql]);
+                com2.Parameters.AddWithValue("@spec1", SpecificityList[countsql]);
+                com2.Parameters.AddWithValue("@prec1", PrecisionList[countsql]);
+                com2.Parameters.AddWithValue("@acc1", AccuracyList[countsql]);
+                com2.Parameters.AddWithValue("@kapp1", kappaList[countsql]);
+                com2.ExecuteNonQuery();
+
+
+                conn2.Close();
+                countsql++;
+            }
+
+
+            
+
+
+            System.Threading.Thread.Sleep(5000);
+
+           
+            Response.Redirect("~/Results.aspx");
 
         }
+
+
+
     }
-}
+} 
 
-
-        
