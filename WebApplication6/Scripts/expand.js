@@ -6,3 +6,6 @@ $("[src*=minus]").on("click", function () {
     $(this).attr("src", 'Images/plus.png');
     $(this).closest("tr").next().remove();
 });
+
+
+
