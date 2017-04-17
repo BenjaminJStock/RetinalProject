@@ -78,10 +78,11 @@ namespace WebApplication6
                 conn.Open();
                 string insertQuery = "insert into [Table] (Full_Name, Email_Address, Institution, ZipFileLocation, Dataset) values (@name, @email, @institution, @ziplocation, @Dataset)";
                 SqlCommand com = new SqlCommand(insertQuery, conn);
+
                 com.Parameters.AddWithValue("@name", NameBox.Text);
                 com.Parameters.AddWithValue("@email", EmaiBox.Text);
                 com.Parameters.AddWithValue("@institution", InstitutionBox.Text);
-                com.Parameters.AddWithValue("@ziplocation", fileName); //chjange this to path
+                com.Parameters.AddWithValue("@ziplocation", fileName);
                 com.Parameters.AddWithValue("@Dataset", DropDownList2.SelectedItem.Value);
                 com.ExecuteNonQuery();
                 //Response.Redirect("Default.aspx");

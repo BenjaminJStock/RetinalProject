@@ -27,44 +27,62 @@
         </p>
 
 
-        <asp:GridView ID="gvCustomers" runat="server" CssClass="Borders"  DataKeyNames="ID" OnRowDataBound="OnRowDataBound"  BorderColor="Tan" BorderWidth="1px" CellPadding="2" ForeColor="Black" GridLines="None" AllowSorting="True" AutoGenerateColumns="False" Width="920px" Style="margin-top: 0px" BackColor="LightGoldenrodYellow">
+        <asp:GridView ID="gvCustomers" runat="server" CssClass="Borders" DataKeyNames="ID" OnRowDataBound="OnRowDataBound" AllowSorting="True" AutoGenerateColumns="False" Width="100%" Style="margin-top: 0px" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="0px" CellPadding="2" ForeColor="Black" GridLines="None">
             <AlternatingRowStyle BackColor="PaleGoldenrod" />
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        
-                            <img alt="" style="cursor: pointer" src="images/plus.png" />
 
-                            <asp:Panel ID="pnlOrders" runat="server" Style="display: none" BorderStyle="Double" CssClass="Nested_ChildGrid">
+                        <img alt="" style="cursor: pointer" src="images/plus.png" />
 
-                                <asp:GridView ID="gvOrders" CssClass="Borders" runat="server" AutoGenerateColumns="false" OnSorting="gvOrders_Sorting" Font-Size="Small">
+                        <asp:Panel ID="pnlOrders" runat="server" Style="display: none" BorderStyle="Solid" CssClass="Nested_ChildGrid">
 
-                                    <Columns>
-                                        <asp:BoundField HeaderStyle-Width="85px" ItemStyle-BorderStyle="None" HeaderStyle-BorderStyle="None" />
-                                        <asp:BoundField DataField="ImgNumber" HeaderText="Image Number" HeaderStyle-Width="123px" />
-                                        <asp:BoundField DataField="Sensitivity" HeaderText="Sensitivity" HeaderStyle-Width="108px" DataFormatString="{0:F8}" SortExpression="Sensitivity" />
-                                        <asp:BoundField DataField="Specificity" HeaderText="Specificity" HeaderStyle-Width="108px" DataFormatString="{0:F8}" SortExpression="Specificity" />
-                                        <asp:BoundField DataField="Precision" HeaderText="Precision" HeaderStyle-Width="109px" DataFormatString="{0:F8}" SortExpression="Precision" />
-                                        <asp:BoundField DataField="Accuracy" HeaderText="Accuracy" HeaderStyle-Width="109px" DataFormatString="{0:F8}" SortExpression="Accuracy" />
-                                        <asp:BoundField DataField="kappa" HeaderText="kappa" HeaderStyle-Width="109px" DataFormatString="{0:F8}" SortExpression="kappa" />
+                            <asp:GridView ID="gvOrders" CssClass="Borders" runat="server" AutoGenerateColumns="false" OnSorting="gvOrders_Sorting" Font-Size="Small">
+
+                                <Columns>
+                                    <asp:BoundField HeaderStyle-Width="126px" ItemStyle-BorderStyle="None" HeaderStyle-BorderStyle="None" />
+                                    <asp:BoundField DataField="ImgNumber" HeaderText="Image Number" HeaderStyle-Width="155px" />
+                                    <asp:BoundField DataField="Sensitivity" HeaderText="Sensitivity" HeaderStyle-Width="127px" DataFormatString="{0:F8}" SortExpression="Sensitivity" />
+                                    <asp:BoundField DataField="Specificity" HeaderText="Specificity" HeaderStyle-Width="124px" DataFormatString="{0:F8}" SortExpression="Specificity" />
+                                    <asp:BoundField DataField="Precision" HeaderText="Precision" HeaderStyle-Width="110px" DataFormatString="{0:F8}" SortExpression="Precision" />
+                                    <asp:BoundField DataField="Accuracy" HeaderText="Accuracy" HeaderStyle-Width="110px" DataFormatString="{0:F8}" SortExpression="Accuracy" />
+                                    <asp:BoundField DataField="kappa" HeaderText="kappa" HeaderStyle-Width="112px" DataFormatString="{0:F8}" SortExpression="kappa" />
 
 
-                                    </Columns>
-                                </asp:GridView>
-                            </asp:Panel>
+                                </Columns>
+                            </asp:GridView>
+                        </asp:Panel>
                     </ItemTemplate>
-                    
+
                 </asp:TemplateField>
-                <asp:BoundField DataField="Name" HeaderText="Name" />
+                <asp:BoundField DataField="Name" HeaderText="Name" HeaderStyle-Width="127px">
+                    
+<HeaderStyle Width="127px"></HeaderStyle>
+                    
+                </asp:BoundField>
                 <asp:BoundField DataField="ImgNumber" HeaderText="Total Images"></asp:BoundField>
-                <asp:BoundField DataField="Sensitivity" HeaderText="Sensitivity" DataFormatString="{0:F8}" />
-                <asp:BoundField DataField="Specificity" HeaderText="Specificity" DataFormatString="{0:F8}" />
-                <asp:BoundField DataField="Precision" HeaderText="Precision" DataFormatString="{0:F8}" />
-                <asp:BoundField DataField="Accuracy" HeaderText="Accuracy" DataFormatString="{0:F8}" />
-                <asp:BoundField DataField="kappa" HeaderText="kappa" DataFormatString="{0:F8}" />
-                <asp:BoundField DataField="Dataset" HeaderText="Dataset" />
+                <asp:BoundField DataField="Sensitivity" HeaderText="Sensitivity" DataFormatString="{0:F8}" ItemStyle-Font-Size="Small">
+                    <ItemStyle Font-Size="Small"></ItemStyle>
+                </asp:BoundField>
+                <asp:BoundField DataField="Specificity" HeaderText="Specificity" DataFormatString="{0:F8}" ItemStyle-Font-Size="Small">
+                    <ItemStyle Font-Size="Small"></ItemStyle>
+                </asp:BoundField>
+                <asp:BoundField DataField="Precision" HeaderText="Precision" DataFormatString="{0:F8}" ItemStyle-Font-Size="Small">
+                    <ItemStyle Font-Size="Small"></ItemStyle>
+                </asp:BoundField>
+                <asp:BoundField DataField="Accuracy" HeaderText="Accuracy" DataFormatString="{0:F8}" ItemStyle-Font-Size="Small">
+                    <ItemStyle Font-Size="Small"></ItemStyle>
+                </asp:BoundField>
+                <asp:BoundField DataField="kappa" HeaderText="kappa" DataFormatString="{0:F8}" ItemStyle-Font-Size="Small">
+                    <ItemStyle Font-Size="Small"></ItemStyle>
+                </asp:BoundField>
+                <asp:BoundField DataField="Dataset" HeaderText="Dataset" ItemStyle-Font-Size="Small">
+
+                    <ItemStyle Font-Size="Small"></ItemStyle>
+                </asp:BoundField>
 
             </Columns>
+            <EditRowStyle Font-Size="Small" />
             <FooterStyle BackColor="Tan" />
             <HeaderStyle BackColor="Tan" Font-Bold="True" />
             <PagerStyle BackColor="PaleGoldenrod" ForeColor="DarkSlateBlue" HorizontalAlign="Center" />
