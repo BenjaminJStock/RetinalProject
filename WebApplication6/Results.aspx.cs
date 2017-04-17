@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 //using System.Web.HttpContext.Current.Session;
@@ -18,8 +15,9 @@ namespace WebApplication6
         {
             if (!IsPostBack)
             {
-                gvCustomers.DataSource = GetData("SELECT * FROM [ResultsDataBase]");
+                gvCustomers.DataSource = GetData("SELECT * FROM [ResultsDatabase]");
                 gvCustomers.DataBind();
+
             }
         }
 
@@ -43,6 +41,7 @@ namespace WebApplication6
                         }
                     }
                 }
+
             }
 
         }
@@ -53,7 +52,8 @@ namespace WebApplication6
             {
                 string customerId = gvCustomers.DataKeys[e.Row.RowIndex].Value.ToString();
                 GridView gvOrders = e.Row.FindControl("gvOrders") as GridView;
-                gvOrders.DataSource = GetData(string.Format("SELECT * FROM [AllResults]")); //SELECT* FROM table LIMIT 10 OFFSET N-10
+               
+                gvOrders.DataSource = GetData("SELECT * FROM [AllResults]");
                 gvOrders.DataBind();
 
             }

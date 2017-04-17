@@ -76,12 +76,13 @@ namespace WebApplication6
                 //System.IO.Directory.Delete();
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 conn.Open();
-                string insertQuery = "insert into [Table] (Full_Name, Email_Address, Institution, ZipFileLocation) values (@name, @email, @institution, @ziplocation)";
+                string insertQuery = "insert into [Table] (Full_Name, Email_Address, Institution, ZipFileLocation, Dataset) values (@name, @email, @institution, @ziplocation, @Dataset)";
                 SqlCommand com = new SqlCommand(insertQuery, conn);
                 com.Parameters.AddWithValue("@name", NameBox.Text);
                 com.Parameters.AddWithValue("@email", EmaiBox.Text);
                 com.Parameters.AddWithValue("@institution", InstitutionBox.Text);
                 com.Parameters.AddWithValue("@ziplocation", fileName); //chjange this to path
+                com.Parameters.AddWithValue("@Dataset", DropDownList2.SelectedItem.Value);
                 com.ExecuteNonQuery();
                 //Response.Redirect("Default.aspx");
                 //Response.Write("Upload Successful");
@@ -108,7 +109,7 @@ namespace WebApplication6
             System.Threading.Thread.Sleep(10000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
             string Folderpath = Server.MapPath("~/UnZipFiles/");
             string[] files = Directory.GetFiles(Folderpath);
-            int p = 0;
+            int p = 1;
             foreach (string file in files)
             {
                 string path = file.Substring(0, file.LastIndexOf('\\'));
@@ -116,13 +117,14 @@ namespace WebApplication6
                 p++;
             }
             int count = files.Length;
-            int imageNumber = 0; // after each image is renamed, I need it to loop
+            int imageNumber = 1; // after each image is renamed, I need it to loop
             int loopcount = 0;
+
             float SensitivityAvg = 0;
             float SpecificityAvg = 0;
             float PrecisionAvg = 0;
             float AccuracyAvg = 0;
-            float kappaAvg = 0;
+            float kappaAvg = 1;
 
 
 
@@ -312,7 +314,7 @@ namespace WebApplication6
                 dt.Rows.Add(ImageNumber[i], SensitivityList[i], SpecificityList[i], PrecisionList[i], AccuracyList[i], kappaList[i]);
 
             }
-            int countsql = 0;
+            int countsql = 1;
 
 
 
@@ -322,21 +324,23 @@ namespace WebApplication6
             //dt.Rows[rowcount][0] = DBNull.Value;
             //GridView1.DataSource = dt;
             //GridView1.DataBind();   
+            int ImgNoTake1 = imageNumber - 1;
 
             try
-            {
+                {
 
                 SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 conn1.Open();
-                string insertQueryResults = "insert into [ResultsDataBase] (Name, ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values (@name, @imgnum, @sens, @spec, @prec, @acc, @kapp)";
+                string insertQueryResults = "insert into [ResultsDataBase] (Name, ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa, Dataset) values (@name, @imgnum, @sens, @spec, @prec, @acc, @kapp, @Dataset)";
                 SqlCommand com1 = new SqlCommand(insertQueryResults, conn1);
                 com1.Parameters.AddWithValue("@name", NameBox.Text);
-                com1.Parameters.AddWithValue("@imgnum", imageNumber);
+                com1.Parameters.AddWithValue("@imgnum", ImgNoTake1);
                 com1.Parameters.AddWithValue("@sens", SensitivityMean);
                 com1.Parameters.AddWithValue("@spec", SpecificityMean);
                 com1.Parameters.AddWithValue("@prec", PrecisionMean);
                 com1.Parameters.AddWithValue("@acc", AccuracyMean);
                 com1.Parameters.AddWithValue("@kapp", kappaMean);
+                com1.Parameters.AddWithValue("@Dataset", DropDownList2.SelectedItem.Value);
                 com1.ExecuteNonQuery();
 
 
@@ -348,15 +352,15 @@ namespace WebApplication6
             }
 
 
+            
 
-
-            while (countsql <= imageNumber)
+            while (countsql < ImgNoTake1) //wont add the last row, which will be the avg results
             {
                 SqlConnection conn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 conn2.Open();
                 string insertQueryResults = "insert into [AllResults] ( ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values ( @imgnum1, @sens1, @spec1, @prec1, @acc1, @kapp1)";
                 SqlCommand com2 = new SqlCommand(insertQueryResults, conn2);
-                com2.Parameters.AddWithValue("@imgnum1", countsql);
+                com2.Parameters.AddWithValue("@imgnum1", ImgNoTake1);
                 com2.Parameters.AddWithValue("@sens1", SensitivityList[countsql]);
                 com2.Parameters.AddWithValue("@spec1", SpecificityList[countsql]);
                 com2.Parameters.AddWithValue("@prec1", PrecisionList[countsql]);
@@ -366,7 +370,9 @@ namespace WebApplication6
 
 
                 conn2.Close();
+                
                 countsql++;
+                
             }
 
 

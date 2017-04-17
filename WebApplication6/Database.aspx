@@ -16,15 +16,19 @@
         <div style="margin-left: 40px">
 
             <asp:SqlDataSource ID="SqlDataBaseZip" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Table] ORDER BY [Id]"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [ResultsDataBase]"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [AllResults]"></asp:SqlDataSource>
             <asp:Label ID="Label1" runat="server" Text="Name Database"></asp:Label>
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="auto-style1" DataKeyNames="Id" DataSourceID="SqlDataBaseZip" Height="203px" Width="614px" BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Vertical">
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="auto-style1" DataSourceID="SqlDataBaseZip" Height="85px" Width="409px" BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Vertical">
                 <AlternatingRowStyle BackColor="#DCDCDC" />
                 <Columns>
-                    <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id" />
+                    <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" />
                     <asp:BoundField DataField="Full_Name" HeaderText="Full_Name" SortExpression="Full_Name" />
                     <asp:BoundField DataField="Email_Address" HeaderText="Email_Address" SortExpression="Email_Address" />
                     <asp:BoundField DataField="Institution" HeaderText="Institution" SortExpression="Institution" />
                     <asp:BoundField DataField="ZipFileLocation" HeaderText="ZipFileLocation" SortExpression="ZipFileLocation" />
+
+                    <asp:BoundField DataField="Dataset" HeaderText="Dataset" SortExpression="Dataset" />
 
                 </Columns>
                 <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
@@ -49,10 +53,10 @@
                     <asp:BoundField DataField="Precision" DataFormatString="{0:F8}" HeaderText="Precision" SortExpression="Precision" />
                     <asp:BoundField DataField="Accuracy" DataFormatString="{0:F8}" HeaderText="Accuracy" SortExpression="Accuracy" />
                     <asp:BoundField DataField="kappa" DataFormatString="{0:F8}" HeaderText="kappa" SortExpression="kappa" />
+                    <asp:BoundField DataField="Dataset" HeaderText="Dataset" />
                 </Columns>
             </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [ResultsDataBase]"></asp:SqlDataSource>
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [AllResults]"></asp:SqlDataSource>
+            
             AllResults Database<br />
             <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="Id" DataSourceID="SqlDataSource2" ForeColor="#333333" GridLines="None">
                 <AlternatingRowStyle BackColor="White" />

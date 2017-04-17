@@ -14,6 +14,9 @@
         <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center">Who is aimed towards?</p>
         <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center; font-size: large">This service is aimed towards and can be used by anyone who is in the retinal image field or any anyone who interested in retinal imaging. As this is a completely free service with no amount of upload restriction, any one can is recommended to verify the results that another person may put foward and say they achieved in order to see if they are the correct results that they say they got.</p>
         <br />
+         <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center">Got More Questions?</p>
+        <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center; font-size: large">Feel free to email me using the email address listed on the contact page!</p>
+        <br />
 
 
 

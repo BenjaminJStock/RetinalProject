@@ -14,17 +14,29 @@ body {
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
-.dl-horizontal dt {
-    white-space: normal;
+
+#MainContent_gvCustomers_gvOrders_0 {
+    
+    border-left-style: none;
+    border-top-style: none;
+    border-bottom-style: none;
 }
 
 
-
+.dl-horizontal dt {
+    white-space: normal;
+}
+.TableCenter {
+    text-align: center;
+    border: 1px solid green;
+    padding: 5px;
+}
 
 #FileUpload1:after {
     content:"Please select a file";
     background-color:white;
 }
+
 
 
 /*table tbody tr td td td 
@@ -39,22 +51,25 @@ body {
 
 #MainContent_gvCustomers_gvOrders_0 {
     font-size :small;
+    
 
 }
+
+
 
 .OneHundo {
     min-width:100%;
 }
 .results {
-    color: #2196F3!important;
-    background-color: #f1f1f1!important;
-    margin: 16px!important;
+    color: #2196F3;
+    background-color: #f1f1f1;
+    margin: 16px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
 }
 #shadow {
-    color: #2196F3!important;
-    background-color: #f1f1f1!important;
-    margin: 16px!important;
+    color: #2196F3;
+    background-color: #f1f1f1;
+    margin: 16px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
 }
 
@@ -70,6 +85,21 @@ body {
   line-height: 1.3;
 }
 
+.Nested_ChildGrid td
+    {
+        background-color: #fff ;
+        color: black;
+        font-size: 10pt;
+        line-height: 200%;
+    }
+    .Nested_ChildGrid th
+    {
+        background-color: #2B579A ;
+        color: White;
+        font-size: 10pt;
+        line-height: 200%;
+    }
+
 table #MainContent_gvCustomers.Grid  + tbody +tr +td +div {
 
     padding-left :158px;
@@ -79,7 +109,19 @@ table #MainContent_gvCustomers.Grid  + tbody +tr +td +div {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+tbody{
+    border-left-style: none;
+    border-top-style: none;
+    border-bottom-style: none;
+    
+}
 
+.Borders {
+    
+    border-left-style: none;
+    border-top-style: none;
+    border-bottom-style: none;
+}
 
 
 /* Responsive: Portrait tablets and up */

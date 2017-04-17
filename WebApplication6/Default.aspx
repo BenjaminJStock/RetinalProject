@@ -111,7 +111,8 @@
         </div>
         <div class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin" id="MobileGrid">
             <p>If you are seeing this message, it means that you are probably using a mobile device or tablet. While this is fine for viewing the completed evaluation results of users' uploaded retinal scans, it is not viable to provide
-                mobile upload viewpoint. This is due to the fact that Apple Devices, and iOS does not deal with zip files that well.</p>
+                mobile upload viewpoint. This is due to the fact that Apple Devices, and iOS does not deal with zip files that well. I recommend you use a laptop or desktop to upload the zip file. <br />Mobile and Tablet users can still view all of the results properly though.</p>
+            <p>&nbsp;</p>
             </div>
 
 
