@@ -19,8 +19,8 @@
 
 
     <div class="jumbotron" style="overflow: auto">
-        <h1>Results Page</h1>
-        <p class="lead" aria-multiselectable="False" spellcheck="true">Below is the results from all of the completed evaluation of uploaded retinal scans.</p>
+        <h2 class="text-center">Results Page</h2>
+        <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center">Below is the results from all of the completed evaluation of uploaded retinal scans.</p>
         <p class="lead" aria-multiselectable="False" spellcheck="true">
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [ResultsDataBase]"></asp:SqlDataSource>
 

@@ -6,12 +6,15 @@
 
 
     <div class="jumbotron">
-        <h1 class="text-center"><span style="font-size: smaller">Retinal Image Evaluation</span></h1>
+        <h1 class="text-center"><span style="font-size: smaller">Retinal Image Evaluation Calculator</span></h1>
 
 
-        <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center"><span style="font-size: large">This is an online service that allows you to evaluate multiple segmented retinal scan images against the DRIVE or STARE Retinal Image datasets.</span></p>
+        <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center"><span style="font-size: large">This is an online service that allows you to evaluate multiple segmented retinal scan images against the DRIVE or STARE Retinal Image datasets. </span></p>
+        <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center"><span style="font-size: large">This project is an automatic diagnostic test evaluation is a method to evaluate the chances of being affected with diseases, calculated based on the present health conditions. In the below form, fill in your details, select the DRIVE or STARE dataset in the dropdown, and then upload your ZIP file that contains the segmented retinal scan images.</span></p>
         <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center">How does it work?</p>
-        <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center; font-size: large">This website allows you to upload a retinal image dataset zip file, then will compare the images in that zip folder to a gold standard dataset and perform an analysis algorithm onto it in order to give back medically accurate results that will show the specificity, sensivity, accuracy and kappa scores of each image</p>
+        <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center; font-size: large">This website allows you to upload a retinal image dataset zip file, then will compare the images in that zip folder to a gold standard dataset and perform an analysis algorithm onto it in order to <span style="font-size: large">calculate medical diagnosis factors such as Sensitivity, Specificity and other values.</span></p>
+        <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center; font-size: large">Why should I use it?</p>
+        <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center; font-size: large">Unlike most other Diagnostic Test Calculators, this one is fully automated for retinal scan images, meaning you dont have to fiddle about entering the TPFPTNFN scores for each image, as it will do it automatically for each segmented retinal scan in the uploaded ZIP file.</p>
         <br />
 
 

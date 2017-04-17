@@ -10,7 +10,7 @@
     </address>
 
     <address>
-        <p class="text-center"><span style="font-size: small">If you have any questions about this service, feel free to contect me on the email address below</span></p>
+        <p class="text-center"><span style="font-size: small">If you have any questions about this service, feel free to contact me on the email address below</span></p>
         <div class="text-center">
         <strong>Support:</strong>   <a href="mailto:benjaminjoshuastock@gmail.com">Contact Support</a><br />
         </div>

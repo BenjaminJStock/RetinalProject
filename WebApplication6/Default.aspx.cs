@@ -8,6 +8,7 @@ using Ionic.Zip;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Net.Mail;
+using AForge.Imaging;
 
 //TODO - add time and date to database when uploading.
 
@@ -141,7 +142,8 @@ namespace WebApplication6
                 string maskImagePath = Server.MapPath("~/Masks/01_test_mask.gif");
                 Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
 
-
+                int pixelcount = mainImage.Height * mainImage.Width;
+               
 
                 //if (DropDownList1.SelectedItem.Text == "Drive" )
                 // {
@@ -160,6 +162,7 @@ namespace WebApplication6
                 int TN1 = 0;
                 int FN1 = 0;
 
+                
 
 
 
@@ -218,6 +221,7 @@ namespace WebApplication6
                 float FNTN = noFN + noTN; //% negativeResponse(FN + TN)
                 float FPFN = noFP + noFN; //% Error(FP + FN)
                 float TPTN = noTP + noTN; //% Correct(TP + TN)
+
                 float Total = noTP + noTN + noFP + noFN;
 
                 float Sensitivity = noTP / TPFN;
@@ -267,6 +271,9 @@ namespace WebApplication6
                 PrecisionAvg = +PrecisionAvg + Precision;
                 AccuracyAvg = +AccuracyAvg + Accuracy;
                 kappaAvg = +kappaAvg + kappa;
+
+                float SensPercent = Sensitivity * 100;
+                float SpecPercent = Specificity * 100;
 
             }
 
