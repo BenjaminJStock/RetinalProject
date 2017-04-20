@@ -46,6 +46,16 @@
                         <asp:TextBox ID="NameBox" runat="server" Style="font-size: medium" Width="100%" Wrap="False" class="w3-input w3-border" placeholder="First Name"></asp:TextBox>
 
                     </div>
+                    <div class="w3-col" style="width: 50px; text-align: center;">
+                        <i class="w3-xxlarge fa fa-user"></i>
+
+                    </div>
+                    <div class="w3-rest">
+                        <%--<input class="w3-input w3-border" name="first" type="text" placeholder="First Name">--%>
+                        <asp:TextBox ID="NameBox1" runat="server" Style="font-size: medium" Width="100%" Wrap="False" class="w3-input w3-border" placeholder="Last Name"></asp:TextBox>
+
+                    </div>
+              
 
 
                     <div class="w3-row w3-section">
@@ -62,8 +72,8 @@
                         <div class="w3-rest" style="text-align: center">
                             <asp:DropDownList ID="DropDownList2" runat="server" class="w3-input w3-border">
                                 <asp:ListItem>--Select--</asp:ListItem>
-                                <asp:ListItem>Drive Data Set</asp:ListItem>
-                                <asp:ListItem>Stare Data Set</asp:ListItem>
+                                <asp:ListItem Value="1">Drive Data Set</asp:ListItem>
+                                <asp:ListItem Value="0">Stare Data Set</asp:ListItem>
                             </asp:DropDownList>
                         </div>
                     </div>

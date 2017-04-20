@@ -511,6 +511,7 @@
     <Folder Include="System\" />
     <Folder Include="UnZipFiles\" />
     <Folder Include="Uploads\" />
+    <Folder Include="VesselSegmentation\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -59,9 +59,11 @@ namespace WebApplication6
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
-            string folder = Server.MapPath("~/files/");
-            string extractPath = Server.MapPath("~/UnZipFiles/");
+            string folder = Server.MapPath("~/Uploads/");
+            string extractPath = Server.MapPath("~/VesselSegmentation/");
 
+            int imageNumber = 1; // after each image is renamed, I need it to loop
+            int loopcount = 0;
 
 
 
@@ -109,7 +111,7 @@ namespace WebApplication6
             }
 
             System.Threading.Thread.Sleep(10000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
-            string Folderpath = Server.MapPath("~/UnZipFiles/");
+            string Folderpath = Server.MapPath("~/VesselSegmentation/");
             string[] files = Directory.GetFiles(Folderpath);
             int p = 1;
             foreach (string file in files)
@@ -119,8 +121,8 @@ namespace WebApplication6
                 p++;
             }
             int count = files.Length;
-            int imageNumber = 1; // after each image is renamed, I need it to loop
-            int loopcount = 0;
+            //int imageNumber = 1; // after each image is renamed, I need it to loop
+            //int loopcount = 0;
 
             float SensitivityAvg = 0;
             float SpecificityAvg = 0;
@@ -128,71 +130,111 @@ namespace WebApplication6
             float AccuracyAvg = 0;
             float kappaAvg = 1;
 
+            int TP1 = 0;
+            int FP1 = 0;
+            int TN1 = 0;
+            int FN1 = 0;
 
-
+            int maskused = Int32.Parse(DropDownList2.SelectedValue);
 
             while (loopcount <= files.Length - 1)
             {
-
-
-
-                string mainImagePath = Server.MapPath("~/UnZipFiles/image" + imageNumber + ".gif");
-                Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
-
-                string maskImagePath = Server.MapPath("~/Masks/01_test_mask.gif");
-                Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
-
-                int pixelcount = mainImage.Height * mainImage.Width;
                
 
-                //if (DropDownList1.SelectedItem.Text == "Drive" )
-                // {
-                string GoldStandardPath = Server.MapPath("~/GoldStandard/Drive/image" + 0 + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
-                Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
-                //}
-                //else if (DropDownList1.SelectedItem.Text == "Stare")
-                //{
-                //    string GoldStandardPath = Server.MapPath("~/GoldStandard/Stare/image" + 0 + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
-                //    Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
+                //if DRIVE use mask
 
-                //}
-
-                int TP1 = 0;
-                int FP1 = 0;
-                int TN1 = 0;
-                int FN1 = 0;
-
-                
-
-
-
-                for (int y = 0; y < mainImage.Height; y++)
+                if (maskused == 1)
                 {
-                    for (int x = 0; x < mainImage.Width; x++)
-                    {
-                        Color gspixel = GSImage.GetPixel(x, y);
-                        Color imagepixel = mainImage.GetPixel(x, y);
-                        Color White = Color.FromArgb(255, 255, 255);
-                        Color Black = Color.FromArgb(0, 0, 0);
+                    string mainImagePath = Server.MapPath("~/VesselSegmentation/image" + imageNumber + ".gif");
+                    Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
+                    int pixelcount = mainImage.Height * mainImage.Width;
 
-                        if (gspixel == White && imagepixel == White)
+                    string GoldStandardPath = Server.MapPath("~/GoldStandard/Drive/test/1st_manual/image" + imageNumber + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
+                    Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
+
+                    string maskImagePath = Server.MapPath("~/GoldStandard/Drive/test/mask/" + imageNumber + "_test_mask.gif");
+                    Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
+
+                    for (int y = 0; y < mainImage.Height; y++)
+                    {
+                        for (int x = 0; x < mainImage.Width; x++)
                         {
-                            TP1++;
-                        }
-                        else if (gspixel == White && imagepixel == Black)
-                        {
-                            FN1++;
-                        }
-                        else if (gspixel == Black && imagepixel == White)
-                        {
-                            FP1++;
-                        }
-                        else if (gspixel == Black && imagepixel == Black)
-                        {
-                            TN1++;
+                            Color gspixel = GSImage.GetPixel(x, y);
+                            Color imagepixel = mainImage.GetPixel(x, y);
+                            Color maskpixel = MaskImage.GetPixel(x, y);
+                            Color White = Color.FromArgb(255, 255, 255);
+                            Color Black = Color.FromArgb(0, 0, 0);
+                            //if FOV == 1 do the calculations with mask
+                            //    else
+                            //    end
+                            if (gspixel == White && imagepixel == White && maskpixel == White)
+                            {
+                                TP1++;
+                            }
+                            else if (gspixel == White && imagepixel == Black && maskpixel == White)
+                            {
+                                FN1++;
+                            }
+                            else if (gspixel == Black && imagepixel == White && maskpixel == White)
+                            {
+                                FP1++;
+                            }
+                            else if (gspixel == Black && imagepixel == Black && maskpixel == White)
+                            {
+                                TN1++;
+                            }
                         }
                     }
                 }
+
+                if (maskused == 0)
+                {
+                    string mainImagePath = Server.MapPath("~/VesselSegmentation/image" + imageNumber + ".gif");
+                    Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
+                    int pixelcount = mainImage.Height * mainImage.Width;
+
+                    string GoldStandardPath = Server.MapPath("~/GoldStandard/Stare/test/1st_manual/image" + imageNumber + ".gif");
+                    Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
+
+                    for (int y = 0; y < mainImage.Height; y++)
+                    {
+                        for (int x = 0; x < mainImage.Width; x++)
+                        {
+                            Color gspixel = GSImage.GetPixel(x, y);
+                            Color imagepixel = mainImage.GetPixel(x, y);
+                            
+                            Color White = Color.FromArgb(255, 255, 255);
+                            Color Black = Color.FromArgb(0, 0, 0);
+                            //if FOV == 1 do the calculations with mask
+                            //    else
+                            //    end
+                            if (gspixel == White && imagepixel == White)
+                            {
+                                TP1++;
+                            }
+                            else if (gspixel == White && imagepixel == Black)
+                            {
+                                FN1++;
+                            }
+                            else if (gspixel == Black && imagepixel == White)
+                            {
+                                FP1++;
+                            }
+                            else if (gspixel == Black && imagepixel == Black )
+                            {
+                                TN1++;
+                            }
+                        }
+                    }
+                }
+            
+
+
+
+
+
+
+                
 
 
                 ////    % TP : True Positive; Correct Foreground
@@ -305,6 +347,7 @@ namespace WebApplication6
 
             dt.Columns.Add("ImageNumber", typeof(int));
             dt.Columns.Add("Sensitivity", typeof(float));
+
             dt.Columns.Add("Specificity", typeof(float));
             dt.Columns.Add("Precision", typeof(float));
             dt.Columns.Add("Accuracy", typeof(float));
@@ -362,7 +405,7 @@ namespace WebApplication6
 
             
 
-            while (countsql < ImgNoTake1) //wont add the last row, which will be the avg results
+            while (countsql <= ImgNoTake1) //wont add the last row, which will be the avg results
             {
                 SqlConnection conn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 conn2.Open();

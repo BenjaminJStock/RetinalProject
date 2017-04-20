@@ -22,6 +22,15 @@ namespace WebApplication6 {
         protected global::System.Web.UI.WebControls.TextBox NameBox;
         
         /// <summary>
+        /// NameBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NameBox1;
+        
+        /// <summary>
         /// EmaiBox control.
         /// </summary>
         /// <remarks>
