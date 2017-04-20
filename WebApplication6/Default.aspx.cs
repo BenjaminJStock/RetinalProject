@@ -39,7 +39,7 @@ namespace WebApplication6
                 conn.Open();
                 SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 conn1.Open();
-                string checkuser = "select count(*) from [Table] where Full_Name ='" + NameBox.Text + "' ";
+                string checkuser = "select count(*) from [Table] where First_Name ='" + NameBox.Text + "' ";
                 string checkuser1 = "select count(*) from [ResultsDatabase] where Full_Name ='" + NameBox.Text + "' ";
 
 
@@ -79,14 +79,17 @@ namespace WebApplication6
                 //System.IO.Directory.Delete();
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 conn.Open();
-                string insertQuery = "insert into [Table] (Full_Name, Email_Address, Institution, ZipFileLocation, Dataset) values (@name, @email, @institution, @ziplocation, @Dataset)";
+                string insertQuery = "insert into [Table] (First_Name, Last_Name, Email_Address, Institution, ZipFileLocation, Dataset, FOV) values (@name, @Lastname, @email, @institution, @ziplocation, @Dataset, @FOV)";
                 SqlCommand com = new SqlCommand(insertQuery, conn);
 
                 com.Parameters.AddWithValue("@name", NameBox.Text);
+                com.Parameters.AddWithValue("@Lastname", NameBox1.Text);
                 com.Parameters.AddWithValue("@email", EmaiBox.Text);
                 com.Parameters.AddWithValue("@institution", InstitutionBox.Text);
                 com.Parameters.AddWithValue("@ziplocation", fileName);
-                com.Parameters.AddWithValue("@Dataset", DropDownList2.SelectedItem.Value);
+                com.Parameters.AddWithValue("@Dataset", DropDownList2.SelectedItem.Text);
+                com.Parameters.AddWithValue("@FOV", DropDownList2.SelectedItem.Value);
+
                 com.ExecuteNonQuery();
                 //Response.Redirect("Default.aspx");
                 //Response.Write("Upload Successful");

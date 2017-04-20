@@ -23,12 +23,15 @@
                 <AlternatingRowStyle BackColor="#DCDCDC" />
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" />
-                    <asp:BoundField DataField="Full_Name" HeaderText="Full_Name" SortExpression="Full_Name" />
+                    <asp:BoundField DataField="First_Name" HeaderText="First_Name" SortExpression="First_Name" />
+                    <asp:BoundField DataField="Last_Name" HeaderText="Last_Name" SortExpression="Last_Name" />
                     <asp:BoundField DataField="Email_Address" HeaderText="Email_Address" SortExpression="Email_Address" />
                     <asp:BoundField DataField="Institution" HeaderText="Institution" SortExpression="Institution" />
+
                     <asp:BoundField DataField="ZipFileLocation" HeaderText="ZipFileLocation" SortExpression="ZipFileLocation" />
 
                     <asp:BoundField DataField="Dataset" HeaderText="Dataset" SortExpression="Dataset" />
+                    <asp:BoundField DataField="FOV" HeaderText="FOV" SortExpression="FOV" />
 
                 </Columns>
                 <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
