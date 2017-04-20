@@ -1,14 +1,14 @@
-﻿using System;
-using System.Web.UI;
-using System.Data.SqlClient;
-using System.Configuration;
-using System.IO;
-using System.Data;
-using Ionic.Zip;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Net.Mail;
-using AForge.Imaging;
+﻿    using System;
+    using System.Web.UI;
+    using System.Data.SqlClient;
+    using System.Configuration;
+    using System.IO;
+    using System.Data;
+    using Ionic.Zip;
+    using System.Drawing;
+    using System.Collections.Generic;
+    using System.Net.Mail;
+    using AForge.Imaging;
 
 //TODO - add time and date to database when uploading.
 
@@ -34,17 +34,17 @@ namespace WebApplication6
         {
             if (IsPostBack)
             {
-                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
 
                 conn.Open();
-                SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
-                conn1.Open();
+                SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
+                
                 string checkuser = "select count(*) from [Table] where First_Name ='" + NameBox.Text + "' ";
-                string checkuser1 = "select count(*) from [ResultsDatabase] where Full_Name ='" + NameBox.Text + "' ";
+                //string checkuser1 = "select count(*) from [ResultsDatabase] where Full_Name ='" + NameBox.Text + "' ";
 
 
                 SqlCommand com = new SqlCommand(checkuser, conn);
-                SqlCommand com1 = new SqlCommand(checkuser1, conn);
+                //SqlCommand com1 = new SqlCommand(checkuser1, conn);
 
                 temp = Convert.ToInt32(com.ExecuteScalar().ToString());
                 if (temp == 1)
@@ -77,7 +77,7 @@ namespace WebApplication6
             {
 
                 //System.IO.Directory.Delete();
-                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
                 conn.Open();
                 string insertQuery = "insert into [Table] (First_Name, Last_Name, Email_Address, Institution, ZipFileLocation, Dataset, FOV) values (@name, @Lastname, @email, @institution, @ziplocation, @Dataset, @FOV)";
                 SqlCommand com = new SqlCommand(insertQuery, conn);
@@ -138,11 +138,11 @@ namespace WebApplication6
             int TN1 = 0;
             int FN1 = 0;
 
-            int maskused = Int32.Parse(DropDownList2.SelectedValue);
+            int maskused = int.Parse(DropDownList2.SelectedValue);
 
             while (loopcount <= files.Length - 1)
             {
-               
+
 
                 //if DRIVE use mask
 
@@ -205,7 +205,7 @@ namespace WebApplication6
                         {
                             Color gspixel = GSImage.GetPixel(x, y);
                             Color imagepixel = mainImage.GetPixel(x, y);
-                            
+
                             Color White = Color.FromArgb(255, 255, 255);
                             Color Black = Color.FromArgb(0, 0, 0);
                             //if FOV == 1 do the calculations with mask
@@ -223,21 +223,21 @@ namespace WebApplication6
                             {
                                 FP1++;
                             }
-                            else if (gspixel == Black && imagepixel == Black )
+                            else if (gspixel == Black && imagepixel == Black)
                             {
                                 TN1++;
                             }
                         }
                     }
                 }
-            
 
 
 
 
 
 
-                
+
+
 
 
                 ////    % TP : True Positive; Correct Foreground
@@ -380,41 +380,41 @@ namespace WebApplication6
             //GridView1.DataBind();   
             int ImgNoTake1 = imageNumber - 1;
 
-            try
-                {
+            //try
+            //{
 
-                SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
-                conn1.Open();
-                string insertQueryResults = "insert into [ResultsDataBase] (Name, ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa, Dataset) values (@name, @imgnum, @sens, @spec, @prec, @acc, @kapp, @Dataset)";
-                SqlCommand com1 = new SqlCommand(insertQueryResults, conn1);
-                com1.Parameters.AddWithValue("@name", NameBox.Text);
-                com1.Parameters.AddWithValue("@imgnum", ImgNoTake1);
-                com1.Parameters.AddWithValue("@sens", SensitivityMean);
-                com1.Parameters.AddWithValue("@spec", SpecificityMean);
-                com1.Parameters.AddWithValue("@prec", PrecisionMean);
-                com1.Parameters.AddWithValue("@acc", AccuracyMean);
-                com1.Parameters.AddWithValue("@kapp", kappaMean);
-                com1.Parameters.AddWithValue("@Dataset", DropDownList2.SelectedItem.Value);
-                com1.ExecuteNonQuery();
-
-
-                conn1.Close();
-            }
-            catch (Exception ex)
-            {
-                Response.Write("Error:" + ex.ToString());
-            }
+            //    SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+            //    conn1.Open();
+            //    string insertQueryResults = "insert into [ResultsDataBase] (Name, ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa, Dataset) values (@name, @imgnum, @sens, @spec, @prec, @acc, @kapp, @Dataset)";
+            //    SqlCommand com1 = new SqlCommand(insertQueryResults, conn1);
+            //    com1.Parameters.AddWithValue("@name", NameBox.Text);
+            //    com1.Parameters.AddWithValue("@imgnum", ImgNoTake1);
+            //    com1.Parameters.AddWithValue("@sens", SensitivityMean);
+            //    com1.Parameters.AddWithValue("@spec", SpecificityMean);
+            //    com1.Parameters.AddWithValue("@prec", PrecisionMean);
+            //    com1.Parameters.AddWithValue("@acc", AccuracyMean);
+            //    com1.Parameters.AddWithValue("@kapp", kappaMean);
+            //    com1.Parameters.AddWithValue("@Dataset", DropDownList2.SelectedItem.Value);
+            //    com1.ExecuteNonQuery();
 
 
-            
+            //    conn1.Close();
+            //}
+            //catch (Exception ex)
+            //{
+            //    Response.Write("Error:" + ex.ToString());
+            //}
+
+
+
 
             while (countsql <= ImgNoTake1) //wont add the last row, which will be the avg results
             {
-                SqlConnection conn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                SqlConnection conn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
                 conn2.Open();
                 string insertQueryResults = "insert into [AllResults] ( ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values ( @imgnum1, @sens1, @spec1, @prec1, @acc1, @kapp1)";
                 SqlCommand com2 = new SqlCommand(insertQueryResults, conn2);
-                com2.Parameters.AddWithValue("@imgnum1", ImgNoTake1);
+                com2.Parameters.AddWithValue("@imgnum1", countsql);
                 com2.Parameters.AddWithValue("@sens1", SensitivityList[countsql]);
                 com2.Parameters.AddWithValue("@spec1", SpecificityList[countsql]);
                 com2.Parameters.AddWithValue("@prec1", PrecisionList[countsql]);
@@ -424,18 +424,18 @@ namespace WebApplication6
 
 
                 conn2.Close();
-                
+
                 countsql++;
-                
+
             }
 
 
-            
+
 
 
             System.Threading.Thread.Sleep(5000);
 
-           
+
             Response.Redirect("~/Results.aspx");
 
         }
@@ -443,5 +443,4 @@ namespace WebApplication6
 
 
     }
-} 
-
+}

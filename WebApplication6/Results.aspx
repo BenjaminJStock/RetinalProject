@@ -21,7 +21,8 @@
     <div class="jumbotron" style="overflow: auto">
         <h2 class="text-center">Results Page</h2>
         <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center">Below is the results from all of the completed evaluation of uploaded retinal scans.</p>
-        <p class="lead" aria-multiselectable="False" spellcheck="true">
+        <br />
+        <%--<p class="lead" aria-multiselectable="False" spellcheck="true">
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [ResultsDataBase]"></asp:SqlDataSource>
 
         </p>
@@ -55,7 +56,7 @@
                     </ItemTemplate>
 
                 </asp:TemplateField>
-                <asp:BoundField DataField="Name" HeaderText="Name" HeaderStyle-Width="127px">
+                <asp:BoundField DataField="Last_Name" HeaderText="Researcher" HeaderStyle-Width="127px">
                     
 <HeaderStyle Width="127px"></HeaderStyle>
                     
@@ -83,6 +84,30 @@
 
             </Columns>
             <EditRowStyle Font-Size="Small" />
+            <FooterStyle BackColor="Tan" />
+            <HeaderStyle BackColor="Tan" Font-Bold="True" />
+            <PagerStyle BackColor="PaleGoldenrod" ForeColor="DarkSlateBlue" HorizontalAlign="Center" />
+            <SelectedRowStyle BackColor="DarkSlateBlue" ForeColor="GhostWhite" />
+            <SortedAscendingCellStyle BackColor="#FAFAE7" />
+            <SortedAscendingHeaderStyle BackColor="#DAC09E" />
+            <SortedDescendingCellStyle BackColor="#E1DB9C" />
+            <SortedDescendingHeaderStyle BackColor="#C2A47B" />
+        </asp:GridView>--%>
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:RegistrationConnectionString %>" SelectCommand="SELECT [Table].Last_Name, [Table].Institution, [Table].Dataset, AllResults.ImgNumber, AllResults.Sensitivity, AllResults.Precision, AllResults.Accuracy, AllResults.kappa, AllResults.Specificity FROM AllResults INNER JOIN [Table] ON AllResults.Researcher_ID_FK = [Table].Researcher_ID"></asp:SqlDataSource>
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" CellSpacing="2" DataSourceID="SqlDataSource1" ForeColor="Black" GridLines="None" HorizontalAlign="Center" style="margin-top: 0px" Width="1050px">
+            <AlternatingRowStyle BackColor="PaleGoldenrod" />
+            <Columns>
+                <asp:BoundField DataField="Last_Name" HeaderText="Last_Name" SortExpression="Last_Name" />
+                <asp:BoundField DataField="Institution" HeaderText="Institution" SortExpression="Institution" />
+                <asp:BoundField DataField="Dataset" HeaderText="Dataset" SortExpression="Dataset" />
+                <asp:BoundField DataField="ImgNumber" HeaderText="ImgNumber" SortExpression="ImgNumber" />
+                 <asp:BoundField DataField="Specificity" HeaderText="Specificity" SortExpression="Specificity" DataFormatString="{0:n4}" />
+                <asp:BoundField DataField="Sensitivity" HeaderText="Sensitivity" SortExpression="Sensitivity" DataFormatString="{0:n4}" />
+                <asp:BoundField DataField="Precision" HeaderText="Precision" SortExpression="Precision" DataFormatString="{0:n4}" />
+                <asp:BoundField DataField="Accuracy" HeaderText="Accuracy" SortExpression="Accuracy" DataFormatString="{0:n4}" />
+                <asp:BoundField DataField="kappa" HeaderText="kappa" SortExpression="kappa" DataFormatString="{0:n4}" />
+               
+            </Columns>
             <FooterStyle BackColor="Tan" />
             <HeaderStyle BackColor="Tan" Font-Bold="True" />
             <PagerStyle BackColor="PaleGoldenrod" ForeColor="DarkSlateBlue" HorizontalAlign="Center" />
