@@ -395,7 +395,7 @@ namespace WebApplication6
             //    Response.Write("Error:" + ex.ToString());
             //}
 
-            while (countsql < ImgNoTake1)
+            while (countsql <= count)
             {
                 SqlConnection conn3 = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
                 conn3.Open();

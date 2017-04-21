@@ -34,11 +34,13 @@
                 <SortedDescendingCellStyle BackColor="#E1DB9C" />
                 <SortedDescendingHeaderStyle BackColor="#C2A47B" />
             </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:RegistrationConnectionString %>" SelectCommand="SELECT [Table].Last_Name, [Table].Institution, [Table].Dataset, AllResults.ImgNumber, AllResults.Sensitivity, AllResults.Precision, AllResults.Accuracy, AllResults.kappa, AllResults.Specificity FROM AllResults INNER JOIN [Table] ON AllResults.Researcher_ID_FK = [Table].Researcher_ID"></asp:SqlDataSource>
             <br />
-            <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource2">
+            <br />
+
+            Results Database<asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource3">
                 <Columns>
                     <asp:BoundField DataField="Last_Name" HeaderText="Last_Name" SortExpression="Last_Name" />
+                    <asp:BoundField DataField="Researcher_ID_FK" HeaderText="Researcher_ID_FK" SortExpression="Researcher_ID_FK" />
                     <asp:BoundField DataField="Institution" HeaderText="Institution" SortExpression="Institution" />
                     <asp:BoundField DataField="Dataset" HeaderText="Dataset" SortExpression="Dataset" />
                     <asp:BoundField DataField="ImgNumber" HeaderText="ImgNumber" SortExpression="ImgNumber" />
@@ -49,9 +51,8 @@
                     <asp:BoundField DataField="Specificity" HeaderText="Specificity" SortExpression="Specificity" />
                 </Columns>
             </asp:GridView>
+            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:RegistrationConnectionString %>" SelectCommand="SELECT [Table].Last_Name, [Table].Institution, [Table].Dataset, AllResults.ImgNumber, AllResults.Sensitivity, AllResults.Precision, AllResults.Accuracy, AllResults.kappa, AllResults.Specificity, AllResults.Researcher_ID_FK FROM AllResults INNER JOIN [Table] ON AllResults.Researcher_ID_FK = [Table].Researcher_ID"></asp:SqlDataSource>
             <br />
-
-            Results Database<br />
             
             AllResults Database<br />
 
