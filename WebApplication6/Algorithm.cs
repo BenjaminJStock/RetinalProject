@@ -35,7 +35,7 @@ namespace WebApplication6
     //        TP = mask & Im & GS;
     //        FN = mask & ~Im & GS;
     //        TN = mask & ~Im & ~GS;
-    //    FP = mask & Im & ~GS;
+    //        FP = mask & Im & ~GS;
     //    end
 
 

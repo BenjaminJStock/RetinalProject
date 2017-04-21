@@ -22,6 +22,7 @@
         <h2 class="text-center">Results Page</h2>
         <p class="lead" aria-multiselectable="False" spellcheck="true" style="text-align: center">Below is the results from all of the completed evaluation of uploaded retinal scans.</p>
         <br />
+        <p class="text-center"><span style="font-size: medium">The table below shows an overview of the performance of each different uploaded dataset. The rightmost column shows the name of the person who uploaded the dataset.</span></p>
         <%--<p class="lead" aria-multiselectable="False" spellcheck="true">
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [ResultsDataBase]"></asp:SqlDataSource>
 
@@ -93,19 +94,20 @@
             <SortedDescendingCellStyle BackColor="#E1DB9C" />
             <SortedDescendingHeaderStyle BackColor="#C2A47B" />
         </asp:GridView>--%>
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:RegistrationConnectionString %>" SelectCommand="SELECT [Table].Last_Name, [Table].Institution, [Table].Dataset, AllResults.ImgNumber, AllResults.Sensitivity, AllResults.Precision, AllResults.Accuracy, AllResults.kappa, AllResults.Specificity FROM AllResults INNER JOIN [Table] ON AllResults.Researcher_ID_FK = [Table].Researcher_ID"></asp:SqlDataSource>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" CellSpacing="2" DataSourceID="SqlDataSource1" ForeColor="Black" GridLines="None" HorizontalAlign="Center" style="margin-top: 0px" Width="1050px">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:RegistrationConnectionString %>" SelectCommand="SELECT [Table].Last_Name, [Table].Institution, [Table].Dataset, AllResults.ImgNumber, AllResults.Sensitivity, AllResults.Precision, AllResults.Accuracy, AllResults.kappa, AllResults.Specificity, AllResults.Researcher_ID_FK FROM AllResults INNER JOIN [Table] ON AllResults.Researcher_ID_FK = [Table].Researcher_ID"></asp:SqlDataSource>
+        <br />
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" CellSpacing="2" DataSourceID="SqlDataSource1" ForeColor="Black" GridLines="Horizontal" HorizontalAlign="Center" style="margin-top: 0px; font-size: small;" Width="1050px" BorderStyle="Dotted">
             <AlternatingRowStyle BackColor="PaleGoldenrod" />
             <Columns>
-                <asp:BoundField DataField="Last_Name" HeaderText="Last_Name" SortExpression="Last_Name" />
+                <asp:BoundField DataField="Last_Name" HeaderText="Method" SortExpression="Last_Name" />
                 <asp:BoundField DataField="Institution" HeaderText="Institution" SortExpression="Institution" />
                 <asp:BoundField DataField="Dataset" HeaderText="Dataset" SortExpression="Dataset" />
-                <asp:BoundField DataField="ImgNumber" HeaderText="ImgNumber" SortExpression="ImgNumber" />
-                 <asp:BoundField DataField="Specificity" HeaderText="Specificity" SortExpression="Specificity" DataFormatString="{0:n4}" />
-                <asp:BoundField DataField="Sensitivity" HeaderText="Sensitivity" SortExpression="Sensitivity" DataFormatString="{0:n4}" />
+                <asp:BoundField DataField="ImgNumber" HeaderText="Image" SortExpression="ImgNumber" />
+                 <asp:BoundField DataField="Sensitivity" HeaderText="Sensitivity" SortExpression="Sensitivity" DataFormatString="{0:n4}" />
                 <asp:BoundField DataField="Precision" HeaderText="Precision" SortExpression="Precision" DataFormatString="{0:n4}" />
                 <asp:BoundField DataField="Accuracy" HeaderText="Accuracy" SortExpression="Accuracy" DataFormatString="{0:n4}" />
                 <asp:BoundField DataField="kappa" HeaderText="kappa" SortExpression="kappa" DataFormatString="{0:n4}" />
+                <asp:BoundField DataField="Specificity" HeaderText="Specificity" SortExpression="Specificity" DataFormatString="{0:n4}" />
                
             </Columns>
             <FooterStyle BackColor="Tan" />

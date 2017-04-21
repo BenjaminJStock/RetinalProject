@@ -91,6 +91,8 @@ namespace WebApplication6
                 com.Parameters.AddWithValue("@FOV", DropDownList2.SelectedItem.Value);
 
                 com.ExecuteNonQuery();
+
+                //conn.Close();
                 //Response.Redirect("Default.aspx");
                 //Response.Write("Upload Successful");
 
@@ -133,15 +135,17 @@ namespace WebApplication6
             float AccuracyAvg = 0;
             float kappaAvg = 1;
 
-            int TP1 = 0;
-            int FP1 = 0;
-            int TN1 = 0;
-            int FN1 = 0;
 
             int maskused = int.Parse(DropDownList2.SelectedValue);
 
             while (loopcount <= files.Length - 1)
             {
+
+
+                int TP1 = 0;
+                int FP1 = 0;
+                int TN1 = 0;
+                int FN1 = 0;
 
 
                 //if DRIVE use mask
@@ -155,8 +159,9 @@ namespace WebApplication6
                     string GoldStandardPath = Server.MapPath("~/GoldStandard/Drive/test/1st_manual/image" + imageNumber + ".gif"); //I set this to image 2 as i need a different base image to analyse as the unzip im using is the test drive 
                     Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
 
-                    string maskImagePath = Server.MapPath("~/GoldStandard/Drive/test/mask/" + imageNumber + "_test_mask.gif");
+                    string maskImagePath = Server.MapPath("~/GoldStandard/Drive/test/mask/" + imageNumber + "_test_mask.png");
                     Bitmap MaskImage = AForge.Imaging.Image.FromFile(maskImagePath);
+
 
                     for (int y = 0; y < mainImage.Height; y++)
                     {
@@ -165,47 +170,6 @@ namespace WebApplication6
                             Color gspixel = GSImage.GetPixel(x, y);
                             Color imagepixel = mainImage.GetPixel(x, y);
                             Color maskpixel = MaskImage.GetPixel(x, y);
-                            Color White = Color.FromArgb(255, 255, 255);
-                            Color Black = Color.FromArgb(0, 0, 0);
-                            //if FOV == 1 do the calculations with mask
-                            //    else
-                            //    end
-                            if (gspixel == White && imagepixel == White && maskpixel == White)
-                            {
-                                TP1++;
-                            }
-                            else if (gspixel == White && imagepixel == Black && maskpixel == White)
-                            {
-                                FN1++;
-                            }
-                            else if (gspixel == Black && imagepixel == White && maskpixel == White)
-                            {
-                                FP1++;
-                            }
-                            else if (gspixel == Black && imagepixel == Black && maskpixel == White)
-                            {
-                                TN1++;
-                            }
-                        }
-                    }
-                }
-
-                if (maskused == 0)
-                {
-                    string mainImagePath = Server.MapPath("~/VesselSegmentation/image" + imageNumber + ".gif");
-                    Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
-                    int pixelcount = mainImage.Height * mainImage.Width;
-
-                    string GoldStandardPath = Server.MapPath("~/GoldStandard/Stare/test/1st_manual/image" + imageNumber + ".gif");
-                    Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
-
-                    for (int y = 0; y < mainImage.Height; y++)
-                    {
-                        for (int x = 0; x < mainImage.Width; x++)
-                        {
-                            Color gspixel = GSImage.GetPixel(x, y);
-                            Color imagepixel = mainImage.GetPixel(x, y);
-
                             Color White = Color.FromArgb(255, 255, 255);
                             Color Black = Color.FromArgb(0, 0, 0);
                             //if FOV == 1 do the calculations with mask
@@ -231,14 +195,44 @@ namespace WebApplication6
                     }
                 }
 
+                //if (maskused == 0)
+                //{
+                //    string mainImagePath = Server.MapPath("~/VesselSegmentation/image" + imageNumber + ".gif");
+                //    Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
+                //    int pixelcount = mainImage.Height * mainImage.Width;
 
+                //    string GoldStandardPath = Server.MapPath("~/GoldStandard/Stare/test/1st_manual/image" + imageNumber + ".gif");
+                //    Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
 
+                //    for (int y = 0; y < mainImage.Height; y++)
+                //    {
+                //        for (int x = 0; x < mainImage.Width; x++)
+                //        {
+                //            Color gspixel = GSImage.GetPixel(x, y);
+                //            Color imagepixel = mainImage.GetPixel(x, y);
 
-
-
-
-
-
+                //            Color White = Color.FromArgb(255, 255, 255);
+                //            Color Black = Color.FromArgb(0, 0, 0);
+                            
+                //            if (gspixel == White && imagepixel == White)
+                //            {
+                //                TP1++;
+                //            }
+                //            else if (gspixel == White && imagepixel == Black)
+                //            {
+                //                FN1++;
+                //            }
+                //            else if (gspixel == Black && imagepixel == White)
+                //            {
+                //                FP1++;
+                //            }
+                //            else if (gspixel == Black && imagepixel == Black)
+                //            {
+                //                TN1++;
+                //            }
+                //        }
+                //    }
+                //}
 
                 ////    % TP : True Positive; Correct Foreground
                 ////    % FP : False Positive; Incorrect Foreground
@@ -287,9 +281,6 @@ namespace WebApplication6
                 //    %Result = [Sensitivity Specificity Accuracy kappa];
                 //var Results1 = [noPxlGT noPxlSM noTP noFP noTN noFN FPFN Sensitivity Specificity Precision JaccardCoefficient AndrewFailer Accuracy kappa TPRate FPRate, DiceCoeff];
 
-
-
-
                 float[] Results = new float[] { noTP, noFP, noTN, noFN, FPFN, Sensitivity, Specificity, Precision, JaccardCoefficient, AndrewFailer, Accuracy, kappa, TPRate, FPRate, DiceCoeff };
 
                 string[] ResultsString = new string[] { "noTP", "noFP", "noTN", "noFN", "FPFN", "Sensitivity", "Specificity", "Precision", "JaccardCoefficient", "AndrewFailer", "Accuracy", "Kappa", "TPRate", "FPRate", "DiceCoeff" };
@@ -305,7 +296,6 @@ namespace WebApplication6
                 AccuracyList.Add(Accuracy);
                 kappaList.Add(kappa);
                 ImageNumber.Add(imageNumber);
-
 
                 loopcount++;
 
@@ -405,25 +395,20 @@ namespace WebApplication6
             //    Response.Write("Error:" + ex.ToString());
             //}
 
-
-
-
-            while (countsql <= ImgNoTake1) //wont add the last row, which will be the avg results
+            while (countsql < ImgNoTake1)
             {
-                SqlConnection conn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
-                conn2.Open();
-                string insertQueryResults = "insert into [AllResults] ( ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values ( @imgnum1, @sens1, @spec1, @prec1, @acc1, @kapp1)";
-                SqlCommand com2 = new SqlCommand(insertQueryResults, conn2);
+                SqlConnection conn3 = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
+                conn3.Open();
+                string insertResults = "insert into [AllResults] (ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values (@imgnum1, @sens1, @spec1, @prec1, @acc1, @kappa1)";
+                SqlCommand com2 = new SqlCommand(insertResults, conn3);
                 com2.Parameters.AddWithValue("@imgnum1", countsql);
                 com2.Parameters.AddWithValue("@sens1", SensitivityList[countsql]);
                 com2.Parameters.AddWithValue("@spec1", SpecificityList[countsql]);
                 com2.Parameters.AddWithValue("@prec1", PrecisionList[countsql]);
                 com2.Parameters.AddWithValue("@acc1", AccuracyList[countsql]);
-                com2.Parameters.AddWithValue("@kapp1", kappaList[countsql]);
+                com2.Parameters.AddWithValue("@kappa1", kappaList[countsql]);
                 com2.ExecuteNonQuery();
-
-
-                conn2.Close();
+                conn3.Close();
 
                 countsql++;
 
@@ -432,8 +417,13 @@ namespace WebApplication6
 
 
 
+          
 
-            System.Threading.Thread.Sleep(5000);
+
+
+
+
+            System.Threading.Thread.Sleep(1000);
 
 
             Response.Redirect("~/Results.aspx");
