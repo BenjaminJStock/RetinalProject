@@ -24,6 +24,7 @@
                     <asp:BoundField DataField="ZipFileLocation" HeaderText="ZipFileLocation" SortExpression="ZipFileLocation" />
                     <asp:BoundField DataField="Dataset" HeaderText="Dataset" SortExpression="Dataset" />
                     <asp:BoundField DataField="FOV" HeaderText="FOV" SortExpression="FOV" />
+                    <asp:BoundField DataField="Download" HeaderText="Download" SortExpression="Download" />
                 </Columns>
                 <FooterStyle BackColor="Tan" />
                 <HeaderStyle BackColor="Tan" Font-Bold="True" />

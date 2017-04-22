@@ -96,11 +96,13 @@
         </asp:GridView>--%>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:RegistrationConnectionString %>" SelectCommand="SELECT [Table].Last_Name, [Table].Institution, [Table].Dataset, AllResults.ImgNumber, AllResults.Sensitivity, AllResults.Precision, AllResults.Accuracy, AllResults.kappa, AllResults.Specificity, AllResults.Researcher_ID_FK FROM AllResults INNER JOIN [Table] ON AllResults.Researcher_ID_FK = [Table].Researcher_ID"></asp:SqlDataSource>
         <br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" CellSpacing="2" DataSourceID="SqlDataSource1" ForeColor="Black" GridLines="Horizontal" HorizontalAlign="Center" style="margin-top: 0px; font-size: small;" Width="1050px" BorderStyle="Dotted">
-            <AlternatingRowStyle BackColor="PaleGoldenrod" />
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderWidth="1px" CellPadding="3" DataSourceID="SqlDataSource1" ForeColor="Black" GridLines="Vertical" HorizontalAlign="Center" style="margin-top: 0px; font-size: small;" Width="1050px" BorderStyle="Solid">
+            <AlternatingRowStyle BackColor="#CCCCCC" />
             <Columns>
                 <asp:BoundField DataField="Last_Name" HeaderText="Method" SortExpression="Last_Name" />
-                <asp:BoundField DataField="Institution" HeaderText="Institution" SortExpression="Institution" />
+                <asp:BoundField DataField="Institution" HeaderText="Institution" SortExpression="Institution" >
+                <ControlStyle Width="100%" />
+                </asp:BoundField>
                 <asp:BoundField DataField="Dataset" HeaderText="Dataset" SortExpression="Dataset" />
                 <asp:BoundField DataField="ImgNumber" HeaderText="Image" SortExpression="ImgNumber" />
                  <asp:BoundField DataField="Sensitivity" HeaderText="Sensitivity" SortExpression="Sensitivity" DataFormatString="{0:n4}" />
@@ -110,14 +112,14 @@
                 <asp:BoundField DataField="Specificity" HeaderText="Specificity" SortExpression="Specificity" DataFormatString="{0:n4}" />
                
             </Columns>
-            <FooterStyle BackColor="Tan" />
-            <HeaderStyle BackColor="Tan" Font-Bold="True" />
-            <PagerStyle BackColor="PaleGoldenrod" ForeColor="DarkSlateBlue" HorizontalAlign="Center" />
-            <SelectedRowStyle BackColor="DarkSlateBlue" ForeColor="GhostWhite" />
-            <SortedAscendingCellStyle BackColor="#FAFAE7" />
-            <SortedAscendingHeaderStyle BackColor="#DAC09E" />
-            <SortedDescendingCellStyle BackColor="#E1DB9C" />
-            <SortedDescendingHeaderStyle BackColor="#C2A47B" />
+            <FooterStyle BackColor="#CCCCCC" />
+            <HeaderStyle BackColor="Black" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#999999" ForeColor="Black" HorizontalAlign="Center" />
+            <SelectedRowStyle BackColor="#000099" ForeColor="White" Font-Bold="True" />
+            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+            <SortedAscendingHeaderStyle BackColor="#808080" />
+            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+            <SortedDescendingHeaderStyle BackColor="#383838" />
         </asp:GridView>
     </div>
 
