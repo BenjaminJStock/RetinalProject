@@ -21,7 +21,7 @@ namespace WebApplication6
     public partial class _Default : Page
     {
         Int32 temp = 0;
-
+        string s;
 
         List<float> SensitivityList = new List<float>();
         List<float> SpecificityList = new List<float>();
@@ -102,6 +102,7 @@ namespace WebApplication6
                     //string folder = Server.MapPath("~/files/");
                     Directory.CreateDirectory(folder);
                     FileUpload1.PostedFile.SaveAs(Path.Combine(folder, fileName));
+                    s = Server.MapPath("~/Uploads/");
 
                     using (ZipFile zip = ZipFile.Read(FileUpload1.PostedFile.InputStream))
                     {
@@ -115,7 +116,7 @@ namespace WebApplication6
                 Response.Write("Error:" + ex.ToString());
             }
 
-            System.Threading.Thread.Sleep(10000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
+            System.Threading.Thread.Sleep(5000); //wait 25 seconds for images to be uploaded so that the algorithm can find the correct files and start working on it.
             string Folderpath = Server.MapPath("~/VesselSegmentation/");
             string[] files = Directory.GetFiles(Folderpath);
             int p = 1;
@@ -129,11 +130,7 @@ namespace WebApplication6
             //int imageNumber = 1; // after each image is renamed, I need it to loop
             //int loopcount = 0;
 
-            float SensitivityAvg = 0;
-            float SpecificityAvg = 0;
-            float PrecisionAvg = 0;
-            float AccuracyAvg = 0;
-            float kappaAvg = 1;
+         
 
 
             int maskused = int.Parse(DropDownList2.SelectedValue);
@@ -172,27 +169,65 @@ namespace WebApplication6
                             Color maskpixel = MaskImage.GetPixel(x, y);
                             Color White = Color.FromArgb(255, 255, 255);
                             Color Black = Color.FromArgb(0, 0, 0);
-                            //if FOV == 1 do the calculations with mask
-                            //    else
-                            //    end
-                            if (gspixel == White && imagepixel == White)
+                            Color MaskWhite = Color.FromArgb(255, 255, 255, 255);
+                            Color MaskWhite1 = Color.FromArgb(0, 255, 255, 255);
+                            Color MaskBlack = Color.FromArgb(255, 0, 0, 0);
+
+                            if (gspixel == White && imagepixel == White && maskpixel == MaskWhite1) //3w
                             {
                                 TP1++;
                             }
-                            else if (gspixel == White && imagepixel == Black)
+                            else if (gspixel == White && imagepixel == Black && maskpixel == MaskWhite1)
                             {
                                 FN1++;
                             }
-                            else if (gspixel == Black && imagepixel == White)
+                            //Sometimes the MaskPixel messes up, so have to add this??
+                            if (gspixel == White && imagepixel == White && maskpixel == MaskWhite) //3w
+                            {
+                                TP1++;
+                            }
+                            else if (gspixel == White && imagepixel == Black && maskpixel == MaskWhite)
+                            {
+                                FN1++;
+                            }
+
+                            else if (gspixel == Black && imagepixel == White && maskpixel == MaskBlack)
                             {
                                 FP1++;
                             }
-                            else if (gspixel == Black && imagepixel == Black)
+                            else if (gspixel == Black && imagepixel == Black && maskpixel == MaskBlack)
+                            {
+                                TN1++;
+                            }
+                            else if (gspixel == White && imagepixel == White && maskpixel == MaskBlack)
+                            {
+                                TP1++;
+                            }
+                            else if (gspixel == White && imagepixel == Black && maskpixel == MaskBlack)
+                            {
+                                FN1++;
+                            }
+                            else if (gspixel == Black && imagepixel == Black && maskpixel == MaskWhite1)
+                            {
+                                FP1++;
+                            }
+                            else if (gspixel == Black && imagepixel == White && maskpixel == MaskWhite1)
+                            {
+                                TN1++;
+                            }
+                            //Sometimes the MaskPixel messes up, so have to add this??
+                            else if (gspixel == Black && imagepixel == Black && maskpixel == MaskWhite)
+                            {
+                                FP1++;
+                            }
+                            else if (gspixel == Black && imagepixel == White && maskpixel == MaskWhite)
                             {
                                 TN1++;
                             }
                         }
                     }
+
+                    
                 }
 
                 //if (maskused == 0)
@@ -301,31 +336,15 @@ namespace WebApplication6
 
                 imageNumber++;
 
-                SensitivityAvg = +SensitivityAvg + Sensitivity;
-                SpecificityAvg = +SpecificityAvg + Specificity;
-                PrecisionAvg = +PrecisionAvg + Precision;
-                AccuracyAvg = +AccuracyAvg + Accuracy;
-                kappaAvg = +kappaAvg + kappa;
-
-                float SensPercent = Sensitivity * 100;
-                float SpecPercent = Specificity * 100;
+                
+               
 
             }
 
-            float RowAdd = imageNumber;
-            float MeanAvg = imageNumber; //used as divide by 20 for mean, as it starts on 0
+            
+            
 
-            float SensitivityMean = 0;
-            float SpecificityMean = 0;
-            float PrecisionMean = 0;
-            float AccuracyMean = 0;
-            float kappaMean = 0;
-
-            SensitivityMean = SensitivityAvg / MeanAvg;
-            SpecificityMean = SpecificityAvg / MeanAvg;
-            PrecisionMean = PrecisionAvg / MeanAvg;
-            AccuracyMean = AccuracyAvg / MeanAvg;
-            kappaMean = kappaAvg / MeanAvg;
+            
 
 
 
@@ -346,19 +365,19 @@ namespace WebApplication6
             dt.Columns.Add("Accuracy", typeof(float));
             dt.Columns.Add("kappa", typeof(float));
 
-            ImageNumber.Add(imageNumber);
-            SensitivityList.Add(SensitivityMean);
-            SpecificityList.Add(SpecificityMean);
-            PrecisionList.Add(PrecisionMean);
-            AccuracyList.Add(AccuracyMean);
-            kappaList.Add(kappaMean);
+            //ImageNumber.Add(imageNumber);
+            //SensitivityList.Add(SensitivityMean);
+            //SpecificityList.Add(SpecificityMean);
+            //PrecisionList.Add(PrecisionMean);
+            //AccuracyList.Add(AccuracyMean);
+            //kappaList.Add(kappaMean);
 
-            for (int i = 0; i < SensitivityList.Count; i++)
+            for (int i = 1; i < SensitivityList.Count; i++)
             {
                 dt.Rows.Add(ImageNumber[i], SensitivityList[i], SpecificityList[i], PrecisionList[i], AccuracyList[i], kappaList[i]);
 
             }
-            int countsql = 1;
+            int countsql = 0;
 
 
 
@@ -395,13 +414,23 @@ namespace WebApplication6
             //    Response.Write("Error:" + ex.ToString());
             //}
 
-            while (countsql <= count)
+
+
+
+
+            
+            int imgnum1 = 1;
+
+
+
+
+            while (countsql < count)
             {
                 SqlConnection conn3 = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
                 conn3.Open();
                 string insertResults = "insert into [AllResults] (ImgNumber, Sensitivity, Specificity, Precision, Accuracy, kappa) values (@imgnum1, @sens1, @spec1, @prec1, @acc1, @kappa1)";
                 SqlCommand com2 = new SqlCommand(insertResults, conn3);
-                com2.Parameters.AddWithValue("@imgnum1", countsql);
+                com2.Parameters.AddWithValue("@imgnum1", imgnum1);
                 com2.Parameters.AddWithValue("@sens1", SensitivityList[countsql]);
                 com2.Parameters.AddWithValue("@spec1", SpecificityList[countsql]);
                 com2.Parameters.AddWithValue("@prec1", PrecisionList[countsql]);
@@ -411,7 +440,7 @@ namespace WebApplication6
                 conn3.Close();
 
                 countsql++;
-
+                imgnum1++;
             }
 
 

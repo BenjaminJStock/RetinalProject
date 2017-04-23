@@ -110,6 +110,7 @@
                 <asp:BoundField DataField="Accuracy" HeaderText="Accuracy" SortExpression="Accuracy" DataFormatString="{0:n4}" />
                 <asp:BoundField DataField="kappa" HeaderText="kappa" SortExpression="kappa" DataFormatString="{0:n4}" />
                 <asp:BoundField DataField="Specificity" HeaderText="Specificity" SortExpression="Specificity" DataFormatString="{0:n4}" />
+                
                
             </Columns>
             <FooterStyle BackColor="#CCCCCC" />
