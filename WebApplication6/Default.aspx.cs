@@ -230,51 +230,76 @@ namespace WebApplication6
                     
                 }
 
-                //if (maskused == 0)
-                //{
-                //    string mainImagePath = Server.MapPath("~/VesselSegmentation/image" + imageNumber + ".gif");
-                //    Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
-                //    int pixelcount = mainImage.Height * mainImage.Width;
+                if (maskused == 0)
+                {
+                    string mainImagePath = Server.MapPath("~/VesselSegmentation/image" + imageNumber + ".gif");
+                    Bitmap mainImage = AForge.Imaging.Image.FromFile(mainImagePath);
+                    int pixelcount = mainImage.Height * mainImage.Width;
 
-                //    string GoldStandardPath = Server.MapPath("~/GoldStandard/Stare/test/1st_manual/image" + imageNumber + ".gif");
-                //    Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
+                    string GoldStandardPath = Server.MapPath("~/GoldStandard/Stare/test/1st_manual/image" + imageNumber + ".png");
+                    Bitmap GSImage = AForge.Imaging.Image.FromFile(GoldStandardPath);
 
-                //    for (int y = 0; y < mainImage.Height; y++)
-                //    {
-                //        for (int x = 0; x < mainImage.Width; x++)
-                //        {
-                //            Color gspixel = GSImage.GetPixel(x, y);
-                //            Color imagepixel = mainImage.GetPixel(x, y);
+                    
 
-                //            Color White = Color.FromArgb(255, 255, 255);
-                //            Color Black = Color.FromArgb(0, 0, 0);
+                    int ree = 0;
+
+                    for (int y = 0; y < mainImage.Width; y++)
+                    {
+                        for (int x = 0; x < mainImage.Height; x++)
+                        {
+                            Color gspixel = GSImage.GetPixel(y, x);
+                            Color imagepixel = mainImage.GetPixel(y, x);
+
+                            Color White = Color.FromArgb(255, 255, 255);
+                            Color Black = Color.FromArgb(0, 0, 0);
+                            Color MaskBlack = Color.FromArgb(255, 0, 0, 0);
+                            Color MaskWhite = Color.FromArgb(255, 255, 255, 255);
+                            Color MaskWhite1 = Color.FromArgb(0, 255, 255, 255);
                             
-                //            if (gspixel == White && imagepixel == White)
-                //            {
-                //                TP1++;
-                //            }
-                //            else if (gspixel == White && imagepixel == Black)
-                //            {
-                //                FN1++;
-                //            }
-                //            else if (gspixel == Black && imagepixel == White)
-                //            {
-                //                FP1++;
-                //            }
-                //            else if (gspixel == Black && imagepixel == Black)
-                //            {
-                //                TN1++;
-                //            }
-                //        }
-                //    }
-                //}
+                            
 
-                ////    % TP : True Positive; Correct Foreground
-                ////    % FP : False Positive; Incorrect Foreground
-                ////    % TN : True Negative; Coreect Background
-                ////    % FN : False Negative; Incorrect Background
+                            int reeeee = 0;
+                            int totalpixels;
 
-                float noPxlGT = TN1 + FN1; //% = TP + FN
+                            if (gspixel == White && imagepixel == White)
+                            {
+                                TP1++;
+                            }
+                            else if (gspixel == White && imagepixel == Black)
+                            {
+                                FN1++;
+                            }
+                            else if (gspixel == Black && imagepixel == White)
+                            {
+                                FP1++;
+                            }
+                            else if (gspixel == Black && imagepixel == Black)
+                            {
+                                TN1++;
+                            }
+
+
+
+                           
+                            int reeeeeeeeee = 0;
+
+
+                         
+
+                        }
+                    }
+                }
+            
+
+            ////    % TP : True Positive; Correct Foreground
+            ////    % FP : False Positive; Incorrect Foreground
+            ////    % TN : True Negative; Coreect Background
+            ////    % FN : False Negative; Incorrect Background
+
+            float noPxlGT = TN1 + FN1; //% = TP + FN
+
+
+
 
                 ////    % Count pixels in the Segment map
                 float noPxlSM = TP1 + FP1; //% = TP + FP
